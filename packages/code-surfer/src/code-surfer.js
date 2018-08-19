@@ -10,13 +10,13 @@ import { css } from "glamor";
 import loadTheme from "./theme";
 loadTheme();
 
-// function getLineNumber(index) {
-//   return (
-//     '<span class="token comment token-leaf line-number" style="user-select: none">' +
-//     padStart(index + 1, 3) +
-//     ".</span> "
-//   );
-// }
+function getFullLineHtml(showNumber, number, line) {
+  const numberHtml =
+    '<span class="token comment token-leaf line-number" style="user-select: none">' +
+    String(number).padStart(3) +
+    ".</span> ";
+  return showNumber ? numberHtml + line : line || " ";
+}
 
 const getLineClassName = (tokens, lineNumber) => {
   if (Object.keys(tokens).length === 0) {
@@ -62,7 +62,7 @@ const LineOfCode = ({ number, tokensPerLine, html }) => {
   );
 };
 
-const CodeSurfer = ({ code, step }) => {
+const CodeSurfer = ({ code, step, showNumbers }) => {
   const tokensPerLine = getTokensPerLine(step);
   const tokenOpacity = css({
     ["& .token-leaf"]: {
@@ -76,7 +76,7 @@ const CodeSurfer = ({ code, step }) => {
         {hightlightLines(code).map((line, index) => (
           <LineOfCode
             key={index}
-            html={line}
+            html={getFullLineHtml(showNumbers, index + 1, line)}
             number={index + 1}
             tokensPerLine={tokensPerLine}
           />

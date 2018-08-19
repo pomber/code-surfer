@@ -33,12 +33,14 @@ export default withDeck(
       };
 
       render() {
-        const { code, steps, title } = this.props;
+        const { code, steps, title, showNumbers } = this.props;
         const { step, mode } = this.props.deck;
         const currentStep = step < 0 ? {} : steps[step];
         const isOverview = mode === modes.overview;
 
         const stepTitle = currentStep.title || title;
+        const anyNotes = steps.some(s => s.notes);
+        console.log(anyNotes);
 
         return (
           <div
@@ -50,9 +52,13 @@ export default withDeck(
           >
             {stepTitle && <h1>{stepTitle}</h1>}
             <div style={{ flex: 1, overflow: "hidden" }} key="code">
-              <CodeSurfer code={code} step={currentStep} />
+              <CodeSurfer
+                code={code}
+                step={currentStep}
+                showNumbers={showNumbers}
+              />
             </div>
-            {currentStep.notes && <p>{currentStep.notes}</p>}
+            {anyNotes && <p>{currentStep.notes || "\u00A0"}</p>}
             <div style={{ height: "25px" }} />
           </div>
         );

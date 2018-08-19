@@ -1,4 +1,5 @@
 import Prism from "prismjs";
+import memoize from "lodash.memoize";
 
 import "prismjs/components/prism-jsx.js";
 
@@ -58,7 +59,6 @@ const highlight = code => {
   return Prism.Token.stringify(Prism.util.encode(env.tokens), env.language);
 };
 
-//TODO memoize
 const highlightLines = code => {
   const html = highlight(code);
   const lines = html.split("\n");
@@ -69,4 +69,4 @@ const highlightLines = code => {
   return lines;
 };
 
-export default highlightLines;
+export default memoize(highlightLines);

@@ -17,6 +17,7 @@
     "component-raf": "^1.2.0",
     "component-tween": "^1.2.0",
     "glamor": "^2.20.40",
+    "lodash.memoize": "^4.1.2",
     "prismjs": "^1.15.0",
     "react": "^16.4.2"
   },

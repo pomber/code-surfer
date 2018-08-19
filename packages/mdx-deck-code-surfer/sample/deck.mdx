@@ -1,18 +1,30 @@
-import CodeSurfer from "../src/code-surfer";
+import CodeSurfer from "../src/deck-code-surfer";
 
-Hi
+## Code Surfer
+# <🏄/>
 
 ---
 
 <CodeSurfer
+	title="Small Code"
   code={require("raw-loader!./snippets/1.jsx")}
-  steps={[{ lines: [1] , notes: "First" }, { lines: [2] }, { lines: [3] }]}
+  steps={[{ lines: [1] , notes: "First" }, { lines: [2] }, { lines: [3], notes: "Third" }]}
+	showNumbers
 />
 
 ---
 
 <CodeSurfer
-	title="Some Title"
+  code={require("raw-loader!./snippets/1.jsx")}
+  steps={[{ lines: [1] , notes: "First" }, { lines: [2], notes: "Second" }, { lines: [3], notes: "Third" }]}
+	showNumbers
+/>
+
+---
+
+<CodeSurfer
+	title="Big Code"
   code={require("raw-loader!./snippets/2.jsx")}
-  steps={[{ lines: [1]}, { lines: [2] }, { lines: [2, 22] }]}
+  steps={[{ lines: [1]}, { lines: [2] }, { lines: [2, 32] }]}
+	showNumbers
 />
