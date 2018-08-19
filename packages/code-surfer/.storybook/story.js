@@ -9,5 +9,8 @@ const code = `
 `;
 
 storiesOf("CodeSurfer", module).add("test hi", () => (
-  <CodeSurfer code={code} />
+  <div>
+    <CodeSurfer code={code} step={{ range: [1, 1] }} />
+    <CodeSurfer code={code} step={{ range: [2, 3] }} />
+  </div>
 ));
