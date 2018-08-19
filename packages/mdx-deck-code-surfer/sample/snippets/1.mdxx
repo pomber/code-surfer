@@ -1,0 +1,10 @@
+<CodeSurfer
+  title="Lines"
+  notes="Use ⬆️ and ⬇️ keys"
+  showNumbers
+  code={require("raw-loader!./snippets/1.mdxx")}
+  steps={[
+    { lines: [1], notes: "Highlight a single line ⬇️" },
+    { lines: [2, 4], notes: "... or multiple lines ➡️" }
+  ]}
+/>

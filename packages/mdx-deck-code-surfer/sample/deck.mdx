@@ -1,30 +1,97 @@
 import CodeSurfer from "../src/deck-code-surfer";
 
 ## Code Surfer
+
 # <🏄/>
 
 ---
 
 <CodeSurfer
-	title="Small Code"
-  code={require("raw-loader!./snippets/1.jsx")}
-  steps={[{ lines: [1] , notes: "First" }, { lines: [2] }, { lines: [3], notes: "Third" }]}
-	showNumbers
+  title="Lines"
+  notes="Use ⬆️ and ⬇️ keys"
+  showNumbers
+  code={require("raw-loader!./snippets/1.mdxx")}
+  steps={[
+    { lines: [1], notes: "Highlight a single line ⬇️" },
+    { lines: [2, 4], notes: "... or multiple lines ➡️" }
+  ]}
 />
 
 ---
 
 <CodeSurfer
-  code={require("raw-loader!./snippets/1.jsx")}
-  steps={[{ lines: [1] , notes: "First" }, { lines: [2], notes: "Second" }, { lines: [3], notes: "Third" }]}
-	showNumbers
+  title="Range and ranges"
+  notes="Sometime is easier to use ranges ⬇️"
+  showNumbers
+  code={require("raw-loader!./snippets/2.mdxx")}
+  steps={[
+    { range: [2, 4], notes: "From line 2 to 4 ⬇️" },
+    { ranges: [[2, 3], [6, 10]], notes: "2, 3 and 6 to 10 ⬇️" },
+    { lines: [1, 3], range: [6, 9], notes: "➡️" }
+  ]}
 />
 
 ---
 
 <CodeSurfer
-	title="Big Code"
-  code={require("raw-loader!./snippets/2.jsx")}
-  steps={[{ lines: [1]}, { lines: [2] }, { lines: [2, 32] }]}
-	showNumbers
+  title="Highlight Tokens"
+  notes="⬇️"
+  showNumbers
+  code={require("raw-loader!./snippets/3.mdxx")}
+  steps={[
+    { lines: [8], notes: "Instead of the full line ⬇️" },
+    { tokens: { 8: [2, 3, 4, 5, 6, 20] }, notes: "... select some tokens ➡️" }
+  ]}
 />
+
+---
+
+<CodeSurfer
+  title="Line Numbers"
+  notes="Line numbers are optional ➡️"
+  code={require("raw-loader!./snippets/4.mdxx")}
+  steps={[{ notes: "➡️" }]}
+/>
+
+---
+
+<CodeSurfer
+  title="Scale and Scroll"
+  notes="Long snippets are scaled ⬇️"
+  showNumbers
+  code={require("raw-loader!./snippets/5.jsx")}
+  steps={[
+    { range: [1, 3], notes: "⬇️" },
+    { range: [5, 13], notes: "⬇️" },
+    { range: [15, 32], notes: "⬇️" },
+    { lines: [30, 35], notes: "⬇️" },
+    { range: [15, 32], lines: [40], notes: "➡️" }
+  ]}
+/>
+
+---
+
+## Titles and Notes are optional
+
+## ➡️
+
+---
+
+<CodeSurfer
+  code={require("raw-loader!./snippets/5.jsx")}
+  steps={[
+    { range: [1, 3] },
+    { range: [5, 13] },
+    { range: [15, 32] },
+    { lines: [30, 35] },
+    { range: [15, 32] }
+  ]}
+/>
+
+---
+
+## That's all
+
+# [Soon...](https://github.com/pomber/code-surfer)
+
+[(demo source)](https://github.com/pomber/code-surfer/blob/master/packages/mdx-deck-code-surfer/sample/deck.mdx)

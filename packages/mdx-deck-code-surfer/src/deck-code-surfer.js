@@ -9,7 +9,6 @@ export default withDeck(
     class extends React.Component {
       componentDidMount() {
         document.body.addEventListener("keydown", this.handleKeyDown);
-        const { update } = { index: 0 };
       }
 
       componentWillUnmount() {
@@ -33,14 +32,13 @@ export default withDeck(
       };
 
       render() {
-        const { code, steps, title, showNumbers } = this.props;
+        const { code, steps, title, showNumbers, notes } = this.props;
         const { step, mode } = this.props.deck;
-        const currentStep = step < 0 ? {} : steps[step];
+        const currentStep = step < 0 ? { notes } : steps[step] || steps[0];
         const isOverview = mode === modes.overview;
 
         const stepTitle = currentStep.title || title;
-        const anyNotes = steps.some(s => s.notes);
-        console.log(anyNotes);
+        const anyNotes = notes || steps.some(s => s.notes);
 
         return (
           <div
@@ -58,7 +56,9 @@ export default withDeck(
                 showNumbers={showNumbers}
               />
             </div>
-            {anyNotes && <p>{currentStep.notes || "\u00A0"}</p>}
+            {anyNotes && (
+              <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
+            )}
             <div style={{ height: "25px" }} />
           </div>
         );

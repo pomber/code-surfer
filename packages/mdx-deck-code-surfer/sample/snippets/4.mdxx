@@ -1,0 +1,6 @@
+<CodeSurfer
+  title="Line Numbers"
+  notes="Line numbers are optional ➡️"
+  code={require("raw-loader!./snippets/4.mdxx")}
+  steps={[{ notes: "➡️" }]}
+/>
