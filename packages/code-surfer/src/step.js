@@ -7,15 +7,26 @@ const mapRange = range => {
   }
   return newTokens;
 };
+const mapLines = lines => {
+  const newTokens = {};
+  lines.forEach(line => (newTokens[line] = null));
+  return newTokens;
+};
 
-export const mapStep = ({ range, ranges = [], tokens, ...rest }) => {
+export const getTokensPerLine = ({
+  lines = [],
+  range,
+  ranges = [],
+  tokens
+}) => {
   const newTokens = {};
 
+  Object.assign(newTokens, mapLines(lines));
   Object.assign(newTokens, mapRange(range));
   Object.assign(newTokens, ...ranges.map(mapRange));
   Object.assign(newTokens, tokens);
 
-  return { tokens: newTokens, ...rest };
+  return newTokens;
 };
 
-export default mapStep;
+export default getTokensPerLine;
