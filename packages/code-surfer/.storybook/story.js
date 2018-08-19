@@ -24,6 +24,9 @@ storiesOf("CodeSurfer", module).add("test hi", () => (
   <div>
     <CodeSurfer code={code} step={{ lines: [1] }} />
     <CodeSurfer code={code} step={{ lines: [1, 3] }} />
-    <CodeSurfer code={code2} step={{ tokens: { 9: [2, 6], 1: null } }} />
+    <CodeSurfer
+      code={code2}
+      step={{ tokens: { 9: [1, 2, 3, 7, 8], 1: null } }}
+    />
   </div>
 ));
