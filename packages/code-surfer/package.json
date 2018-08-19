@@ -1,0 +1,24 @@
+{
+  "name": "code-surfer",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "pomber",
+  "license": "MIT",
+  "repository": "pomber/code-surfer",
+  "private": false,
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "dependencies": {
+    "component-raf": "^1.2.0",
+    "component-tween": "^1.2.0",
+    "glamor": "^2.20.40",
+    "react": "^16.4.2"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.4.10",
+    "@types/storybook__react": "^3.0.9",
+    "babel-core": "^6.26.3",
+    "react-dom": "^16.4.2"
+  }
+}
