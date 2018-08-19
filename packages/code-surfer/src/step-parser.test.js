@@ -1,4 +1,4 @@
-import mapStep from "./step";
+import mapStep from "./step-parser";
 
 test("map lines", () => {
   const steps = [{ lines: [1, 3] }, { lines: [5], note: "foo" }];
