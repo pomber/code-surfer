@@ -20,6 +20,7 @@
     "@storybook/react": "^3.4.10",
     "@types/storybook__react": "^3.0.9",
     "babel-core": "^6.26.3",
+    "jest": "^23.5.0",
     "react-dom": "^16.4.2"
   }
 }

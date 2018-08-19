@@ -7,14 +7,16 @@ import "prismjs/themes/prism.css";
 
 class CodeSurfer extends React.Component {
   render() {
+    const { code, step } = this.props;
     return (
       <pre>
         <code>
-          {hightlightLines(this.props.code).map(line => (
+          {hightlightLines(code).map((line, index) => (
             <div
               dangerouslySetInnerHTML={{
                 __html: line
               }}
+              style={{ opacity: index + 1 === step.range[0] ? 1 : 0.3 }}
             />
           ))}
         </code>
