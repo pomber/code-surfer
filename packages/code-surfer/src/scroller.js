@@ -3,6 +3,10 @@ import Tween from "component-tween";
 import raf from "component-raf";
 
 const getNewCenter = (container, content, firstSelected, lastSelected) => {
+  // debugger;
+  const parentHeight = container.parentElement.offsetHeight;
+  container.style.padding = `${parentHeight / 2}px 0`;
+
   firstSelected = firstSelected || content;
   lastSelected = lastSelected || firstSelected;
   const contentTop = content.offsetTop;
@@ -136,7 +140,7 @@ export class Container extends React.Component {
           height: 0,
           margin: 0,
           // background: "#222",
-          padding: this.props.height / 2 + "px 0",
+          // padding: this.props.height / 2 + "px 0",
           overflow: "hidden",
           textAlign: "center",
           position: "relative"

@@ -1,9 +1,18 @@
+import CodeSurfer from "../src/code-surfer";
+
 Hi
 
 ---
 
-import CodeSurfer from "../src/code-surfer"
+<CodeSurfer
+  code={require("raw-loader!./snippets/1.jsx")}
+  steps={[{ lines: [1] , notes: "First" }, { lines: [2] }, { lines: [3] }]}
+/>
 
-<CodeSurfer code={`const x = hello;
-const x = hello;
-const x = hello;`} steps={[{lines:[1]}, {lines:[2]}, {lines:[3]}]} />
+---
+
+<CodeSurfer
+	title="Some Title"
+  code={require("raw-loader!./snippets/2.jsx")}
+  steps={[{ lines: [1]}, { lines: [2] }, { lines: [2, 22] }]}
+/>

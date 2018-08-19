@@ -33,11 +33,29 @@ export default withDeck(
       };
 
       render() {
-        const { code, steps } = this.props;
+        const { code, steps, title } = this.props;
         const { step, mode } = this.props.deck;
         const currentStep = step < 0 ? {} : steps[step];
         const isOverview = mode === modes.overview;
-        return <CodeSurfer code={code} step={currentStep} />;
+
+        const stepTitle = currentStep.title || title;
+
+        return (
+          <div
+            style={{
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column"
+            }}
+          >
+            {stepTitle && <h1>{stepTitle}</h1>}
+            <div style={{ flex: 1, overflow: "hidden" }} key="code">
+              <CodeSurfer code={code} step={currentStep} />
+            </div>
+            {currentStep.notes && <p>{currentStep.notes}</p>}
+            <div style={{ height: "25px" }} />
+          </div>
+        );
       }
     }
   )

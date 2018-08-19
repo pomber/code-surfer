@@ -7,6 +7,8 @@ import { css } from "glamor";
 //TODO configure theme
 //TODO don't import css
 // import "prismjs/themes/prism.css";
+import loadTheme from "./theme";
+loadTheme();
 
 // function getLineNumber(index) {
 //   return (
@@ -69,7 +71,7 @@ const CodeSurfer = ({ code, step }) => {
     }
   });
   return (
-    <Scroller.Container type="pre" height={100}>
+    <Scroller.Container type="pre" height={500}>
       <Scroller.Content type="code" className={tokenOpacity}>
         {hightlightLines(code).map((line, index) => (
           <LineOfCode
