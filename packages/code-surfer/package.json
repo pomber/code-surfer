@@ -7,7 +7,9 @@
   "repository": "pomber/code-surfer",
   "private": false,
   "scripts": {
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "component-raf": "^1.2.0",
@@ -20,6 +22,8 @@
     "@storybook/react": "^3.4.10",
     "@types/storybook__react": "^3.0.9",
     "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "jest": "^23.5.0",
     "react-dom": "^16.4.2"
   }
