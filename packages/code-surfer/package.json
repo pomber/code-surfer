@@ -1,15 +1,17 @@
 {
   "name": "code-surfer",
-  "version": "0.0.1",
-  "main": "index.js",
+  "version": "0.0.0",
+  "main": "dist/code-surfer.js",
   "author": "pomber",
   "license": "MIT",
   "repository": "pomber/code-surfer",
   "private": false,
   "scripts": {
+    "build": "babel ./src -d ./dist --ignore test.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "release": "np"
   },
   "dependencies": {
     "component-raf": "^1.2.0",
@@ -21,11 +23,13 @@
   "devDependencies": {
     "@storybook/react": "^3.4.10",
     "@types/storybook__react": "^3.0.9",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "jest": "^23.5.0",
+    "np": "^3.0.4",
     "react-dom": "^16.4.2"
   }
 }
