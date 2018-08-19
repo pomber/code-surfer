@@ -6,7 +6,7 @@ import { css } from "glamor";
 
 //TODO configure theme
 //TODO don't import css
-import "prismjs/themes/prism.css";
+// import "prismjs/themes/prism.css";
 
 // function getLineNumber(index) {
 //   return (

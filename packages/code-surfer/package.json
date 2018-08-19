@@ -1,6 +1,6 @@
 {
   "name": "code-surfer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/code-surfer.js",
   "author": "pomber",
   "license": "MIT",

@@ -5,5 +5,13 @@
   "repository": "https://github.com/pomber/code-surfer",
   "author": "pomber",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "sample": "mdx-deck sample/deck.mdx"
+  },
+  "dependencies": {
+    "code-surfer": "^0.0.1",
+    "mdx-deck": "^1.6.4",
+    "react": "^16.4.2"
+  }
 }
