@@ -26,7 +26,7 @@ export default withDeck(
         switch (e.key) {
           case "ArrowDown":
             e.preventDefault();
-            update(incStep(this.props.steps));
+            update(incStep(this.props.stepsTop));
             break;
           case "ArrowUp":
             e.preventDefault();
@@ -36,13 +36,23 @@ export default withDeck(
       };
 
       render() {
-        const { code, steps, title, showNumbers, notes } = this.props;
+        const {
+          codeTop,
+          codeBottom,
+          stepsTop,
+          stepsBottom,
+          title,
+          showNumbers,
+          notes
+        } = this.props;
         const { step, mode } = this.props.deck;
-        const currentStep = step < 0 ? { notes } : steps[step] || steps[0];
-        const isOverview = mode === modes.overview;
+        const currentStepTop =
+          step < 0 ? { notes } : stepsTop[step] || stepsTop[0];
+        const currentStepBottom =
+          step < 0 ? { notes } : stepsBottom[step] || stepsBottom[0];
 
-        const stepTitle = currentStep.title || title;
-        const anyNotes = notes || steps.some(s => s.notes);
+        const topSize = codeTop.split("\n").length - 1;
+        const bottomSize = codeBottom.split("\n").length - 1;
 
         return (
           <div
@@ -52,17 +62,24 @@ export default withDeck(
               flexDirection: "column"
             }}
           >
-            {stepTitle && <h1>{stepTitle}</h1>}
-            <div style={{ flex: 1, overflow: "hidden" }} key="code">
+            <div style={{ flex: topSize, overflow: "hidden" }} key="codeTop">
               <CodeSurfer
-                code={code}
-                step={currentStep}
+                code={codeTop}
+                step={currentStepTop}
                 showNumbers={showNumbers}
               />
             </div>
-            {anyNotes && (
-              <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
-            )}
+            <div style={{ height: "25px" }} />
+            <div
+              style={{ flex: bottomSize, overflow: "hidden" }}
+              key="codeBottom"
+            >
+              <CodeSurfer
+                code={codeBottom}
+                step={currentStepBottom}
+                showNumbers={showNumbers}
+              />
+            </div>
             <div style={{ height: "25px" }} />
           </div>
         );
