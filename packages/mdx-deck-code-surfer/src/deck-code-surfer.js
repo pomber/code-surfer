@@ -63,7 +63,7 @@ export default withDeck(
             {anyNotes && (
               <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
             )}
-            <div style={{ height: "25px" }} />
+            <div style={{ height: "35px" }} />
           </div>
         );
       }
