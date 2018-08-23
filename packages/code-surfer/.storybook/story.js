@@ -2,31 +2,23 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import CodeSurfer from "../src/code-surfer";
 
-const code = `<div>
-  <span>Hi</span>
-</div>`;
+const code = `<arthur
+  p1="1"
+  p2={2}
+  p3={Math.sqrt(3) * Math.PI}
+  p4={x => x * 4}
+  p5={{ a: 5 }}
+  p6
+/>;`;
 
-const code2 = `<Scroller.Container type="pre" height={100}>
-<Scroller.Content type="code">
-	{hightlightLines(code).map((line, index) => (
-		<Scroller.Element
-			key={index}
-			dangerouslySetInnerHTML={{
-				__html: line
-			}}
-			style={{ opacity: index + 1 in tokensPerLine ? 1 : 0.3 }}
-		/>
-	))}
-</Scroller.Content>
-</Scroller.Container>`;
-
-storiesOf("CodeSurfer", module).add("test hi", () => (
-  <div>
-    <CodeSurfer code={code} step={{ lines: [1] }} />
-    <CodeSurfer code={code} step={{ lines: [1, 3] }} />
-    <CodeSurfer
-      code={code2}
-      step={{ tokens: { 9: [1, 2, 3, 7, 8], 1: null } }}
-    />
-  </div>
-));
+storiesOf("CodeSurfer", module)
+  .add("range", () => (
+    <div style={{ height: "100vh" }}>
+      <CodeSurfer code={code} step={{ range: [2, 7] }} showNumbers />
+    </div>
+  ))
+  .add("lines", () => (
+    <div style={{ height: "100vh" }}>
+      <CodeSurfer code={code} step={{ lines: [1, 8] }} showNumbers />
+    </div>
+  ));
