@@ -1,6 +1,5 @@
 import React from "react";
 import Tween from "component-tween";
-import raf from "component-raf";
 
 const getNewCenter = (container, content, firstSelected, lastSelected) => {
   // debugger;
@@ -38,13 +37,13 @@ const getNewCenter = (container, content, firstSelected, lastSelected) => {
     center = (middle - halfContent) * scale + halfContent;
   }
 
-  console.log("top", top);
-  console.log("bottom", bottom);
-  console.log("containerHeight", containerHeight);
-  console.log("selectedHeight", selectedHeight);
-  console.log("scaledSelectedHeight", scaledSelectedHeight);
-  console.log("contentHeight", contentHeight);
-  console.log("scaledContentHeight", scaledContentHeight);
+  // console.log("top", top);
+  // console.log("bottom", bottom);
+  // console.log("containerHeight", containerHeight);
+  // console.log("selectedHeight", selectedHeight);
+  // console.log("scaledSelectedHeight", scaledSelectedHeight);
+  // console.log("contentHeight", contentHeight);
+  // console.log("scaledContentHeight", scaledContentHeight);
 
   if (containerHeight >= scaledContentHeight) {
     // center in the middle of the content
@@ -55,11 +54,11 @@ const getNewCenter = (container, content, firstSelected, lastSelected) => {
     center = center < minScroll ? minScroll : center;
     center = center > maxScroll ? maxScroll : center;
   } else {
-    console.log("Bigger selected than container");
+    // console.log("Bigger selected than container");
     center = (top - halfContent) * scale + halfContent + containerHeight / 2;
   }
 
-  console.log(center);
+  // console.log(center);
   return { center, scale };
 };
 
@@ -91,7 +90,7 @@ const scrollTo = (container, content, center, scale, duration) => {
   });
 
   function animate() {
-    raf(animate);
+    requestAnimationFrame(animate);
     tween.update();
   }
   animate();
