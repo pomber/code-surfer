@@ -22,6 +22,7 @@ ARG REPO_URL=https://github.com/pomber/code-surfer
 
 WORKDIR /repo
 RUN git clone --depth 1 -b ${BRANCH_NAME} --single-branch ${REPO_URL} .
+RUN rm -rf packages/mdx-deck-code-surfer
 RUN yarn --cwd packages/code-surfer
 
 ENV FORKBOX_COMMAND TERMINAL
