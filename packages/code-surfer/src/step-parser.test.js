@@ -8,7 +8,7 @@ test("map lines", () => {
   expect(tokenSteps).toEqual(expected);
 });
 
-test("map range", () => {
+test("map rangess", () => {
   const steps = [{ range: [1, 3] }, { range: [1, 1], note: "foo" }];
   const expected = [{ 1: null, 2: null, 3: null }, { 1: [1, 2,3] }];
 
