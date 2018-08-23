@@ -22,6 +22,7 @@ const code2 = `<Scroller.Container type="pre" height={100}>
 
 storiesOf("CodeSurfer", module).add("test hi", () => (
   <div>
+  <h1>Hi!</h1>
   <div style={{height: "100px"}}>
     <CodeSurfer code={code} step={{ lines: [1] }} />
     </div>
