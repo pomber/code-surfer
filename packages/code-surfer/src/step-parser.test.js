@@ -10,7 +10,7 @@ test("map lines", () => {
 
 test("map range", () => {
   const steps = [{ range: [1, 3] }, { range: [1, 1], note: "foo" }];
-  const expected = [{ 1: null, 2: null, 3: null }, { 1: [] }];
+  const expected = [{ 1: null, 2: null, 3: null }, { 1: [1, 2,3] }];
 
   const tokenSteps = steps.map(mapStep);
   expect(tokenSteps).toEqual(expected);
