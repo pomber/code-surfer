@@ -1,0 +1,7 @@
+{
+  "commands": [
+    { "name": "Launch Terminal", "env": { "FORKBOX_COMMAND": "TERMINAL" } },
+    { "name": "Watch Tests", "env": { "FORKBOX_COMMAND": "TESTS" } },
+    { "name": "Run Storybook", "env": { "FORKBOX_COMMAND": "STORYBOOK" } }
+  ]
+}
