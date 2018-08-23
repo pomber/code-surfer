@@ -10,7 +10,7 @@
     "build": "babel ./src -d ./dist --ignore test.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "release": "np"
   },
   "dependencies": {
