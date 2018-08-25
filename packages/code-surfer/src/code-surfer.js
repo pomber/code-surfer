@@ -39,7 +39,12 @@ const CodeSurfer = ({ code, step, lang, showNumbers, dark }) => {
               <div {...getLineProps({ line, key: i })}>
                 {showNumbers && (
                   <span
-                    className="token comment"
+                    className={
+                      "token comment " +
+                      (tokensPerLine[i + 1] !== undefined
+                        ? selectedRules
+                        : unselectedRules)
+                    }
                     style={{ userSelect: "none" }}
                   >
                     {(i + 1 + ".").padStart(3)}{" "}

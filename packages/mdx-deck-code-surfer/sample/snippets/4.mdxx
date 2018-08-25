@@ -1,6 +1,6 @@
 <CodeSurfer
   title="Line Numbers"
-  notes="Line numbers are optional ➡️"
+  notes="Show line numbers ➡️"
+  showNumbers
   code={require("raw-loader!./snippets/4.mdxx")}
-  steps={[{ notes: "➡️" }]}
 />

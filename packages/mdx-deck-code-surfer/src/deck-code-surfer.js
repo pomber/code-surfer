@@ -26,7 +26,7 @@ export default withDeck(
         switch (e.key) {
           case "ArrowDown":
             e.preventDefault();
-            update(incStep(this.props.steps));
+            update(incStep(this.props.steps || []));
             break;
           case "ArrowUp":
             e.preventDefault();
@@ -38,7 +38,13 @@ export default withDeck(
       render() {
         const { code, steps, title, notes, ...rest } = this.props;
         const { step, mode } = this.props.deck;
-        const currentStep = step < 0 ? { notes } : steps[step] || steps[0];
+
+        const stepZero = {
+          range: [0, code.split("\n").length],
+          notes
+        };
+
+        const currentStep = step < 0 ? stepZero : steps[step] || steps[0];
         const isOverview = mode === modes.overview;
 
         const stepTitle = currentStep.title || title;

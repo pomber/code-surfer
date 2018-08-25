@@ -1,10 +1,12 @@
 <CodeSurfer
   title="Highlight Tokens"
   notes="⬇️"
-  showNumbers
   code={require("raw-loader!./snippets/3.mdxx")}
   steps={[
-    { lines: [8], notes: "Instead of the full line ⬇️" },
-    { tokens: { 8: [2, 3, 4, 5, 6, 20] }, notes: "... select some tokens ➡️" }
+    { lines: [6], notes: "Instead of the full line ⬇️" },
+    {
+      tokens: { 8: [9, 12, 15] },
+      notes: "... select some tokens ➡️"
+    }
   ]}
 />

@@ -1,21 +1,18 @@
 import CodeSurfer from "../src/deck-code-surfer";
 
-
 ## Code Surfer
 
 # <🏄/>
 
 ---
 
-
 <CodeSurfer
   title="Lines"
   notes="Use ⬆️ and ⬇️ keys"
-  showNumbers
   code={require("raw-loader!./snippets/1.mdxx")}
   steps={[
-    { lines: [1], notes: "Highlight a single line ⬇️" },
-    { lines: [2, 4], notes: "... or multiple lines ➡️" }
+    { lines: [6], notes: "Highlight a single line ⬇️" },
+    { lines: [5, 7, 8], notes: "... or multiple lines ➡️" }
   ]}
 />
 
@@ -24,12 +21,11 @@ import CodeSurfer from "../src/deck-code-surfer";
 <CodeSurfer
   title="Range and ranges"
   notes="Sometime is easier to use ranges ⬇️"
-  showNumbers
   code={require("raw-loader!./snippets/2.mdxx")}
   steps={[
     { range: [2, 4], notes: "From line 2 to 4 ⬇️" },
-    { ranges: [[2, 3], [6, 10]], notes: "2, 3 and 6 to 10 ⬇️" },
-    { lines: [1, 3], range: [6, 9], notes: "➡️" }
+    { ranges: [[2, 3], [6, 11]], notes: "2, 3 and 6 to 10 ⬇️" },
+    { lines: [1, 3], range: [6, 11], notes: "➡️" }
   ]}
 />
 
@@ -38,11 +34,10 @@ import CodeSurfer from "../src/deck-code-surfer";
 <CodeSurfer
   title="Highlight Tokens"
   notes="⬇️"
-  showNumbers
   code={require("raw-loader!./snippets/3.mdxx")}
   steps={[
-    { lines: [8], notes: "Instead of the full line ⬇️" },
-    { tokens: { 8: [2, 3, 4, 5, 6, 20] }, notes: "... select some tokens ➡️" }
+    { lines: [6], notes: "Instead of the full line ⬇️" },
+    { tokens: { 8: [9, 12, 15] }, notes: "... select some tokens ➡️" }
   ]}
 />
 
@@ -50,9 +45,9 @@ import CodeSurfer from "../src/deck-code-surfer";
 
 <CodeSurfer
   title="Line Numbers"
-  notes="Line numbers are optional ➡️"
+  notes="Show line numbers ➡️"
+  showNumbers
   code={require("raw-loader!./snippets/4.mdxx")}
-  steps={[{ notes: "➡️" }]}
 />
 
 ---
@@ -60,7 +55,6 @@ import CodeSurfer from "../src/deck-code-surfer";
 <CodeSurfer
   title="Scale and Scroll"
   notes="Long snippets are scaled ⬇️"
-  showNumbers
   code={require("raw-loader!./snippets/5.jsx")}
   steps={[
     { range: [1, 3], notes: "⬇️" },
@@ -92,8 +86,7 @@ import CodeSurfer from "../src/deck-code-surfer";
 
 ---
 
-## That's all
 
-# [Soon...](https://github.com/pomber/code-surfer)
+### [github.com/pomber/code-surfer](https://github.com/pomber/code-surfer)
 
 [(demo source)](https://github.com/pomber/code-surfer/blob/master/packages/mdx-deck-code-surfer/sample/deck.mdx)
