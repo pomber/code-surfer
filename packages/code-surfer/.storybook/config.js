@@ -1,8 +1,8 @@
 import { configure } from "@storybook/react";
 
 function loadStories() {
-  require("./story.js");
-  require("./scroller-stories.js");
+  require("./code-surfer.story.js");
+  require("./scroller.story.js");
 }
 
 configure(loadStories, module);

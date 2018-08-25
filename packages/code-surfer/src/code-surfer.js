@@ -1,88 +1,58 @@
 import React from "react";
-import hightlightLines from "./highlighter";
-import getTokensPerLine from "./step-parser";
+import Highlight, { defaultProps } from "prism-react-renderer";
 import * as Scroller from "./scroller";
 import { css } from "glamor";
+import getTokensPerLine from "./step-parser";
 
-//TODO configure theme
-//TODO don't import css
-// import "prismjs/themes/prism.css";
-import loadTheme from "./theme";
-loadTheme();
-
-function getFullLineHtml(showNumber, number, line) {
-  const numberHtml =
-    '<span class="token comment token-leaf line-number" style="user-select: none">' +
-    String(number).padStart(3) +
-    ".</span> ";
-  return showNumber ? numberHtml + line : line || " ";
-}
-
-const getLineClassName = (tokens, lineNumber) => {
-  if (Object.keys(tokens).length === 0) {
-    return css({
-      [`& .token-leaf`]: {
-        opacity: "1 !important"
-      }
-    });
-  } else if (!(lineNumber in tokens)) {
-    return "";
-  } else if (tokens[lineNumber] == null) {
-    return css({
-      [`& .token-leaf`]: {
-        opacity: "1 !important"
-      }
-    });
-  } else {
-    return css(
-      {
-        [`& .token-leaf.line-number`]: {
-          opacity: "1 !important"
-        }
-      },
-      ...tokens[lineNumber].map(n => ({
-        [`& .token-leaf.token-${n}`]: {
-          opacity: "1 !important"
-        }
-      }))
-    );
-  }
-};
-
-const LineOfCode = ({ number, tokensPerLine, html }) => {
-  const isSelected = number in tokensPerLine;
-  const className = getLineClassName(tokensPerLine, number);
-  return (
-    <Scroller.Element
-      dangerouslySetInnerHTML={{ __html: html }}
-      // style={{ opacity: isSelected ? 1 : 0.3 }}
-      className={className}
-      selected={isSelected}
-    />
-  );
-};
+const selectedRules = css({
+  opacity: 1,
+  transition: "opacity 300ms"
+});
+const unselectedRules = css({
+  opacity: 0.3,
+  transition: "opacity 300ms"
+});
 
 const CodeSurfer = ({ code, step, showNumbers }) => {
   const tokensPerLine = getTokensPerLine(step);
-  const tokenOpacity = css({
-    ["& .token-leaf"]: {
-      opacity: "0.35",
-      transition: "opacity 300ms"
-    }
-  });
+  const isSelected = (lineIndex, tokenIndex) =>
+    tokensPerLine[lineIndex + 1] !== undefined &&
+    (tokensPerLine[lineIndex + 1] === null ||
+      tokensPerLine[lineIndex + 1].includes(tokenIndex));
   return (
-    <Scroller.Container type="pre">
-      <Scroller.Content type="code" className={tokenOpacity}>
-        {hightlightLines(code).map((line, index) => (
-          <LineOfCode
-            key={index}
-            html={getFullLineHtml(showNumbers, index + 1, line)}
-            number={index + 1}
-            tokensPerLine={tokensPerLine}
-          />
-        ))}
-      </Scroller.Content>
-    </Scroller.Container>
+    <Highlight {...defaultProps} code={code} language="jsx">
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <Scroller.Container type="pre" className={className} style={style}>
+          <Scroller.Content type="code">
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {showNumbers && (
+                  <span
+                    className="token comment"
+                    style={{ userSelect: "none" }}
+                  >
+                    {(i + 1 + ".").padStart(3)}{" "}
+                  </span>
+                )}
+                {line.map((token, key) => (
+                  <Scroller.Element
+                    type="span"
+                    {...getTokenProps({
+                      token,
+                      key,
+                      selected: isSelected(i, key),
+                      className: isSelected(i, key)
+                        ? selectedRules
+                        : unselectedRules
+                    })}
+                  />
+                ))}
+              </div>
+            ))}
+          </Scroller.Content>
+        </Scroller.Container>
+      )}
+    </Highlight>
   );
 };
 
