@@ -1,6 +1,6 @@
 {
   "name": "mdx-deck-code-surfer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "repository": "https://github.com/pomber/code-surfer",
   "author": "pomber",
@@ -11,11 +11,15 @@
     "talk": "mdx-deck sample/talk.mdx"
   },
   "dependencies": {
-    "code-surfer": "^0.0.1",
+    "code-surfer": "^0.0.2"
+  },
+  "devDependencies": {
+    "raw-loader": "^0.5.1",
     "mdx-deck": "^1.6.4",
     "react": "^16.4.2"
   },
-  "devDependencies": {
-    "raw-loader": "^0.5.1"
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "mdx-deck": ">=1.6.0"
   }
 }

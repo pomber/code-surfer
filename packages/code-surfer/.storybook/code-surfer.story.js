@@ -2,14 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import CodeSurfer from "../src/code-surfer";
 
-const code = `<arthur
-  p1="1"
-  p2={2}
-  p3={Math.sqrt(3) * Math.PI}
-  p4={x => x * 4}
-  p5={{ a: 5 }}
-  p6
-/>;`;
+const code = require("raw-loader!./snippets/jsx.jsxx");
 
 storiesOf("CodeSurfer", module)
   .add("range", () => (
@@ -30,5 +23,14 @@ storiesOf("CodeSurfer", module)
       <div style={{ height: "10vh" }}>
         <CodeSurfer code={code} step={{ lines: [1] }} showNumbers />
       </div>
+    </div>
+  ))
+  .add("python", () => (
+    <div style={{ height: "100vh" }}>
+      <CodeSurfer
+        code={require("raw-loader!./snippets/python.py")}
+        step={{ range: [1, 19] }}
+        lang="python"
+      />
     </div>
   ));
