@@ -1,5 +1,5 @@
 import React from "react";
-import Tween from "component-tween";
+import TWEEN from "./tween";
 
 const getNewCenter = (container, content, firstSelected, lastSelected) => {
   // debugger;
@@ -76,24 +76,22 @@ const scrollTo = (container, content, center, scale, duration) => {
 
   const endY = center;
 
-  const tween = Tween({ top: startY, scale: startScale })
-    .ease("out-circ")
-    .to({ top: endY, scale })
-    .duration(duration);
+  let step = { top: startY, scale: startScale };
 
-  tween.update(o => {
-    container.scrollTop = o.top | 0;
-    content.style.transform = "scale(" + o.scale + ")";
-  });
-  tween.on("end", function() {
-    animate = function() {};
-  });
+  const tween = new TWEEN.Tween(step)
+    .to({ top: endY, scale }, duration)
+    .easing(TWEEN.Easing.Circular.Out)
+    .onUpdate(() => {
+      container.scrollTop = step.top | 0;
+      content.style.transform = "scale(" + step.scale + ")";
+    })
+    .start();
 
-  function animate() {
+  function animate(time) {
     requestAnimationFrame(animate);
-    tween.update();
+    TWEEN.update(time);
   }
-  animate();
+  requestAnimationFrame(animate);
 };
 
 const contentClassName = "scroll-content";
@@ -127,7 +125,7 @@ export class Container extends React.Component {
   }
 
   componentDidUpdate() {
-    this.animate(700);
+    this.animate(400);
   }
   render() {
     const { type, height, children, style, ...rest } = this.props;

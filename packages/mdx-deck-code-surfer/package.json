@@ -8,7 +8,7 @@
   "private": false,
   "scripts": {
     "sample": "mdx-deck sample/deck.mdx",
-    "talk": "mdx-deck sample/talk.mdx"
+    "build:sample": "mdx-deck build sample/deck.mdx"
   },
   "dependencies": {
     "code-surfer": "^0.0.2"

@@ -14,7 +14,6 @@
     "release": "np"
   },
   "dependencies": {
-    "component-tween": "^1.2.0",
     "glamor": "^2.20.40",
     "prism-react-renderer": "^0.1.2"
   },
