@@ -2330,6 +2330,16 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+code-surfer@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/code-surfer/-/code-surfer-0.0.1.tgz#a5ef653541decdb8716d9814ea67b65e1777bdbd"
+  dependencies:
+    component-raf "^1.2.0"
+    component-tween "^1.2.0"
+    glamor "^2.20.40"
+    prismjs "^1.15.0"
+    react "^16.4.2"
+
 collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.4.tgz#ce05cf49e54c3277ae573036a26851ba430a0091"
@@ -7084,6 +7094,10 @@ pretty-format@^23.5.0:
   dependencies:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
+
+prism-react-renderer@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-0.1.2.tgz#4130ede656f860943fc6e37a1506de9c3614d437"
 
 prismjs@^1.15.0, prismjs@^1.8.4, prismjs@~1.15.0:
   version "1.15.0"

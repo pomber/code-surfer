@@ -130,21 +130,22 @@ export class Container extends React.Component {
     this.animate(700);
   }
   render() {
-    const { type, height, children, ...rest } = this.props;
+    const { type, height, children, style, ...rest } = this.props;
     return React.createElement(
       type || "div",
       {
         ref: this.containerRef,
-        style: {
-          height: 0,
-          margin: 0,
-          // background: "#222",
-          // padding: this.props.height / 2 + "px 0",
-          overflow: "hidden",
-          textAlign: "center",
-          position: "relative"
-          // color: "#fafafa"
-        },
+        style: Object.assign(
+          {},
+          {
+            height: 0,
+            margin: 0,
+            overflow: "hidden",
+            textAlign: "center",
+            position: "relative"
+          },
+          style
+        ),
         ...rest
       },
       <div style={{ position: "relative" }}>{children}</div>
@@ -154,12 +155,16 @@ export class Container extends React.Component {
 
 export class Content extends React.Component {
   render() {
-    const { type, children, className, ...rest } = this.props;
+    const { type, children, style, className, ...rest } = this.props;
     return React.createElement(
       type || "div",
       {
         className: contentClassName + " " + className,
-        style: { display: "inline-block", textAlign: "left", width: "100%" },
+        style: Object.assign(
+          {},
+          { display: "inline-block", textAlign: "left", width: "100%" },
+          style
+        ),
         ...rest
       },
       children

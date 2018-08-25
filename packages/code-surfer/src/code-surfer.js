@@ -71,7 +71,7 @@ const CodeSurfer = ({ code, step, showNumbers }) => {
     }
   });
   return (
-    <Scroller.Container type="pre" height={500}>
+    <Scroller.Container type="pre">
       <Scroller.Content type="code" className={tokenOpacity}>
         {hightlightLines(code).map((line, index) => (
           <LineOfCode
