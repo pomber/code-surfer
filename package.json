@@ -3,5 +3,8 @@
   "license": "MIT",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "build:sample": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer build:sample "
+  }
 }
