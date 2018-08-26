@@ -10,8 +10,7 @@
     "build": "babel ./src -d ./dist --ignore test.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "release": "np"
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "glamor": "^2.20.40",
@@ -29,7 +28,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "jest": "^23.5.0",
-    "np": "^3.0.4",
     "raw-loader": "^0.5.1",
     "react-dom": "^16.4.2"
   }
