@@ -12,7 +12,7 @@
     "build:sample": "mdx-deck build sample/deck.mdx"
   },
   "dependencies": {
-    "code-surfer": "^0.0.2"
+    "code-surfer": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
