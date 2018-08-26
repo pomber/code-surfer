@@ -14,7 +14,7 @@ React component for scrolling, zooming and highlighting code.
 <div><a href="https://mdx-deck-code-surfer.netlify.com/">(demo)</a></div>
 </div>
 
-Add the dependency (and `raw-loader` if you want to load the code form a file):
+Add the dependency (and `raw-loader` if you want to load the code from a file):
 
 ```bash
 $ yarn add --dev mdx-deck-code-surfer raw-loader
