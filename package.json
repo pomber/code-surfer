@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "license": "MIT",
   "author": "pomber",
-  "repository": "pomber/code-surfer",
+  "repository": "https://github.com/pomber/code-surfer",
   "workspaces": [
     "packages/*"
   ],

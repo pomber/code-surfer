@@ -2,7 +2,7 @@
   "name": "mdx-deck-code-surfer",
   "version": "0.1.1",
   "main": "dist/index.js",
-  "repository": "pomber/code-surfer",
+  "repository": "https://github.com/pomber/code-surfer",
   "author": "pomber",
   "license": "MIT",
   "private": false,
