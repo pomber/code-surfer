@@ -14,28 +14,33 @@ React component for scrolling, zooming and highlighting code.
 <div><a href="https://mdx-deck-code-surfer.netlify.com/">(demo)</a></div>
 </div>
 
-Add the dependency:
+Add the dependency (and `raw-loader` if you want to load the code form a file):
 
 ```bash
-$ yarn add mdx-deck-code-surfer
+$ yarn add --dev mdx-deck-code-surfer raw-loader
 ```
 
 And then use it from your `.mdx`:
 
-```
-import { CodeSurfer } from "mdx-deck-code-surfer";
+```mdx
+---
+
+import { CodeSurfer } from "mdx-deck-code-surfer"
 
 <CodeSurfer
   title="Some Title"
   notes="Start with this note"
-  code={require("raw-loader!./my-snippet.jsx")}
-  showNumbers={true}
+  code={require("!raw-loader!./my-snippet.js")}
+  showNumbers={false}
+  dark={false}
   steps={[
     { lines: [6], notes: "Note for the first step" },
     { range: [5, 9] },
     { tokens: { 9: [3, 4, 5] }, notes: "Note for the third step" }
   ]}
 />
+
+---
 ```
 
 ## Related / Credits
