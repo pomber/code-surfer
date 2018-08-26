@@ -11,7 +11,7 @@
     "token",
     "prism"
   ],
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "dist/code-surfer.js",
   "author": "pomber",
   "license": "MIT",
