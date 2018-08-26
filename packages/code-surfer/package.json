@@ -1,5 +1,16 @@
 {
   "name": "code-surfer",
+  "description": "React component for scrolling, zooming and highlighting code.",
+  "keywords": [
+    "mdx",
+    "mdx-deck",
+    "slides",
+    "react",
+    "code",
+    "highlight",
+    "token",
+    "prism"
+  ],
   "version": "0.0.2",
   "main": "dist/code-surfer.js",
   "author": "pomber",
