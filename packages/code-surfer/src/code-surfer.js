@@ -15,7 +15,7 @@ const unselectedRules = css({
   transition: "opacity 300ms"
 });
 
-const CodeSurfer = ({ code, step, lang, showNumbers, dark }) => {
+const CodeSurfer = ({ code, step, lang, showNumbers, dark, theme }) => {
   const tokensPerLine = getTokensPerLine(step);
   const isSelected = (lineIndex, tokenIndex) =>
     tokensPerLine[lineIndex + 1] !== undefined &&
@@ -26,7 +26,7 @@ const CodeSurfer = ({ code, step, lang, showNumbers, dark }) => {
       {...defaultProps}
       code={code}
       language={lang || "jsx"}
-      theme={dark ? darkTheme : lightTheme}
+      theme={theme !== undefined ? theme : dark ? darkTheme : lightTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <Scroller.Container
