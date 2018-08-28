@@ -9,7 +9,8 @@
     "code",
     "highlight",
     "token",
-    "prism"
+    "prism",
+    "ractjs"
   ],
   "version": "0.1.3",
   "main": "dist/code-surfer.js",
