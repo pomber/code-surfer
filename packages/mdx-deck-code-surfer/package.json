@@ -1,6 +1,6 @@
 {
   "name": "mdx-deck-code-surfer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/index.js",
   "repository": "https://github.com/pomber/code-surfer",
   "author": "pomber",
