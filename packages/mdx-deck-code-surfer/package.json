@@ -13,7 +13,7 @@
     "build:theming": "mdx-deck build docs/theming.mdx"
   },
   "dependencies": {
-    "code-surfer": "^0.1.2"
+    "code-surfer": "^0.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
