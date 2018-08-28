@@ -43,6 +43,9 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 ---
 ```
 
+More options:
+- [Theming](https://mdx-deck-code-surfer-theming.netlify.com/)
+
 ## Related / Credits
 
 - [mdx-deck](https://github.com/jxnblk/mdx-deck)
