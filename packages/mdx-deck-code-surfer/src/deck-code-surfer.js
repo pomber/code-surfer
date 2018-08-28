@@ -36,7 +36,7 @@ export default withDeck(
       };
 
       render() {
-        const { code, steps, title, notes, ...rest } = this.props;
+        const { code, steps, title, notes, theme, ...rest } = this.props;
         const { step, mode } = this.props.deck;
 
         const stepZero = {
@@ -45,7 +45,7 @@ export default withDeck(
         };
 
         const currentStep = step < 0 ? stepZero : steps[step] || steps[0];
-        const isOverview = mode === modes.overview;
+        // const isOverview = mode === modes.overview;
 
         const stepTitle = currentStep.title || title;
         const anyNotes = notes || steps.some(s => s.notes);
@@ -54,18 +54,37 @@ export default withDeck(
           <div
             style={{
               height: "100vh",
+              width: "100vw",
+              background: theme && theme.plain.backgroundColor,
+              color: theme && theme.plain.color,
               display: "flex",
-              flexDirection: "column"
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            {stepTitle && <h1>{stepTitle}</h1>}
-            <div style={{ flex: 1, overflow: "hidden" }} key="code">
-              <CodeSurfer code={code} step={currentStep} {...rest} />
+            <div
+              style={{
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              {stepTitle && <h1>{stepTitle}</h1>}
+              <div style={{ flex: 1, overflow: "hidden" }} key="code">
+                <CodeSurfer
+                  code={code}
+                  step={currentStep}
+                  theme={theme}
+                  {...rest}
+                />
+              </div>
+              {anyNotes && (
+                <p style={{ height: "50px" }}>
+                  {currentStep.notes || "\u00A0"}
+                </p>
+              )}
+              <div style={{ height: "35px" }} />
             </div>
-            {anyNotes && (
-              <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
-            )}
-            <div style={{ height: "35px" }} />
           </div>
         );
       }

@@ -10,7 +10,7 @@ import { CodeSurfer } from "../src/index";
 <CodeSurfer
   title="Lines"
   notes="Use ⬆️ and ⬇️ keys"
-  code={require("raw-loader!./snippets/1.mdxx")}
+  code={require("!raw-loader!./snippets/1.mdx")}
   steps={[
     { lines: [6], notes: "Highlight a single line ⬇️" },
     { lines: [5, 7, 8], notes: "... or multiple lines ➡️" }
@@ -22,7 +22,7 @@ import { CodeSurfer } from "../src/index";
 <CodeSurfer
   title="Range and ranges"
   notes="Sometime is easier to use ranges ⬇️"
-  code={require("raw-loader!./snippets/2.mdxx")}
+  code={require("!raw-loader!./snippets/2.mdx")}
   steps={[
     { range: [2, 4], notes: "From line 2 to 4 ⬇️" },
     { ranges: [[2, 3], [6, 11]], notes: "2, 3 and 6 to 10 ⬇️" },
@@ -35,7 +35,7 @@ import { CodeSurfer } from "../src/index";
 <CodeSurfer
   title="Highlight Tokens"
   notes="⬇️"
-  code={require("raw-loader!./snippets/3.mdxx")}
+  code={require("!raw-loader!./snippets/3.mdx")}
   steps={[
     { lines: [6], notes: "Instead of the full line ⬇️" },
     { tokens: { 8: [9, 12, 15] }, notes: "... select some tokens ➡️" }
@@ -48,7 +48,7 @@ import { CodeSurfer } from "../src/index";
   title="Line Numbers"
   notes="Show line numbers ➡️"
   showNumbers
-  code={require("raw-loader!./snippets/4.mdxx")}
+  code={require("!raw-loader!./snippets/4.mdx")}
 />
 
 ---
@@ -56,7 +56,7 @@ import { CodeSurfer } from "../src/index";
 <CodeSurfer
   title="Scale and Scroll"
   notes="Long snippets are scaled ⬇️"
-  code={require("raw-loader!./snippets/5.jsx")}
+  code={require("!raw-loader!./snippets/5.jsx")}
   steps={[
     { range: [1, 3], notes: "⬇️" },
     { range: [5, 13], notes: "⬇️" },
@@ -75,7 +75,7 @@ import { CodeSurfer } from "../src/index";
 ---
 
 <CodeSurfer
-  code={require("raw-loader!./snippets/5.jsx")}
+  code={require("!raw-loader!./snippets/5.jsx")}
   steps={[
     { range: [1, 3] },
     { range: [5, 13] },
@@ -90,4 +90,4 @@ import { CodeSurfer } from "../src/index";
 
 ### [github.com/pomber/code-surfer](https://github.com/pomber/code-surfer)
 
-[(demo source)](https://github.com/pomber/code-surfer/blob/master/packages/mdx-deck-code-surfer/sample/deck.mdx)
+[(demo source)](https://github.com/pomber/code-surfer/blob/master/packages/mdx-deck-code-surfer/docs/sample.mdx)
