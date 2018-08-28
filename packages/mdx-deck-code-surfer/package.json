@@ -8,11 +8,12 @@
   "private": false,
   "scripts": {
     "build": "babel ./src -d ./dist --ignore test.js",
-    "sample": "mdx-deck sample/deck.mdx",
-    "build:sample": "mdx-deck build sample/deck.mdx"
+    "sample": "mdx-deck docs/sample.mdx",
+    "build:sample": "mdx-deck build docs/sample.mdx",
+    "build:theming": "mdx-deck build docs/theming.mdx"
   },
   "dependencies": {
-    "code-surfer": "^0.1.0"
+    "code-surfer": "^0.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
