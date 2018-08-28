@@ -22,7 +22,7 @@ $ yarn add --dev mdx-deck-code-surfer raw-loader
 
 And then use it from your `.mdx`:
 
-```mdx
+```jsx
 ---
 
 import { CodeSurfer } from "mdx-deck-code-surfer"
