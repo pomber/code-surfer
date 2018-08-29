@@ -22,7 +22,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "raw-loader": "^0.5.1",
-    "mdx-deck": "mdx-deck@alpha",
+    "mdx-deck": ">=1.7.0",
     "react": "^16.4.2"
   },
   "peerDependencies": {
