@@ -1,93 +1,72 @@
 import CodeSurfer from "code-surfer";
 import React from "react";
-import { modes, incStep, decStep } from "mdx-deck";
-import { withDeck } from "mdx-deck/dist/context";
-import { withSlide } from "mdx-deck/dist/Slide";
+import { withDeck, updaters } from "mdx-deck";
 
 export default withDeck(
-  withSlide(
-    class extends React.Component {
-      componentDidMount() {
-        document.body.addEventListener("keydown", this.handleKeyDown);
-      }
+  class InnerCodeSurfer extends React.Component {
+    constructor(props) {
+      super(props);
+      const { update, index } = props.deck;
+      const steps = props.steps ? props.steps.length : 0;
+      update(updaters.setSteps(index, steps));
+    }
 
-      componentWillUnmount() {
-        document.body.removeEventListener("keydown", this.handleKeyDown);
-      }
+    shouldComponentUpdate(nextProps) {
+      return nextProps.deck.active;
+    }
 
-      shouldComponentUpdate() {
-        return this.props.deck.index === this.props.slide.index;
-      }
+    render() {
+      const { code, steps, title, notes, theme, ...rest } = this.props;
+      const { step } = this.props.deck;
 
-      handleKeyDown = e => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        if (this.props.deck.index !== this.props.slide.index) return;
-        const { update } = this.props.deck;
-        switch (e.key) {
-          case "ArrowDown":
-            e.preventDefault();
-            update(incStep(this.props.steps || []));
-            break;
-          case "ArrowUp":
-            e.preventDefault();
-            update(decStep());
-            break;
-        }
+      const stepZero = {
+        range: [0, code.split("\n").length],
+        notes
       };
 
-      render() {
-        const { code, steps, title, notes, theme, ...rest } = this.props;
-        const { step, mode } = this.props.deck;
+      const currentStep =
+        !steps || step < 1 ? stepZero : steps[step - 1] || steps[0];
+      // console.log(title);
+      // console.log("step:", step);
 
-        const stepZero = {
-          range: [0, code.split("\n").length],
-          notes
-        };
+      const stepTitle = currentStep.title || title;
+      const anyNotes = notes || steps.some(s => s.notes);
 
-        const currentStep = step < 0 ? stepZero : steps[step] || steps[0];
-        // const isOverview = mode === modes.overview;
-
-        const stepTitle = currentStep.title || title;
-        const anyNotes = notes || steps.some(s => s.notes);
-
-        return (
+      return (
+        <div
+          style={{
+            height: "100vh",
+            width: "100vw",
+            background: theme && theme.plain.backgroundColor,
+            color: theme && theme.plain.color,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
           <div
             style={{
               height: "100vh",
-              width: "100vw",
-              background: theme && theme.plain.backgroundColor,
-              color: theme && theme.plain.color,
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
+              flexDirection: "column"
             }}
           >
-            <div
-              style={{
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
-              {stepTitle && <h1>{stepTitle}</h1>}
-              <div style={{ flex: 1, overflow: "hidden" }} key="code">
-                <CodeSurfer
-                  code={code}
-                  step={currentStep}
-                  theme={theme}
-                  {...rest}
-                />
-              </div>
-              {anyNotes && (
-                <p style={{ height: "50px" }}>
-                  {currentStep.notes || "\u00A0"}
-                </p>
-              )}
-              <div style={{ height: "35px" }} />
+            {stepTitle && <h1>{stepTitle}</h1>}
+            <div style={{ flex: 1, overflow: "hidden" }} key="code">
+              <CodeSurfer
+                code={code}
+                step={currentStep}
+                theme={theme}
+                {...rest}
+              />
             </div>
+            {anyNotes && (
+              <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
+            )}
+            <div style={{ height: "35px" }} />
           </div>
-        );
-      }
+        </div>
+      );
     }
-  )
+  }
 );
