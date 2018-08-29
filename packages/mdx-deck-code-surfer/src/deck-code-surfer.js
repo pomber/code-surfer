@@ -1,17 +1,14 @@
 import CodeSurfer from "code-surfer";
 import React from "react";
-import { withDeck, withSlide } from "mdx-deck";
-import { setSteps } from "mdx-deck/dist/updaters";
-// import { modes } from "mdx-deck/dist/constants";
+import { withDeck, updaters } from "mdx-deck";
 
 export default withDeck(
   class InnerCodeSurfer extends React.Component {
     constructor(props) {
-      console.log("ctr");
       super(props);
       const { update, index } = props.deck;
       const steps = props.steps ? props.steps.length : 0;
-      update(setSteps(index, steps));
+      update(updaters.setSteps(index, steps));
     }
 
     shouldComponentUpdate(nextProps) {
@@ -20,7 +17,7 @@ export default withDeck(
 
     render() {
       const { code, steps, title, notes, theme, ...rest } = this.props;
-      const { step, mode } = this.props.deck;
+      const { step } = this.props.deck;
 
       const stepZero = {
         range: [0, code.split("\n").length],
@@ -29,9 +26,8 @@ export default withDeck(
 
       const currentStep =
         !steps || step < 1 ? stepZero : steps[step - 1] || steps[0];
-      // const isOverview = mode === modes.overview;
-      console.log(title);
-      console.log("step:", step);
+      // console.log(title);
+      // console.log("step:", step);
 
       const stepTitle = currentStep.title || title;
       const anyNotes = notes || steps.some(s => s.notes);
