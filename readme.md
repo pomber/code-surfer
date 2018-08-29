@@ -31,6 +31,7 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
   title="Some Title"
   notes="Start with this note"
   code={require("!raw-loader!./my-snippet.js")}
+  lang="javascript"
   showNumbers={false}
   dark={false}
   steps={[
@@ -42,6 +43,8 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 ---
 ```
+
+A list of available languages can be found [here](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) and it will default to `jsx`
 
 More options:
 - [Theming](https://mdx-deck-code-surfer-theming.netlify.com/)
