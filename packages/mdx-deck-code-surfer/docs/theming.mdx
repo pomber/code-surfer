@@ -81,6 +81,30 @@ import dracula from "prism-react-renderer/themes/dracula"
 
 ---
 
+import shadesOfPurple from "prism-react-renderer/themes/shadesOfPurple"
+
+<CodeSurfer
+  title="Shades of Purlple"
+  theme={shadesOfPurple}
+  notes="⬇️"
+  code={require("!raw-loader!./snippets/shades-of-purple.mdx")}
+  steps={[{ lines:[1, 5] }]}
+/>
+
+---
+
+import vsDark from "prism-react-renderer/themes/vsDark"
+
+<CodeSurfer
+  title="VS Dark"
+  theme={vsDark}
+  notes="⬇️"
+  code={require("!raw-loader!./snippets/vs-dark.mdx")}
+  steps={[{ lines:[1, 5] }]}
+/>
+
+---
+
 ### [github.com/pomber/code-surfer](https://github.com/pomber/code-surfer)
 
 [(demo source)](https://github.com/pomber/code-surfer/blob/master/packages/mdx-deck-code-surfer/docs/theming.mdx)
