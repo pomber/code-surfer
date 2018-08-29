@@ -2,7 +2,7 @@ import CodeSurfer from "code-surfer";
 import React from "react";
 import { withDeck, withSlide } from "mdx-deck";
 import { setSteps } from "mdx-deck/dist/updaters";
-import { modes } from "mdx-deck/dist/constants";
+// import { modes } from "mdx-deck/dist/constants";
 
 export default withDeck(
   class InnerCodeSurfer extends React.Component {
@@ -14,8 +14,8 @@ export default withDeck(
       update(setSteps(index, steps));
     }
 
-    shouldComponentUpdate() {
-      return this.props.deck.active;
+    shouldComponentUpdate(nextProps) {
+      return nextProps.deck.active;
     }
 
     render() {
