@@ -1,3 +1,4 @@
+// TODO: refactor this!
 const mapRange = range => {
   if (!range) return {};
   const newTokens = {};
@@ -7,26 +8,20 @@ const mapRange = range => {
   }
   return newTokens;
 };
-const mapLines = lines => {
-  const newTokens = {};
-  lines.forEach(line => (newTokens[line] = null));
-  return newTokens;
-};
+
+const mapLines = lines =>
+  lines.reduce((obj, line) => ({ ...obj, [line]: null }), {});
 
 export const getTokensPerLine = ({
   lines = [],
   range,
   ranges = [],
   tokens
-}) => {
-  const newTokens = {};
-
-  Object.assign(newTokens, mapLines(lines));
-  Object.assign(newTokens, mapRange(range));
-  Object.assign(newTokens, ...ranges.map(mapRange));
-  Object.assign(newTokens, tokens);
-
-  return newTokens;
-};
+}) => ({
+  ...mapLines(lines),
+  ...mapRange(range),
+  ...Object.assign({}, ...ranges.map(mapRange)),
+  ...tokens
+});
 
 export default getTokensPerLine;
