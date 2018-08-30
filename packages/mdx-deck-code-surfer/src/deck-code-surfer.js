@@ -1,72 +1,88 @@
 import CodeSurfer from "code-surfer";
 import React from "react";
 import { withDeck, updaters } from "mdx-deck";
+import { withTheme } from "styled-components";
 
-export default withDeck(
-  class InnerCodeSurfer extends React.Component {
-    constructor(props) {
-      super(props);
-      const { update, index } = props.deck;
-      const steps = props.steps ? props.steps.length : 0;
-      update(updaters.setSteps(index, steps));
-    }
+class InnerCodeSurfer extends React.Component {
+  constructor(props) {
+    super(props);
+    const { update, index } = props.deck;
+    const steps = props.steps ? props.steps.length : 0;
+    update(updaters.setSteps(index, steps));
+  }
 
-    shouldComponentUpdate(nextProps) {
-      return nextProps.deck.active;
-    }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.deck.active;
+  }
 
-    render() {
-      const { code, steps, title, notes, theme, ...rest } = this.props;
-      const { step } = this.props.deck;
+  render() {
+    const {
+      code,
+      steps,
+      title,
+      notes,
+      theme,
+      prismTheme,
+      ...rest
+    } = this.props;
 
-      const stepZero = {
-        range: [0, code.split("\n").length],
-        notes
-      };
+    const { step } = this.props.deck;
+    const mdxDeckTheme = theme;
 
-      const currentStep =
-        !steps || step < 1 ? stepZero : steps[step - 1] || steps[0];
-      // console.log(title);
-      // console.log("step:", step);
+    const stepZero = {
+      range: [0, code.split("\n").length],
+      notes
+    };
 
-      const stepTitle = currentStep.title || title;
-      const anyNotes = notes || steps.some(s => s.notes);
+    const currentStep =
+      !steps || step < 1 ? stepZero : steps[step - 1] || steps[0];
+    // console.log(title);
+    // console.log("step:", step);
 
-      return (
+    const stepTitle = currentStep.title || title;
+    const anyNotes = notes || steps.some(s => s.notes);
+
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100vw",
+          background: prismTheme && prismTheme.plain.backgroundColor,
+          color: prismTheme && prismTheme.plain.color,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
         <div
           style={{
             height: "100vh",
-            width: "100vw",
-            background: theme && theme.plain.backgroundColor,
-            color: theme && theme.plain.color,
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            flexDirection: "column"
           }}
         >
-          <div
-            style={{
-              height: "100vh",
-              display: "flex",
-              flexDirection: "column"
-            }}
-          >
-            {stepTitle && <h1>{stepTitle}</h1>}
-            <div style={{ flex: 1, overflow: "hidden" }} key="code">
-              <CodeSurfer
-                code={code}
-                step={currentStep}
-                theme={theme}
-                {...rest}
-              />
-            </div>
-            {anyNotes && (
-              <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
-            )}
-            <div style={{ height: "35px" }} />
+          {stepTitle && <h1>{stepTitle}</h1>}
+          <div style={{ flex: 1, overflow: "hidden" }} key="code">
+            <CodeSurfer
+              {...rest}
+              code={code}
+              step={currentStep}
+              theme={console.log(prismTheme) || prismTheme}
+              monospace={mdxDeckTheme && mdxDeckTheme.monospace}
+            />
           </div>
+          {anyNotes && (
+            <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
+          )}
+          <div style={{ height: "35px" }} />
         </div>
-      );
-    }
+      </div>
+    );
   }
+}
+
+// Things I need to do to avoid props name collisions
+const EnhancedCodeSurfer = withDeck(withTheme(InnerCodeSurfer));
+export default ({ theme, ...rest }) => (
+  <EnhancedCodeSurfer {...rest} prismTheme={theme} />
 );

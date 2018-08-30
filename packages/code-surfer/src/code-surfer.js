@@ -15,7 +15,15 @@ const unselectedRules = css({
   transition: "opacity 300ms"
 });
 
-const CodeSurfer = ({ code, step, lang, showNumbers, dark, theme }) => {
+const CodeSurfer = ({
+  code,
+  step,
+  lang,
+  showNumbers,
+  dark,
+  theme,
+  monospace
+}) => {
   const tokensPerLine = getTokensPerLine(step);
   const isSelected = (lineIndex, tokenIndex) =>
     tokensPerLine[lineIndex + 1] !== undefined &&
@@ -32,9 +40,12 @@ const CodeSurfer = ({ code, step, lang, showNumbers, dark, theme }) => {
         <Scroller.Container
           type="pre"
           className={className}
-          style={Object.assign({}, style, { background: null })}
+          style={Object.assign({}, style, {
+            background: null,
+            fontFamily: monospace
+          })}
         >
-          <Scroller.Content type="code">
+          <Scroller.Content type="code" style={{ fontFamily: monospace }}>
             {tokens.map((line, i) => (
               <div {...getLineProps({ line, key: i })}>
                 {showNumbers && (
