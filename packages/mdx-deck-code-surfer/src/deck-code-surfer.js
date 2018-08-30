@@ -40,7 +40,7 @@ class InnerCodeSurfer extends React.Component {
     // console.log("step:", step);
 
     const stepTitle = currentStep.title || title;
-    const anyNotes = notes || steps.some(s => s.notes);
+    const anyNotes = notes || (steps && steps.some(s => s.notes));
 
     return (
       <div
@@ -58,11 +58,20 @@ class InnerCodeSurfer extends React.Component {
           style={{
             height: "100vh",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            justifyContent: "center"
           }}
         >
           {stepTitle && <h1>{stepTitle}</h1>}
-          <div style={{ flex: 1, overflow: "hidden" }} key="code">
+          <div
+            style={{
+              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+              overflow: "hidden"
+            }}
+            key="code"
+          >
             <CodeSurfer
               {...rest}
               code={code}
