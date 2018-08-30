@@ -11,6 +11,8 @@
     "status": "oao status",
     "build": "oao all yarn build",
     "build:sample": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer build:sample ",
+    "serve:sample": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer sample ",
+    "serve:theming": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer theming ",
     "build:theming": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer build:theming ",
     "release": "npx oao publish"
   },
