@@ -3,6 +3,16 @@ import React from "react";
 import { withDeck, updaters } from "mdx-deck";
 import { withTheme } from "styled-components";
 
+const Notes = ({ notes }) =>
+  typeof notes === "string" ? (
+    <p style={{ height: "50px" }}>{notes || "\u00A0"}</p>
+  ) : (
+    notes()
+  );
+
+const Title = ({ title }) =>
+  typeof title === "string" ? <h1>{title}</h1> : title();
+
 class InnerCodeSurfer extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +72,7 @@ class InnerCodeSurfer extends React.Component {
             justifyContent: "center"
           }}
         >
-          {stepTitle && <h1>{stepTitle}</h1>}
+          {stepTitle && <Title title={stepTitle} />}
           <div
             style={{
               flexGrow: 1,
@@ -80,9 +90,7 @@ class InnerCodeSurfer extends React.Component {
               monospace={mdxDeckTheme && mdxDeckTheme.monospace}
             />
           </div>
-          {anyNotes && (
-            <p style={{ height: "50px" }}>{currentStep.notes || "\u00A0"}</p>
-          )}
+          {anyNotes && <Notes notes={currentStep.notes} />}
           <div style={{ height: "35px" }} />
         </div>
       </div>
