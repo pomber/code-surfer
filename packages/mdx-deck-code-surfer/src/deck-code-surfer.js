@@ -67,7 +67,7 @@ class InnerCodeSurfer extends React.Component {
               {...rest}
               code={code}
               step={currentStep}
-              theme={console.log(prismTheme) || prismTheme}
+              theme={prismTheme}
               monospace={mdxDeckTheme && mdxDeckTheme.monospace}
             />
           </div>
