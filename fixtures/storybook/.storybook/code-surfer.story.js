@@ -1,13 +1,13 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import CodeSurfer from "../src/code-surfer";
+import CodeSurfer from "code-surfer";
 
-const code = require("raw-loader!./snippets/jsx.jsxx");
+const code = require("!raw-loader!./snippets/jsx.jsxx");
 
 storiesOf("CodeSurfer", module)
   .add("range", () => (
     <div style={{ height: "100vh" }}>
-      <CodeSurfer code={code} step={{ range: [2, 7] }} showNumbers />
+      <CodeSurfer code={code} step={{ range: [5, 7] }} showNumbers />
     </div>
   ))
   .add("lines", () => (

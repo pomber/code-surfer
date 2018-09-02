@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import * as Scroller from "../src/scroller";
+import * as Scroller from "code-surfer/dist/scroller";
 
 const ScrollerDemo = ({ n, selected, height }) => {
   const elements = [...Array(n).keys()];

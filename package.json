@@ -1,22 +1,20 @@
 {
+  "name": "code-surfer",
   "private": true,
   "version": "0.4.0",
   "license": "MIT",
   "author": "pomber",
   "repository": "https://github.com/pomber/code-surfer",
   "workspaces": [
-    "packages/*"
+    "{packages,fixtures}/*"
   ],
   "scripts": {
-    "status": "oao status",
-    "build": "oao all yarn build",
-    "build:sample": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer build:sample ",
-    "serve:sample": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer sample ",
-    "serve:theming": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer theming ",
-    "build:theming": "yarn --cwd packages/code-surfer build && yarn --cwd packages/mdx-deck-code-surfer build:theming ",
-    "release": "npx oao publish"
+    "build:watch": "lerna exec yarn build:watch --no-private --parallel",
+    "start": "lerna exec yarn start --scope",
+    "start:fixture": "run-p build:watch \"start -- {1}\" "
   },
   "devDependencies": {
-    "oao": "^1.5.1"
+    "lerna": "^3.2.1",
+    "npm-run-all": "^4.1.3"
   }
 }
