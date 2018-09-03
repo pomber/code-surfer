@@ -3,3 +3,8 @@ cache: yarn
 node_js:
   - 8
   - node
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
