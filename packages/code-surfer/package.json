@@ -1,8 +1,11 @@
 {
   "name": "code-surfer",
   "version": "0.3.0",
-  "main": "dist/code-surfer.js",
   "private": false,
+  "main": "dist/code-surfer.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "babel ./src -d ./dist --ignore test.js",
     "build:watch": "yarn build --watch",

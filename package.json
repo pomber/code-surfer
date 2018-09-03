@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "lerna run build",
+    "build:packages": "lerna run build --no-private",
     "build:watch": "lerna exec yarn build:watch --no-private --parallel",
     "start": "lerna exec yarn start --scope",
     "start:fixture": "run-p build:watch \"start {1}-fixture\" --",
