@@ -1,26 +1,11 @@
 {
   "name": "code-surfer",
-  "description": "React component for scrolling, zooming and highlighting code.",
-  "keywords": [
-    "mdx",
-    "mdx-deck",
-    "slides",
-    "react",
-    "code",
-    "highlight",
-    "token",
-    "prism",
-    "ractjs"
-  ],
   "version": "0.3.0",
   "main": "dist/code-surfer.js",
-  "author": "pomber",
-  "license": "MIT",
-  "repository": "https://github.com/pomber/code-surfer",
   "private": false,
   "scripts": {
     "build": "babel ./src -d ./dist --ignore test.js",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build:watch": "yarn build --watch",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -32,15 +17,27 @@
     "react": ">=15.0.0"
   },
   "devDependencies": {
-    "@storybook/react": "^3.4.10",
-    "@types/storybook__react": "^3.0.9",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "jest": "^23.5.0",
-    "raw-loader": "^0.5.1",
-    "react-dom": "^16.4.2"
-  }
+    "react": "^16.4.2"
+  },
+  "author": "pomber",
+  "license": "MIT",
+  "repository": "https://github.com/pomber/code-surfer",
+  "description": "React component for scrolling, zooming and highlighting code.",
+  "keywords": [
+    "mdx",
+    "mdx-deck",
+    "slides",
+    "react",
+    "code",
+    "highlight",
+    "token",
+    "prism",
+    "ractjs"
+  ]
 }

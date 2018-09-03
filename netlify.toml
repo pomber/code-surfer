@@ -1,0 +1,4 @@
+[build]
+  base    = ""
+  command = "yarn publish:website"
+  publish = "website/dist/"

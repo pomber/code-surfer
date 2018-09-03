@@ -4,7 +4,7 @@ import { withDeck, updaters } from "mdx-deck";
 import { withTheme } from "styled-components";
 
 const Notes = ({ notes }) =>
-  typeof notes === "string" ? (
+  !notes || typeof notes === "string" ? (
     <p style={{ height: "50px" }}>{notes || "\u00A0"}</p>
   ) : (
     notes()

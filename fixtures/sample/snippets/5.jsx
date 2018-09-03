@@ -27,7 +27,8 @@ const CarouselInner = styled.div(
     }
   },
   props => ({
-    transform: `translateX(${-100 * props.index}%)`
+    transform: `translateX(${-100 *
+      props.index}%)`
   })
 )
 

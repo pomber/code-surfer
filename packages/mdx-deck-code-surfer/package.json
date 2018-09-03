@@ -8,10 +8,7 @@
   "private": false,
   "scripts": {
     "build": "babel ./src -d ./dist --ignore test.js",
-    "sample": "mdx-deck docs/sample.mdx",
-    "theming": "mdx-deck docs/theming.mdx",
-    "build:sample": "mdx-deck build docs/sample.mdx",
-    "build:theming": "mdx-deck build docs/theming.mdx",
+    "build:watch": "yarn build --watch",
     "format": "prettier --write '**/*.{js,css,md}'"
   },
   "dependencies": {
@@ -23,9 +20,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "mdx-deck": ">=1.7.0",
-    "prettier": "^1.14.2",
-    "raw-loader": "^0.5.1",
+    "mdx-deck": "^1.7.0",
     "react": "^16.4.2"
   },
   "peerDependencies": {
