@@ -1,7 +1,6 @@
 # Code Surfer <🏄/>
 
-![](https://flat.badgen.net/npm/v/code-surfer)
-[![Contribute with Forkbox](<https://flat.badgen.net/badge/PRs/ForkBox%20(experimental)/222>)](https://forkbox.co/f/pomber/code-surfer)
+![](https://flat.badgen.net/npm/v/code-surfer) [![Contribute with Forkbox](<https://flat.badgen.net/badge/PRs/ForkBox%20(experimental)/222>)](https://forkbox.co/f/pomber/code-surfer)
 
 React component for scrolling, zooming and highlighting code.
 
@@ -47,6 +46,7 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 A list of available languages can be found [here](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) and it will default to `jsx`
 
 More options:
+
 - [Theming](https://mdx-deck-code-surfer-theming.netlify.com/)
 
 ## Related / Credits

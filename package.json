@@ -13,12 +13,15 @@
     "build:watch": "lerna exec yarn build:watch --no-private --parallel",
     "start": "lerna exec yarn start --scope",
     "start:fixture": "run-p build:watch \"start {1}\" --",
-    "test": "lerna run test",
-    "format": "prettier --write '**/*.{js,jsx,css,md,mdx}'"
+    "format": "prettier --write '**/*.{js,jsx,css,md}'",
+    "format:check": "prettier-check '**/*.{js,jsx,css,md}'",
+    "test": "run-p format:check test:all",
+    "test:all": "lerna run test"
   },
   "devDependencies": {
     "lerna": "^3.2.1",
     "npm-run-all": "^4.1.3",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "prettier-check": "^2.0.0"
   }
 }
