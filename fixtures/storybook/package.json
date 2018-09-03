@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "start-storybook -p 9001 -c .storybook"
+    "build": "build-storybook -c .storybook -o dist",
+    "start": "start-storybook -c .storybook -p 9001"
   },
   "devDependencies": {
     "@storybook/react": "^3.4.10",
