@@ -7,7 +7,7 @@ const code = require("!raw-loader!./snippets/jsx.jsxx");
 storiesOf("CodeSurfer", module)
   .add("range", () => (
     <div style={{ height: "100vh" }}>
-      <CodeSurfer code={code} step={{ range: [5, 7] }} showNumbers />
+      <CodeSurfer code={code} step={{ range: [2, 7] }} showNumbers />
     </div>
   ))
   .add("lines", () => (
