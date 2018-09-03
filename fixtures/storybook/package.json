@@ -1,7 +1,7 @@
 {
   "name": "storybook-fixture",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.4.1",
   "scripts": {
     "build": "build-storybook -c .storybook -o dist",
     "start": "start-storybook -c .storybook -p 9001"
@@ -9,7 +9,7 @@
   "devDependencies": {
     "@storybook/react": "^3.4.10",
     "@types/storybook__react": "^3.0.9",
-    "code-surfer": "^0.3.0",
+    "code-surfer": "^0.4.1",
     "raw-loader": "^0.5.1"
   }
 }

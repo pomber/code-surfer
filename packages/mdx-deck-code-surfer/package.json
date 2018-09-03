@@ -1,6 +1,6 @@
 {
   "name": "mdx-deck-code-surfer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,7 @@
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
-    "code-surfer": "^0.3.0"
+    "code-surfer": "^0.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -23,8 +23,8 @@
     "react": "^16.4.2"
   },
   "peerDependencies": {
-    "react": ">=15.0.0",
     "mdx-deck": ">=1.7.0",
+    "react": ">=15.0.0",
     "styled-components": ">=3.0.0"
   },
   "author": "pomber",
