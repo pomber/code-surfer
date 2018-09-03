@@ -7,10 +7,10 @@ React component for scrolling, zooming and highlighting code.
 ## How to use with [mdx-deck](https://github.com/jxnblk/mdx-deck)
 
 <div align="center">
-<a href="https://mdx-deck-code-surfer.netlify.com/">
+<a href="https://code-surfer.netlify.com/sample/">
 <img alt="sample" src="https://raw.githubusercontent.com/pomber/code-surfer/master/other/sample.gif" />
 </a>
-<div><a href="https://mdx-deck-code-surfer.netlify.com/">(demo)</a></div>
+<div><a href="https://code-surfer.netlify.com/sample/">(demo)</a></div>
 </div>
 
 Add the dependency (and `raw-loader` if you want to load the code from a file):
@@ -47,7 +47,7 @@ A list of available languages can be found [here](https://github.com/FormidableL
 
 More options:
 
-- [Theming](https://mdx-deck-code-surfer-theming.netlify.com/)
+- [Theming](https://code-surfer.netlify.com/theming/)
 
 ## Related / Credits
 
