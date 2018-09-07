@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "babel ./src -d ./dist --ignore test.js",
-    "build:watch": "yarn build --watch",
+    "build:watch": "yarn build --watch --source-maps",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -17,6 +17,7 @@
     "prism-react-renderer": "^0.1.3"
   },
   "peerDependencies": {
+    "prop-types": ">=15.0.0",
     "react": ">=15.0.0"
   },
   "devDependencies": {

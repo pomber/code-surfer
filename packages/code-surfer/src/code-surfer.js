@@ -5,6 +5,7 @@ import lightTheme from "prism-react-renderer/themes/duotoneLight";
 import * as Scroller from "./scroller";
 import { css } from "glamor";
 import getTokensPerLine from "./step-parser";
+import PropTypes from "prop-types";
 
 const selectedRules = css({
   opacity: 1,
@@ -81,6 +82,33 @@ const CodeSurfer = ({
       )}
     </Highlight>
   );
+};
+
+CodeSurfer.propTypes = {
+  /** The code you want to show */
+  code: PropTypes.string.isRequired,
+  /** The lines/tokens to highlight */
+  step: PropTypes.shape({
+    lines: PropTypes.arrayOf(PropTypes.number),
+    range: PropTypes.arrayOf(PropTypes.number),
+    ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+    tokens: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.number))
+  }),
+  /** Any language supported in [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) */
+  lang: PropTypes.string,
+  /** Whether to show line numbers or not */
+  showNumbers: PropTypes.bool,
+  /** If you have a dark background set this prop to true (it will use the default dark theme) */
+  dark: PropTypes.bool,
+  /** Use a theme from react-prism-renderer */
+  theme: PropTypes.object,
+  /** Use your own font-family */
+  monospace: PropTypes.string
+};
+
+CodeSurfer.defaultProps = {
+  lang: "jsx",
+  step: {}
 };
 
 export default CodeSurfer;
