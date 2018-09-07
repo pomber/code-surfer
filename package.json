@@ -6,7 +6,8 @@
   "author": "pomber",
   "repository": "https://github.com/pomber/code-surfer",
   "workspaces": [
-    "{packages,fixtures}/*"
+    "{packages,fixtures}/*",
+    "website"
   ],
   "scripts": {
     "build": "lerna run build",
