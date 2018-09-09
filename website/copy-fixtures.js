@@ -4,16 +4,13 @@ const ncp = require("ncp").ncp;
 ncp.limit = 1;
 
 const fixturesPath = path.resolve(__dirname, "../fixtures");
-const publicPath = path.resolve(__dirname, "./public");
-const distPath = path.resolve(__dirname, "./dist");
-
-copyFolder(publicPath, distPath);
+const destPath = path.resolve(__dirname, "./static");
 
 const fixtures = fs.readdirSync(fixturesPath);
 fixtures.forEach(fixture => {
   copyFolder(
     path.join(fixturesPath, fixture, "dist"),
-    path.join(distPath, fixture)
+    path.join(destPath, fixture)
   );
 });
 

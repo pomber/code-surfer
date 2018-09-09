@@ -10,7 +10,7 @@
     "website"
   ],
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run build --ignore website",
     "build:packages": "lerna run build --no-private",
     "build:watch": "lerna exec yarn build:watch --no-private --parallel",
     "start": "lerna exec yarn start --scope",
@@ -19,7 +19,7 @@
     "format:check": "prettier-check '**/*.{js,jsx,css,md}'",
     "test": "run-p format:check test:all",
     "test:all": "lerna run test",
-    "build:website": "node website/build.js",
+    "build:website": "lerna exec yarn build --scope website",
     "publish:website": "run-s build build:website"
   },
   "devDependencies": {
