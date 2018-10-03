@@ -88,12 +88,15 @@ CodeSurfer.propTypes = {
   /** The code you want to show */
   code: PropTypes.string.isRequired,
   /** The lines/tokens to highlight */
-  step: PropTypes.shape({
-    lines: PropTypes.arrayOf(PropTypes.number),
-    range: PropTypes.arrayOf(PropTypes.number),
-    ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-    tokens: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.number))
-  }),
+  step: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      lines: PropTypes.arrayOf(PropTypes.number),
+      range: PropTypes.arrayOf(PropTypes.number),
+      ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      tokens: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.number))
+    })
+  ]),
   /** Any language supported in [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) */
   lang: PropTypes.string,
   /** Whether to show line numbers or not */
