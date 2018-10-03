@@ -4,7 +4,7 @@ import darkTheme from "prism-react-renderer/themes/duotoneDark";
 import lightTheme from "prism-react-renderer/themes/duotoneLight";
 import * as Scroller from "./scroller";
 import { css } from "glamor";
-import getTokensPerLine from "./step-parser";
+import SelectedTokens from "./step-parser";
 import PropTypes from "prop-types";
 
 const selectedRules = css({
@@ -25,11 +25,8 @@ const CodeSurfer = ({
   theme,
   monospace
 }) => {
-  const tokensPerLine = getTokensPerLine(step);
-  const isSelected = (lineIndex, tokenIndex) =>
-    tokensPerLine[lineIndex + 1] !== undefined &&
-    (tokensPerLine[lineIndex + 1] === null ||
-      tokensPerLine[lineIndex + 1].includes(tokenIndex));
+  const selectedTokens = new SelectedTokens(step);
+
   return (
     <Highlight
       {...defaultProps}
@@ -53,7 +50,7 @@ const CodeSurfer = ({
                   <span
                     className={
                       "token comment " +
-                      (tokensPerLine[i + 1] !== undefined
+                      (selectedTokens.isLineSelected(i)
                         ? selectedRules
                         : unselectedRules)
                     }
@@ -68,8 +65,8 @@ const CodeSurfer = ({
                     {...getTokenProps({
                       token,
                       key,
-                      selected: isSelected(i, key),
-                      className: isSelected(i, key)
+                      selected: selectedTokens.isTokenSelected(i, key),
+                      className: selectedTokens.isTokenSelected(i, key)
                         ? selectedRules
                         : unselectedRules
                     })}

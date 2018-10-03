@@ -45,6 +45,10 @@ const expandString = part => {
 };
 
 const getTokensPerLineFromString = step => {
+  if (step.trim() === "*") {
+    return { all: true };
+  }
+
   const parts = step.split(/,(?![^\[]*\])/g).map(part => {
     const tokensMatch = part.match(/(\d+)\[(.+)\]/);
     if (tokensMatch) {
@@ -60,12 +64,36 @@ const getTokensPerLineFromString = step => {
   return Object.assign({}, ...parts);
 };
 
-const getTokensPerLine = step => {
+export const mapStep = step => {
   if (typeof step === "string") {
     return getTokensPerLineFromString(step);
+  } else if (Object.keys(step).length === 0) {
+    return { all: true };
   } else {
     return getTokensPerLineFromObject(step);
   }
 };
 
-export default getTokensPerLine;
+export default class SelectedTokens {
+  constructor(step) {
+    this.tokensPerLine = mapStep(step);
+  }
+
+  isTokenSelected(lineIndex, tokenIndex) {
+    if (this.tokensPerLine.all) {
+      return true;
+    }
+    return (
+      this.tokensPerLine[lineIndex + 1] !== undefined &&
+      (this.tokensPerLine[lineIndex + 1] === null ||
+        this.tokensPerLine[lineIndex + 1].includes(tokenIndex))
+    );
+  }
+
+  isLineSelected(lineIndex) {
+    if (this.tokensPerLine.all) {
+      return true;
+    }
+    return this.tokensPerLine[lineIndex + 1] !== undefined;
+  }
+}

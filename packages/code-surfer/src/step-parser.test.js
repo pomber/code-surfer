@@ -1,4 +1,4 @@
-import mapStep from "./step-parser";
+import { mapStep } from "./step-parser";
 
 test("map lines", () => {
   const steps = [{ lines: [1, 3] }, { lines: [5], note: "foo" }];
@@ -77,6 +77,22 @@ test("map range tokens syntax", () => {
 test("map complex syntax", () => {
   const step = "1[2, 3,  6:9],   2[3], 5, 6:7";
   const expected = { 1: [2, 3, 6, 7, 8, 9], 2: [3], 5: null, 6: null, 7: null };
+
+  const result = mapStep(step);
+  expect(result).toEqual(expected);
+});
+
+test("map star syntax", () => {
+  const step = "* ";
+  const expected = { all: true };
+
+  const result = mapStep(step);
+  expect(result).toEqual(expected);
+});
+
+test("map empty object", () => {
+  const step = {};
+  const expected = { all: true };
 
   const result = mapStep(step);
   expect(result).toEqual(expected);
