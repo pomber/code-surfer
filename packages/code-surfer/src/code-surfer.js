@@ -4,7 +4,7 @@ import darkTheme from "prism-react-renderer/themes/duotoneDark";
 import lightTheme from "prism-react-renderer/themes/duotoneLight";
 import * as Scroller from "./scroller";
 import { css } from "glamor";
-import getTokensPerLine from "./step-parser";
+import SelectedTokens from "./step-parser";
 import PropTypes from "prop-types";
 
 const selectedRules = css({
@@ -25,11 +25,8 @@ const CodeSurfer = ({
   theme,
   monospace
 }) => {
-  const tokensPerLine = getTokensPerLine(step);
-  const isSelected = (lineIndex, tokenIndex) =>
-    tokensPerLine[lineIndex + 1] !== undefined &&
-    (tokensPerLine[lineIndex + 1] === null ||
-      tokensPerLine[lineIndex + 1].includes(tokenIndex));
+  const selectedTokens = new SelectedTokens(step);
+
   return (
     <Highlight
       {...defaultProps}
@@ -53,7 +50,7 @@ const CodeSurfer = ({
                   <span
                     className={
                       "token comment " +
-                      (tokensPerLine[i + 1] !== undefined
+                      (selectedTokens.isLineSelected(i)
                         ? selectedRules
                         : unselectedRules)
                     }
@@ -68,8 +65,8 @@ const CodeSurfer = ({
                     {...getTokenProps({
                       token,
                       key,
-                      selected: isSelected(i, key),
-                      className: isSelected(i, key)
+                      selected: selectedTokens.isTokenSelected(i, key),
+                      className: selectedTokens.isTokenSelected(i, key)
                         ? selectedRules
                         : unselectedRules
                     })}
@@ -88,12 +85,15 @@ CodeSurfer.propTypes = {
   /** The code you want to show */
   code: PropTypes.string.isRequired,
   /** The lines/tokens to highlight */
-  step: PropTypes.shape({
-    lines: PropTypes.arrayOf(PropTypes.number),
-    range: PropTypes.arrayOf(PropTypes.number),
-    ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-    tokens: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.number))
-  }),
+  step: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      lines: PropTypes.arrayOf(PropTypes.number),
+      range: PropTypes.arrayOf(PropTypes.number),
+      ranges: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+      tokens: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.number))
+    })
+  ]),
   /** Any language supported in [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) */
   lang: PropTypes.string,
   /** Whether to show line numbers or not */

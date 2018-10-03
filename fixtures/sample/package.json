@@ -7,7 +7,7 @@
     "start": "mdx-deck sample.mdx"
   },
   "devDependencies": {
-    "mdx-deck": "^1.7.0",
+    "mdx-deck": "^1.7.7",
     "mdx-deck-code-surfer": "^0.4.1",
     "raw-loader": "^0.5.1"
   }

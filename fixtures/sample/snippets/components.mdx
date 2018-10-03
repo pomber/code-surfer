@@ -1,0 +1,21 @@
+export { components } from "mdx-deck-code-surfer"
+
+```java FizzBuzz
+public String fizzBuzz(int n){
+  String s = "";
+  if (n == 0)
+    return s;
+  if((n % 5) == 0)
+    s = "Buzz" + s;
+  if((n % 3) == 0)
+    s = "Fizz" + s;
+  if (s.equals(""))
+    s = n + "";
+  return fizzBuzz(n-1) +  s;
+}
+----
+* > Copy pasted from rosettacode.org
+1, 3 > Some lines
+1:4, 6, 8:10 > Also ranges
+2, 4[1:6], 5[2, 4, 6:9] > Some tokens
+```

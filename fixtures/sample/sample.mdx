@@ -1,4 +1,15 @@
 import { CodeSurfer } from "mdx-deck-code-surfer"
+import { dark } from "mdx-deck/themes"
+import nightOwl from "prism-react-renderer/themes/nightOwl"
+
+export { components } from "mdx-deck-code-surfer"
+export const theme = {
+  ...dark,
+  codeSurfer: {
+    ...nightOwl,
+    showNumbers: false
+  }
+}
 
 ## Code Surfer
 
@@ -8,9 +19,9 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 <CodeSurfer
   title="Lines"
-  notes="Use ⬆️ and ⬇️ keys"
   code={require("!raw-loader!./snippets/1.mdx")}
   steps={[
+    { notes: "Use ⬆️ and ⬇️ keys" },
     { lines: [6], notes: "Highlight a single line ⬇️" },
     { lines: [5, 7, 8], notes: "... or multiple lines ➡️" }
   ]}
@@ -20,9 +31,9 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 <CodeSurfer
   title="Range and ranges"
-  notes="Sometime is easier to use ranges ⬇️"
   code={require("!raw-loader!./snippets/2.mdx")}
   steps={[
+    { notes: "Sometime is easier to use ranges ⬇️" },
     { range: [2, 4], notes: "From line 2 to 4 ⬇️" },
     { ranges: [[2, 3], [6, 11]], notes: "2, 3 and 6 to 10 ⬇️" },
     { lines: [1, 3], range: [6, 11], notes: "➡️" }
@@ -33,9 +44,9 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 <CodeSurfer
   title="Highlight Tokens"
-  notes="⬇️"
   code={require("!raw-loader!./snippets/3.mdx")}
   steps={[
+    { notes: "⬇️" },
     { lines: [6], notes: "Instead of the full line ⬇️" },
     { tokens: { 8: [9, 12, 15] }, notes: "... select some tokens ➡️" }
   ]}
@@ -54,9 +65,9 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 <CodeSurfer
   title="Scale and Scroll"
-  notes="Long snippets are scaled ⬇️"
   code={require("!raw-loader!./snippets/5.jsx")}
   steps={[
+    { notes: "Long snippets are scaled ⬇️" },
     { range: [1, 3], notes: "⬇️" },
     { range: [5, 13], notes: "⬇️" },
     { range: [15, 32], notes: "⬇️" },
@@ -73,20 +84,59 @@ import { CodeSurfer } from "mdx-deck-code-surfer"
 
 ---
 
-<CodeSurfer
-  code={require("!raw-loader!./snippets/3.mdx")}
-/>
+<CodeSurfer code={require("!raw-loader!./snippets/3.mdx")} />
 
 ---
 
 <CodeSurfer
-  title={() => <h1 style={{background: "pink"}}>Use Render Props</h1>}
-  notes={() => <span style={{background: "pink"}}>For title or notes</span>}
+  title={() => (
+    <h1 style={{ background: "black", color: "pink" }}>Use Render Props</h1>
+  )}
+  notes={() => (
+    <span style={{ background: "black", color: "pink" }}>
+      For title or notes
+    </span>
+  )}
   code={require("!raw-loader!./snippets/render-props.mdx")}
 />
 
 ---
 
+<CodeSurfer
+  code={require("!raw-loader!./snippets/components.mdx")}
+  lang="java"
+  title="Use Code Blocks instead of JSX"
+  steps={[
+    {},
+    { lines: [1], notes: "You need to add this export" },
+    { lines: [3, 21], notes: "Make a code block with triple backticks" },
+    { lines: [3], notes: "Put the language and title ..." },
+    { range: [4, 15], notes: "... then your code ..." },
+    { lines: [16], notes: "... then this separator '----' ..." },
+    { range: [17, 20], notes: "... and then the steps (using a new syntax)" }
+  ]}
+/>
+
+---
+
+```jsx Global Theming
+import { dark } from "mdx-deck/themes"
+import nightOwl from "prism-react-renderer/themes/nightOwl"
+
+export const theme = {
+  ...dark,
+  codeSurfer: {
+    ...nightOwl,
+    showNumbers: false
+  }
+}
+----
+* > You can't set the theme for each Code Block
+2, 6:9 > But you can set it globally
+```
+
+
+---
 
 ### [github.com/pomber/code-surfer](https://github.com/pomber/code-surfer)
 

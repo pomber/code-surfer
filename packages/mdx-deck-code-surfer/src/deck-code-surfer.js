@@ -2,6 +2,7 @@ import CodeSurfer from "code-surfer";
 import React from "react";
 import { withDeck, updaters } from "mdx-deck";
 import { withTheme } from "styled-components";
+import memoizeOne from "memoize-one";
 
 const Notes = ({ notes }) =>
   !notes || typeof notes === "string" ? (
@@ -17,40 +18,61 @@ class InnerCodeSurfer extends React.Component {
   constructor(props) {
     super(props);
     const { update, index } = props.deck;
-    const steps = props.steps ? props.steps.length : 0;
-    update(updaters.setSteps(index, steps));
+    const parsedSteps = this.parseSteps(props.steps);
+    const maxStep = parsedSteps.length - 1;
+    update(updaters.setSteps(index, maxStep));
   }
 
   shouldComponentUpdate(nextProps) {
+    // console.log(nextProps.deck.id, nextProps.deck.active);
     return nextProps.deck.active;
   }
 
+  parseSteps = memoizeOne((steps, notes) => {
+    if (!steps) {
+      return [{ notes }];
+    }
+
+    if (typeof steps === "string") {
+      return steps
+        .trim()
+        .split("\n")
+        .map(stepAndNoteString => {
+          const [step, notes] = stepAndNoteString.split("> ");
+          return {
+            step,
+            notes
+          };
+        });
+    }
+
+    return steps.map(({ notes, title, ...step }) => ({ step, notes, title }));
+  });
+
   render() {
-    const {
+    let {
       code,
       steps,
       title,
       notes,
       theme,
       prismTheme,
+      showNumbers,
       ...rest
     } = this.props;
 
-    const { step } = this.props.deck;
+    const stepIndex = this.props.deck.step;
     const mdxDeckTheme = theme;
+    prismTheme = prismTheme || mdxDeckTheme.codeSurfer;
+    showNumbers = showNumbers || (prismTheme && prismTheme.showNumbers);
+    const stepsWithNotes = this.parseSteps(steps, notes);
 
-    const stepZero = {
-      range: [0, code.split("\n").length],
-      notes
-    };
-
-    const currentStep =
-      !steps || step < 1 ? stepZero : steps[step - 1] || steps[0];
-    // console.log(title);
-    // console.log("step:", step);
-
-    const stepTitle = currentStep.title || title;
-    const anyNotes = notes || (steps && steps.some(s => s.notes));
+    const current =
+      stepsWithNotes[stepIndex >= stepsWithNotes.length ? 0 : stepIndex];
+    const currentStep = current.step;
+    const currentTitle = current.title || title;
+    const currentNotes = current.notes;
+    const anyNotes = stepsWithNotes.some(s => s.notes);
 
     return (
       <div
@@ -72,7 +94,7 @@ class InnerCodeSurfer extends React.Component {
             justifyContent: "center"
           }}
         >
-          {stepTitle && <Title title={stepTitle} />}
+          {currentTitle && <Title title={currentTitle} />}
           <div
             style={{
               flexGrow: 1,
@@ -85,12 +107,13 @@ class InnerCodeSurfer extends React.Component {
             <CodeSurfer
               {...rest}
               code={code}
+              showNumbers={showNumbers}
               step={currentStep}
               theme={prismTheme}
               monospace={mdxDeckTheme && mdxDeckTheme.monospace}
             />
           </div>
-          {anyNotes && <Notes notes={currentStep.notes} />}
+          {anyNotes && <Notes notes={currentNotes} />}
           <div style={{ height: "35px" }} />
         </div>
       </div>

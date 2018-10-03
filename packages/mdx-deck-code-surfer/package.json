@@ -11,7 +11,8 @@
     "build:watch": "yarn build --watch"
   },
   "dependencies": {
-    "code-surfer": "^0.4.1"
+    "code-surfer": "^0.4.1",
+    "memoize-one": "^4.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -19,11 +20,11 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "mdx-deck": "^1.7.0",
+    "mdx-deck": "^1.7.7",
     "react": "^16.4.2"
   },
   "peerDependencies": {
-    "mdx-deck": ">=1.7.0",
+    "mdx-deck": "^1.7.7",
     "react": ">=15.0.0",
     "styled-components": ">=3.0.0"
   },
