@@ -1,14 +1,14 @@
 {
   "name": "theming-fixture",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "scripts": {
     "build": "mdx-deck build theming.mdx",
     "start": "mdx-deck theming.mdx"
   },
   "devDependencies": {
     "mdx-deck": "^1.7.0",
-    "mdx-deck-code-surfer": "^0.5.0",
+    "mdx-deck-code-surfer": "^0.5.1",
     "raw-loader": "^0.5.1"
   }
 }
