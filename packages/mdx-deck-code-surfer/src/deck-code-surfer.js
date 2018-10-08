@@ -25,7 +25,7 @@ class InnerCodeSurfer extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     // console.log(nextProps.deck.id, nextProps.deck.active);
-    return nextProps.deck.active;
+    return !!nextProps.deck.active;
   }
 
   parseSteps = memoizeOne((steps, notes) => {
@@ -61,7 +61,7 @@ class InnerCodeSurfer extends React.Component {
       ...rest
     } = this.props;
 
-    const stepIndex = this.props.deck.step;
+    const stepIndex = this.props.deck.step || 0;
     const mdxDeckTheme = theme;
     prismTheme = prismTheme || mdxDeckTheme.codeSurfer;
     showNumbers = showNumbers || (prismTheme && prismTheme.showNumbers);
