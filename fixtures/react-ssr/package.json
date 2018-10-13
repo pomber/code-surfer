@@ -2,8 +2,7 @@
   "name": "react-ssr-fixture",
   "license": "MIT",
   "private": true,
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.5.0",
   "scripts": {
     "start": "razzle start",
     "build": "razzle build",
@@ -11,7 +10,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "code-surfer": "^0.5.0",
+    "code-surfer": "0.5.0",
     "express": "^4.16.4",
     "razzle": "^2.4.0",
     "react": "^16.5.2",

@@ -1,7 +1,8 @@
 import App from "./app";
 import React from "react";
 import express from "express";
-import { renderToString } from "react-dom/server";
+import { renderToString, renderToStaticMarkup } from "react-dom/server";
+import inline from "glamor/inline";
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -11,7 +12,7 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get("/*", (req, res) => {
     const context = {};
-    const markup = renderToString(<App />);
+    const markup = inline(renderToString(<App />));
 
     if (context.url) {
       res.redirect(context.url);
@@ -24,6 +25,13 @@ server
         <meta charset="utf-8" />
         <title>Welcome to Razzle</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          html, body, #root { 
+            height: 100%;
+            padding: 0;
+            margin: 0;
+          }
+        </style>
         ${
           assets.client.css
             ? `<link rel="stylesheet" href="${assets.client.css}">`

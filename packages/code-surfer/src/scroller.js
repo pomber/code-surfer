@@ -5,6 +5,7 @@ const getNewCenter = (container, content, firstSelected, lastSelected) => {
   // debugger;
   const parentHeight = container.parentElement.offsetHeight;
   container.style.padding = `${parentHeight / 2}px 0`;
+  container.style.height = 0;
 
   firstSelected = firstSelected || content;
   lastSelected = lastSelected || firstSelected;
@@ -136,7 +137,7 @@ export class Container extends React.Component {
         style: Object.assign(
           {},
           {
-            height: 0,
+            // height: 0,
             margin: 0,
             overflow: "hidden",
             textAlign: "center",
