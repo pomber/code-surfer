@@ -10,21 +10,23 @@ const server = express();
 server
   .disable("x-powered-by")
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  // .get("/oembed/*", (req, res) => {})
   .get("/*", (req, res) => {
-    const context = {};
-    const markup = inline(renderToString(<App />));
-
-    if (context.url) {
-      res.redirect(context.url);
-    } else {
-      res.status(200).send(
-        `<!doctype html>
+    const markup = inline(renderToStaticMarkup(<App />));
+    res.status(200).send(
+      `<!doctype html>
     <html lang="">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="utf-8" />
-        <title>Welcome to Razzle</title>
+        <title>Code Surfer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/json+oembed"
+          href="https://code-surfer.now.sh/oembed?url=${req.url}&format=json"
+          title="Code Surfer oEmbed" />
+        <link rel="alternate" type="text/xml+oembed"
+          href="https://code-surfer.now.sh/oembed?url=${req.url}&format=xml"
+          title="Code Surfer oEmbed" />
         <style>
           html, body, #root { 
             height: 100%;
@@ -33,12 +35,12 @@ server
           }
         </style>
         ${
-          assets.client.css
+          "" && assets.client.css
             ? `<link rel="stylesheet" href="${assets.client.css}">`
             : ""
         }
         ${
-          process.env.NODE_ENV === "production"
+          "" && process.env.NODE_ENV === "production"
             ? `<script src="${assets.client.js}" defer></script>`
             : `<script src="${assets.client.js}" defer crossorigin></script>`
         }
@@ -47,8 +49,7 @@ server
         <div id="root">${markup}</div>
     </body>
 </html>`
-      );
-    }
+    );
   });
 
 export default server;
