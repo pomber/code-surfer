@@ -27,7 +27,6 @@ const getNewCenter = (container, content, firstSelected, lastSelected) => {
 
   // center in the middle of the selected element
   let center = middle;
-  // debugger;
 
   const scaledContentHeight = contentHeight * scale;
   const scaledSelectedHeight = selectedHeight * scale;
