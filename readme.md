@@ -56,6 +56,14 @@ More options:
 - [spectacle-code-slide](https://github.com/jamiebuilds/spectacle-code-slide)
 - [prism](https://github.com/PrismJS/prism)
 
+## Contributing
+
+Release new versions with:
+```bash
+$ yarn build:packages
+$ npx lerna publish
+```
+
 ## License
 
 Released under MIT license.
