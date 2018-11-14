@@ -77,6 +77,7 @@ const scrollTo = (container, content, center, scale, duration) => {
   const endY = center;
 
   let step = { top: startY, scale: startScale };
+  let shouldAnimate = true;
 
   const tween = new TWEEN.Tween(step)
     .to({ top: endY, scale }, duration)
@@ -85,9 +86,13 @@ const scrollTo = (container, content, center, scale, duration) => {
       container.scrollTop = step.top | 0;
       content.style.transform = "scale(" + step.scale + ")";
     })
+    .onComplete(() => {
+      shouldAnimate = false;
+    })
     .start();
 
   function animate(time) {
+    if (!shouldAnimate) return;
     requestAnimationFrame(animate);
     TWEEN.update(time);
   }
