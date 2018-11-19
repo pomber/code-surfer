@@ -1,8 +1,10 @@
 # Code Surfer <🏄/>
 
-![](https://flat.badgen.net/npm/v/code-surfer) ![](https://flat.badgen.net/travis/pomber/code-surfer) [![Contribute with Forkbox](<https://flat.badgen.net/badge/PRs/ForkBox%20(experimental)/222>)](https://forkbox.co/f/pomber/code-surfer)
+![](https://flat.badgen.net/npm/v/code-surfer) ![](https://flat.badgen.net/travis/pomber/code-surfer) 
 
 React component for scrolling, zooming and highlighting code.
+
+> Follow [@pomber](https://twitter.com/pomber) for updates
 
 ## How to use with [mdx-deck](https://github.com/jxnblk/mdx-deck)
 
