@@ -1,11 +1,14 @@
 import React from "react";
+import { Notes } from "mdx-deck";
 import DeckCodeSurfer from "./deck-code-surfer";
+
+const getLanguage = className => className.slice(9);
 
 class Code extends React.PureComponent {
   render() {
     const { children, metaString, className } = this.props;
     const [src, steps] = children.split("\n----");
-    const language = className.slice(9);
+    const language = getLanguage(className);
     return (
       <DeckCodeSurfer
         code={src}
@@ -17,6 +20,13 @@ class Code extends React.PureComponent {
   }
 }
 
+const NotesOrCode = props =>
+  getLanguage(props.className) === "notes" ? (
+    <Notes {...props} />
+  ) : (
+    <Code {...props} />
+  );
+
 export default {
-  code: Code
+  code: NotesOrCode
 };
