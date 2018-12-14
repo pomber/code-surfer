@@ -1,6 +1,6 @@
 # Code Surfer <🏄/>
 
-![](https://flat.badgen.net/npm/v/code-surfer) ![](https://flat.badgen.net/travis/pomber/code-surfer) 
+![](https://flat.badgen.net/npm/v/code-surfer) ![](https://flat.badgen.net/travis/pomber/code-surfer)
 
 React component for scrolling, zooming and highlighting code.
 
@@ -61,6 +61,7 @@ More options:
 ## Contributing
 
 Release new versions with:
+
 ```bash
 $ yarn build:packages
 $ npx lerna publish

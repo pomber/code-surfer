@@ -1,4 +1,5 @@
 import React from "react";
+import { Notes } from "mdx-deck";
 import DeckCodeSurfer from "./deck-code-surfer";
 
 class Code extends React.PureComponent {
@@ -6,7 +7,9 @@ class Code extends React.PureComponent {
     const { children, metaString, className } = this.props;
     const [src, steps] = children.split("\n----");
     const language = className.slice(9);
-    return (
+    return language === "notes" ? (
+      <Notes {...this.props} />
+    ) : (
       <DeckCodeSurfer
         code={src}
         steps={steps}
