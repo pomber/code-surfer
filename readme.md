@@ -60,6 +60,24 @@ More options:
 
 ## Contributing
 
+First fork and clone the repo.
+
+Then use lerna to install dependencies:
+
+```bash
+$ npx lerna bootstrap
+```
+
+And run any of the fixtures with:
+
+```bash
+$ yarn start:fixture sample
+$ yarn start:fixture storybook
+$ yarn start:fixture react-docs
+```
+
+Then change the code and the fixture should update automatically.
+
 Release new versions with:
 
 ```bash
