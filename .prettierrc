@@ -9,6 +9,12 @@
         "trailingComma": "none",
         "proseWrap": "never"
       }
+    },
+    {
+      "files": "*.mdx",
+      "options": {
+        "semi": false
+      }
     }
   ]
 }
