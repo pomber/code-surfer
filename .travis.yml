@@ -7,9 +7,7 @@ node_js:
   - node
 install:
   - npx lerna bootstrap
-script:
-  - yarn build
-  - yarn test
+
 
 notifications:
   email:
