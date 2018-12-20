@@ -5,7 +5,8 @@
   "scripts": {
     "build": "mdx-deck build sample.mdx",
     "start": "mdx-deck sample.mdx",
-    "test": "cypress run",
+    "cypress:run": "cypress run",
+    "test": "start-server-and-test start http-get://localhost:8080 cypress:run",
     "update-snapshots": "cypress run --env updateSnapshots=true"
   },
   "devDependencies": {
@@ -13,6 +14,7 @@
     "cypress-image-snapshot": "^3.0.0",
     "mdx-deck": "^1.7.7",
     "mdx-deck-code-surfer": "^0.5.3",
-    "raw-loader": "^0.5.1"
+    "raw-loader": "^0.5.1",
+    "start-server-and-test": "^1.7.11"
   }
 }

@@ -1,5 +1,8 @@
 language: node_js
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - ~/.cache
 node_js:
   - 8
   - node
