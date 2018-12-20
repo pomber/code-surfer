@@ -4,8 +4,9 @@ cache:
   directories:
     - ~/.cache
 node_js:
-  - 8
   - node
+install:
+  - npx lerna bootstrap
 
 notifications:
   email:
