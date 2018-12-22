@@ -6,9 +6,10 @@
     "build": "mdx-deck build sample.mdx",
     "start": "mdx-deck sample.mdx",
     "cypress:run": "cypress run",
+    "cypress:update": "cypress run --env updateSnapshots=true",
     "test-wrapper": "fail-to-pr cypress run",
     "test": "start-server-and-test start http-get://localhost:8080 test-wrapper",
-    "update-snapshots": "cypress run --env updateSnapshots=true"
+    "update-snapshots": "start-server-and-test start http-get://localhost:8080 cypress:update"
   },
   "devDependencies": {
     "cypress": "^3.1.3",
