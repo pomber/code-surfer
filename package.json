@@ -15,9 +15,9 @@
     "build:watch": "lerna exec yarn build:watch --no-private --parallel",
     "start": "lerna exec yarn start --scope",
     "start:fixture": "run-p build:watch \"start {1}-fixture\" --",
-    "format": "prettier --write '**/*.{js,jsx,css,md}'",
-    "format:check": "prettier-check '**/*.{js,jsx,css,md}'",
-    "test": "run-p format:check test:all",
+    "format": "prettier --write '**/*.{js,jsx,css,md}' --ignore-path .gitignore",
+    "format:check": "prettier-check '**/*.{js,jsx,css,md}' --ignore-path .gitignore",
+    "test": "run-s format:check build test:all",
     "test:all": "lerna run test",
     "build:website": "lerna exec yarn build --scope website",
     "publish:website": "run-s build build:website"

@@ -5,6 +5,7 @@ import nightOwl from "prism-react-renderer/themes/nightOwl"
 export { components } from "mdx-deck-code-surfer"
 export const theme = {
   ...dark,
+  font: 'Arial',
   codeSurfer: {
     ...nightOwl,
     showNumbers: false
@@ -13,8 +14,6 @@ export const theme = {
 
 ## Code Surfer
 
-# <🏄/>
-
 ---
 
 <CodeSurfer
@@ -22,7 +21,7 @@ export const theme = {
   code={require("!raw-loader!./snippets/1.mdx")}
   steps={[
     { notes: "Use ⬆️ and ⬇️ keys" },
-    { lines: [6], notes: "Highlight a single line ⬇️" },
+    { lines: [6], notes: "Highlight not a single line ⬇️" },
     { lines: [5, 7, 8], notes: "... or multiple lines ➡️" }
   ]}
 />
