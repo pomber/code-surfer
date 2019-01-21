@@ -1,6 +1,6 @@
 {
   "name": "code-surfer",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": false,
   "main": "dist/code-surfer.js",
   "files": [
