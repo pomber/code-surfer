@@ -24,7 +24,6 @@ class InnerCodeSurfer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    // console.log(nextProps.deck.id, nextProps.deck.active);
     return !!nextProps.deck.active;
   }
 

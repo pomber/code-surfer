@@ -2,7 +2,6 @@ import React from "react";
 import TWEEN from "./tween";
 
 const getNewCenter = (container, content, firstSelected, lastSelected) => {
-  // debugger;
   const parentHeight = container.parentElement.offsetHeight;
   container.style.padding = `${parentHeight / 2}px 0`;
   container.style.height = 0;
