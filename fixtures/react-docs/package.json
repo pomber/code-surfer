@@ -1,6 +1,6 @@
 {
   "name": "react-docs-fixture",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "author": "pomber",
   "license": "MIT",
   "private": true,
@@ -9,7 +9,7 @@
     "build": "docz build"
   },
   "dependencies": {
-    "code-surfer": "^0.5.3",
+    "code-surfer": "^0.5.4",
     "prop-types": "^15.6.2",
     "react": "^16.4.2"
   },
