@@ -23,13 +23,15 @@ const CodeSurfer = ({
   showNumbers,
   dark,
   theme,
-  monospace
+  monospace,
+  Prism
 }) => {
   const selectedTokens = new SelectedTokens(step);
 
   return (
     <Highlight
       {...defaultProps}
+      Prism={Prism || defaultProps.Prism}
       code={code}
       language={lang || "jsx"}
       theme={theme !== undefined ? theme : dark ? darkTheme : lightTheme}
