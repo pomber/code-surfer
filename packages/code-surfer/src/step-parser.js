@@ -67,7 +67,10 @@ const getTokensPerLineFromString = step => {
 export const mapStep = step => {
   if (typeof step === "string") {
     return getTokensPerLineFromString(step);
-  } else if (Object.keys(step).length === 0) {
+  } else if (
+    Object.keys(step).length === 0 ||
+    (Object.keys(step).length === 1 && step.lineAnnotations)
+  ) {
     return { all: true };
   } else {
     return getTokensPerLineFromObject(step);

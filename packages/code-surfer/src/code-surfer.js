@@ -72,6 +72,11 @@ const CodeSurfer = ({
                     })}
                   />
                 ))}
+                {step.lineAnnotations && step.lineAnnotations[i]
+                  ? typeof step.lineAnnotations[i] === "function"
+                    ? step.lineAnnotations[i]()
+                    : step.lineAnnotations[i]
+                  : null}
               </div>
             ))}
           </Scroller.Content>
