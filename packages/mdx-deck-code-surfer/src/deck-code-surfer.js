@@ -92,7 +92,10 @@ class InnerCodeSurfer extends React.Component {
             height: (containerStyles && containerStyles.height) || "100vh",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
+            ...(containerStyles && containerStyles.width
+              ? { width: containerStyles.width }
+              : {})
           }}
         >
           {currentTitle && <Title title={currentTitle} />}
