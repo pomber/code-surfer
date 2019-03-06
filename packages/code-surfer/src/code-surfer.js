@@ -74,7 +74,7 @@ const CodeSurfer = ({
                       })}
                     />
                   ))}
-                  {step.lineAnnotations && step.lineAnnotations[i]
+                  {step.lineAnnotations && step.lineAnnotations[lineNumber]
                     ? typeof step.lineAnnotations[lineNumber] === "function"
                       ? step.lineAnnotations[lineNumber]()
                       : step.lineAnnotations[lineNumber]
