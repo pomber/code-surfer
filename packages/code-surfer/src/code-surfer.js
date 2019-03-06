@@ -44,41 +44,44 @@ const CodeSurfer = ({
           })}
         >
           <Scroller.Content type="code" style={{ fontFamily: monospace }}>
-            {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })}>
-                {showNumbers && (
-                  <span
-                    className={
-                      "token comment " +
-                      (selectedTokens.isLineSelected(i)
-                        ? selectedRules
-                        : unselectedRules)
-                    }
-                    style={{ userSelect: "none" }}
-                  >
-                    {(i + 1 + ".").padStart(3)}{" "}
-                  </span>
-                )}
-                {line.map((token, key) => (
-                  <Scroller.Element
-                    type="span"
-                    {...getTokenProps({
-                      token,
-                      key,
-                      selected: selectedTokens.isTokenSelected(i, key),
-                      className: selectedTokens.isTokenSelected(i, key)
-                        ? selectedRules
-                        : unselectedRules
-                    })}
-                  />
-                ))}
-                {step.lineAnnotations && step.lineAnnotations[i]
-                  ? typeof step.lineAnnotations[i] === "function"
-                    ? step.lineAnnotations[i]()
-                    : step.lineAnnotations[i]
-                  : null}
-              </div>
-            ))}
+            {tokens.map((line, i) => {
+              const lineNumber = i + 1;
+              return (
+                <div {...getLineProps({ line, key: i })}>
+                  {showNumbers && (
+                    <span
+                      className={
+                        "token comment " +
+                        (selectedTokens.isLineSelected(i)
+                          ? selectedRules
+                          : unselectedRules)
+                      }
+                      style={{ userSelect: "none" }}
+                    >
+                      {(lineNumber + ".").padStart(3)}{" "}
+                    </span>
+                  )}
+                  {line.map((token, key) => (
+                    <Scroller.Element
+                      type="span"
+                      {...getTokenProps({
+                        token,
+                        key,
+                        selected: selectedTokens.isTokenSelected(i, key),
+                        className: selectedTokens.isTokenSelected(i, key)
+                          ? selectedRules
+                          : unselectedRules
+                      })}
+                    />
+                  ))}
+                  {step.lineAnnotations && step.lineAnnotations[i]
+                    ? typeof step.lineAnnotations[lineNumber] === "function"
+                      ? step.lineAnnotations[lineNumber]()
+                      : step.lineAnnotations[lineNumber]
+                    : null}
+                </div>
+              );
+            })}
           </Scroller.Content>
         </Scroller.Container>
       )}
