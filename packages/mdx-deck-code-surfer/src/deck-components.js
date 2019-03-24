@@ -1,5 +1,5 @@
 import React from "react";
-import { Notes } from "mdx-deck";
+import { Notes } from "@mdx-deck/components";
 import DeckCodeSurfer from "./deck-code-surfer";
 
 class Code extends React.PureComponent {
