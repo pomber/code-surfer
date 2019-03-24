@@ -86,6 +86,7 @@ class InnerCodeSurfer extends React.Component {
         <div
           style={{
             height: "100vh",
+            maxWidth: "100vw",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center"
