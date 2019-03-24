@@ -1,6 +1,6 @@
 {
   "name": "code-surfer",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "private": false,
   "main": "dist/code-surfer.js",
   "files": [
@@ -26,8 +26,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "jest": "^23.5.0",
-    "react": "^16.4.2"
+    "jest": "^23.5.0"
   },
   "author": "pomber",
   "license": "MIT",
