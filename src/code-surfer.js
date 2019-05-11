@@ -14,12 +14,12 @@ theme.styles.forEach(({ types, style }) => {
   });
 });
 
-function CodeSurfer({ steps }) {
+function CodeSurfer({ steps, lineHeight = 18 }) {
   const { currentStepIndex, stepPlayhead } = useStepSpring(steps.length);
   const step = steps[currentStepIndex];
 
   const styles = runAnimation({
-    lineHeight: 18,
+    lineHeight,
     t: stepPlayhead,
     lines: step.lines
   });
@@ -31,6 +31,10 @@ function CodeSurfer({ steps }) {
     };
   });
 
+  return <CodeSurferFrame frame={frame} />;
+}
+
+function CodeSurferFrame({ frame }) {
   return (
     <pre style={{ margin: 0, color: "inherit", height: "100%" }}>
       <div style={{ height: "50%" }} />
@@ -44,7 +48,7 @@ function CodeSurfer({ steps }) {
 
 function Line({ style, tokens }) {
   return (
-    <div style={{ overflow: "hidden", ...style }}>
+    <div style={{ overflow: "hidden", ...style }} className="cs-line">
       {tokens.map((token, i) => (
         <span key={i} style={themeStylesByType[token.type] || {}}>
           {token.content}
@@ -56,31 +60,52 @@ function Line({ style, tokens }) {
 
 function CodeSurferContainer(props) {
   const container = React.useRef();
+  const [dimensions, setDimensions] = React.useState(null);
 
   const steps = React.useMemo(() => parseSteps(props.steps, props.lang), [
     props.steps,
     props.lang
   ]);
 
-  React.useLayoutEffect(() => {
-    const currentScale =
-      container.current.getBoundingClientRect().height /
-      container.current.clientHeight;
+  React.useLayoutEffect(
+    () => {
+      const $container = container.current;
+      const currentScale =
+        $container.getBoundingClientRect().height / $container.clientHeight;
 
-    const containerRect = {
-      height: container.current.clientHeight,
-      width: container.current.clientWidth
-    };
+      const containerRect = {
+        height: $container.clientHeight,
+        width: $container.clientWidth
+      };
 
-    console.log(currentScale, containerRect);
-  });
+      const lineHeight = $container.querySelector(".cs-line").clientHeight;
+      console.log(currentScale, containerRect, lineHeight);
+      setDimensions({ lineHeight });
+    },
+    [dimensions != null]
+  );
+
+  console.log("dim", dimensions);
+
+  if (!dimensions) {
+    return (
+      <div
+        ref={container}
+        style={{ height: "100%", width: "100%", ...theme.plain }}
+      >
+        <CodeSurferFrame
+          frame={[{ key: 1, style: {}, tokens: [{ content: "foo" }] }]}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
       ref={container}
       style={{ height: "100%", width: "100%", ...theme.plain }}
     >
-      <CodeSurfer steps={steps} />
+      <CodeSurfer steps={steps} lineHeight={dimensions.lineHeight} />
     </div>
   );
 }
