@@ -15,8 +15,8 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "format": "prettier --write '**/*.{js,jsx,css,md,mdx}'",
-    "format:check": "prettier --check '**/*.{js,jsx,css,md,mdx}'",
+    "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
+    "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
     "test:all": "cross-env CI=1 react-scripts test --env=jsdom",
     "test": "run-p format:check test:all",
     "prepare": "yarn run build",
