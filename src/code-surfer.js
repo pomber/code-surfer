@@ -67,23 +67,20 @@ function CodeSurferContainer(props) {
     props.lang
   ]);
 
-  React.useLayoutEffect(
-    () => {
-      const $container = container.current;
-      const currentScale =
-        $container.getBoundingClientRect().height / $container.clientHeight;
+  React.useLayoutEffect(() => {
+    const $container = container.current;
+    const currentScale =
+      $container.getBoundingClientRect().height / $container.clientHeight;
 
-      const containerRect = {
-        height: $container.clientHeight,
-        width: $container.clientWidth
-      };
+    const containerRect = {
+      height: $container.clientHeight,
+      width: $container.clientWidth
+    };
 
-      const lineHeight = $container.querySelector(".cs-line").clientHeight;
-      console.log(currentScale, containerRect, lineHeight);
-      setDimensions({ lineHeight });
-    },
-    [dimensions != null]
-  );
+    const lineHeight = $container.querySelector(".cs-line").clientHeight;
+    console.log(currentScale, containerRect, lineHeight);
+    setDimensions({ lineHeight });
+  }, [dimensions != null]);
 
   console.log("dim", dimensions);
 
