@@ -138,5 +138,6 @@ function getZoom(step, lineHeight, containerHeight) {
   if (!step) return null;
   const contentHeight = (step.focusCount + 4) * lineHeight;
   const zoom = containerHeight / contentHeight;
+  console.log("z", containerHeight, lineHeight, contentHeight);
   return Math.min(zoom, 1);
 }

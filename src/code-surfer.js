@@ -42,6 +42,7 @@ function CodeSurfer({ steps, dimensions }) {
     nextStep,
     t: stepPlayhead
   });
+  console.log("scale", scale);
 
   const frame = styles.map((style, i) => {
     return {
@@ -82,11 +83,19 @@ function CodeSurferFrame({ frame, dimensions, scrollTop, scale }) {
           2}px`
       }}
     >
-      <div style={{ height: "50%" }} />
-      {frame.map(line => (
-        <Line {...line} />
-      ))}
-      <div style={{ height: "50%" }} />
+      <div
+        style={{
+          height: "100%",
+          transform: `scale(${scale})`,
+          transformOrigin: `center ${dimensions.containerHeight / 2}px`
+        }}
+      >
+        <div style={{ height: "50%" }} />
+        {frame.map(line => (
+          <Line {...line} />
+        ))}
+        <div style={{ height: "50%" }} />
+      </div>
     </pre>
   );
 }
@@ -143,7 +152,10 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
   frame[0] = longestLine;
 
   return (
-    <div ref={container} style={{ width: "100%", ...theme.plain }}>
+    <div
+      ref={container}
+      style={{ width: "100%", ...theme.plain, maxHeight: "100%" }}
+    >
       <pre
         style={{
           margin: 0,
