@@ -25,6 +25,24 @@ function CodeSurfer({ steps, dimensions }) {
     lines: step.lines
   });
 
+  const prevStep = steps[currentStepIndex - 1];
+  const currStep = steps[currentStepIndex];
+  const nextStep = steps[currentStepIndex + 1];
+  const currentFocus = steps[currentStepIndex].focusCenter || 0;
+  const prevFocus = prevStep ? prevStep.focusCenter || 0 : 0;
+  const nextFocus = nextStep ? nextStep.focusCenter || 0 : 0;
+  const { focusY, scale } = scrollAnimation({
+    lineHeight: dimensions.lineHeight,
+    containerHeight: dimensions.containerHeight,
+    currentFocus,
+    prevFocus,
+    nextFocus,
+    prevStep,
+    currStep,
+    nextStep,
+    t: stepPlayhead
+  });
+
   const frame = styles.map((style, i) => {
     return {
       ...step.lines[i],
@@ -32,16 +50,34 @@ function CodeSurfer({ steps, dimensions }) {
     };
   });
 
-  return <CodeSurferFrame frame={frame} dimensions={dimensions} />;
+  return (
+    <CodeSurferFrame
+      frame={frame}
+      dimensions={dimensions}
+      scrollTop={focusY}
+      scale={scale}
+    />
+  );
 }
 
-function CodeSurferFrame({ frame, dimensions }) {
+function CodeSurferFrame({ frame, dimensions, scrollTop, scale }) {
+  const ref = React.useRef();
+
+  React.useLayoutEffect(() => {
+    // no idea where I'm losing these 7px
+    ref.current.scrollTop = scrollTop * scale + 7;
+  }, [scrollTop, scale]);
+
   return (
     <pre
+      ref={ref}
       style={{
         margin: 0,
+        // border: "1px solid red",
         color: "inherit",
         height: "100%",
+        overflowY: "hidden",
+        overflowX: "hidden",
         padding: `0 ${(dimensions.containerWidth - dimensions.maxLineWidth) /
           2}px`
       }}
@@ -101,7 +137,9 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
       ? a
       : b
   );
-  const frame = longestStep.lines.map(l => ({ ...l, style: {} }));
+  const frame = longestStep.lines
+    .filter(l => l.middle)
+    .map(l => ({ ...l, style: {} }));
   frame[0] = longestLine;
 
   return (
@@ -143,7 +181,14 @@ function CodeSurferContainer(props) {
   }
   console.log(dimensions);
   return (
-    <div style={{ height: "100%", width: "100%", ...theme.plain }}>
+    <div
+      style={{
+        width: "100%",
+        height: dimensions.containerHeight * 2,
+        maxHeight: "100%",
+        ...theme.plain
+      }}
+    >
       <CodeSurfer steps={steps} dimensions={dimensions} />
     </div>
   );

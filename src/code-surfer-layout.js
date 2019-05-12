@@ -16,7 +16,8 @@ function CodeSurferLayout({ children, ...props }) {
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignItems: "center"
       }}
     >
       <CodeSurfer steps={steps} lang={lang} />

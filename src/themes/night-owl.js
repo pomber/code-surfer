@@ -1,4 +1,11 @@
+import { base } from "mdx-deck/themes";
 const theme = {
+  ...base,
+  colors: {
+    text: "#d6deeb",
+    background: "#011627",
+    link: "#rgb(173, 219, 103)"
+  },
   plain: {
     color: "#d6deeb",
     backgroundColor: "#011627"
@@ -104,4 +111,4 @@ const theme = {
   ]
 };
 
-module.exports = theme;
+export default theme;

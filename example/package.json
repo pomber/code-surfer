@@ -7,7 +7,7 @@
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "mdx-deck": "link:../node_modules/mdx-deck",
-    "new-code-surfer": "link:.."
+    "code-surfer": "link:.."
   },
   "scripts": {
     "start": "../node_modules/.bin/mdx-deck deck.mdx",
