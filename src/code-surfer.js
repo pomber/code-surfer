@@ -65,8 +65,7 @@ function CodeSurferFrame({ frame, dimensions, scrollTop, scale }) {
   const ref = React.useRef();
 
   React.useLayoutEffect(() => {
-    // no idea where I'm losing these 7px
-    ref.current.scrollTop = scrollTop * scale + 7;
+    ref.current.scrollTop = scrollTop * scale;
   }, [scrollTop, scale]);
 
   return (
@@ -126,6 +125,7 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
     const maxLineWidth =
       $container.querySelector(".cs-line-tokens").getBoundingClientRect()
         .width / currentScale;
+    // debugger;
     setDimensions({
       lineHeight,
       maxLineWidth,

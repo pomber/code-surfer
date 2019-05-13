@@ -1,11 +1,10 @@
 import React from "react";
 import { useDeck } from "mdx-deck";
 import CodeSurfer from "./code-surfer";
+import { parseMetastring } from "./codeblock-metastring-parser";
 
 function CodeSurferLayout({ children, ...props }) {
   const deck = useDeck();
-  console.log("layout props", props);
-  console.log("layout deck", deck);
   const steps = React.useMemo(getStepsFromChildren(children), [deck.index]);
   const lang = steps.length && steps[0].lang;
 
@@ -36,7 +35,7 @@ const getStepsFromChildren = children => () => {
       return {
         code: props.children,
         lang: props.className[0].substring("language-".length),
-        focus: props.metastring
+        ...parseMetastring(props.metastring)
       };
     })
     .filter(x => x);
