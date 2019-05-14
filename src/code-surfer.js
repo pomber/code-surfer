@@ -4,6 +4,7 @@ import { parseSteps } from "./parse-steps";
 import { useStepSpring } from "./use-step-spring";
 import { runAnimation, scrollAnimation } from "./animation";
 import useWindowResize from "./use-window-resize";
+import { CodeSurferMeasurer } from "./code-surfer-measurer";
 
 const themeStylesByType = Object.create(null);
 theme.styles.forEach(({ types, style }) => {
@@ -111,73 +112,6 @@ function Line({ style, tokens }) {
   );
 }
 
-function CodeSurferMeasurer({ steps, setDimensions }) {
-  const container = React.useRef();
-  React.useLayoutEffect(() => {
-    const $container = container.current;
-    const currentScale =
-      $container.getBoundingClientRect().height / $container.clientHeight;
-
-    const containerHeight = $container.clientHeight;
-    const containerWidth = $container.clientWidth;
-
-    const lineHeight = $container.querySelector(".cs-line").clientHeight;
-    const maxLineWidth =
-      $container.querySelector(".cs-line-tokens").getBoundingClientRect()
-        .width / currentScale;
-    // debugger;
-    setDimensions({
-      lineHeight,
-      maxLineWidth,
-      currentScale,
-      containerHeight,
-      containerWidth
-    });
-  });
-
-  const longestLine = steps
-    .map(step =>
-      step.lines.reduce((a, b) => (a.content.length > b.content.length ? a : b))
-    )
-    .reduce((a, b) => (a.content.length > b.content.length ? a : b));
-  longestLine.style = {};
-  const longestStep = steps.reduce((a, b) =>
-    a.lines.filter(l => l.middle).length > b.lines.filter(l => l.middle).length
-      ? a
-      : b
-  );
-  const frame = longestStep.lines
-    .filter(l => l.middle)
-    .map(l => ({ ...l, style: {} }));
-  frame[0] = longestLine;
-
-  return (
-    <div
-      ref={container}
-      style={{ width: "100%", ...theme.plain, maxHeight: "100%" }}
-    >
-      <pre
-        style={{
-          margin: 0,
-          color: "inherit",
-          height: "100%",
-          padding: `0`
-        }}
-      >
-        {frame.map((line, i) => (
-          <div
-            key={i}
-            style={{ overflow: "hidden", ...line.style }}
-            className="cs-line"
-          >
-            <span className="cs-line-tokens">{line.content}</span>
-          </div>
-        ))}
-      </pre>
-    </div>
-  );
-}
-
 function CodeSurferContainer(props) {
   const [dimensions, setDimensions] = React.useState(null);
 
@@ -191,12 +125,12 @@ function CodeSurferContainer(props) {
   if (!dimensions) {
     return <CodeSurferMeasurer steps={steps} setDimensions={setDimensions} />;
   }
-  console.log(dimensions);
+  console.log("dims", dimensions);
   return (
     <div
       style={{
         width: "100%",
-        height: dimensions.containerHeight * 2,
+        height: dimensions.containerHeight,
         maxHeight: "100%",
         ...theme.plain
       }}

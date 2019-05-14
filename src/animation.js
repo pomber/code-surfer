@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { createAnimation, Stagger, Context, run } from "./playhead/playhead";
 import easing from "./playhead/easing";
+import { getZoom } from "./code-surfer-measurer";
 
 const dx = 250;
 const offOpacity = 0.3;
@@ -132,12 +133,4 @@ export function scrollAnimation({
   );
 
   return run(animation, t);
-}
-
-function getZoom(step, lineHeight, containerHeight) {
-  if (!step) return null;
-  const contentHeight = (step.focusCount + 4) * lineHeight;
-  const zoom = containerHeight / contentHeight;
-  console.log("z", containerHeight, lineHeight, contentHeight);
-  return Math.min(zoom, 1);
 }
