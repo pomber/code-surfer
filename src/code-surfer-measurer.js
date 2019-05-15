@@ -1,5 +1,5 @@
-import theme from "./themes/night-owl";
 import React from "react";
+import { useContainerStyle } from "./theming";
 
 // numer of extra lines to show at top and buttom when zooming in
 const paddingLines = 2;
@@ -59,7 +59,7 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
   return (
     <div
       ref={container}
-      style={{ ...theme.plain, width: "100%", height: "100vh" }}
+      style={{ ...useContainerStyle(), width: "100%", height: "100vh" }}
     >
       <pre
         style={{

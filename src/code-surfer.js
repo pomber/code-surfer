@@ -1,20 +1,10 @@
 import React from "react";
-import theme from "./themes/night-owl";
 import { parseSteps } from "./parse-steps";
 import { useStepSpring } from "./use-step-spring";
 import { runAnimation, scrollAnimation } from "./animation";
 import useWindowResize from "./use-window-resize";
 import { CodeSurferMeasurer } from "./code-surfer-measurer";
-
-const themeStylesByType = Object.create(null);
-theme.styles.forEach(({ types, style }) => {
-  types.forEach(type => {
-    themeStylesByType[type] = Object.assign(
-      themeStylesByType[type] || {},
-      style
-    );
-  });
-});
+import { useTokenStyles, usePreStyle, useContainerStyle } from "./theming";
 
 function CodeSurfer({ steps, dimensions }) {
   const { currentStepIndex, stepPlayhead } = useStepSpring(steps.length);
@@ -73,9 +63,8 @@ function CodeSurferFrame({ frame, dimensions, scrollTop, scale }) {
     <pre
       ref={ref}
       style={{
+        ...usePreStyle(),
         margin: 0,
-        // border: "1px solid red",
-        color: "inherit",
         height: "100%",
         overflowY: "hidden",
         overflowX: "hidden",
@@ -101,10 +90,11 @@ function CodeSurferFrame({ frame, dimensions, scrollTop, scale }) {
 }
 
 function Line({ style, tokens }) {
+  const getStyleForToken = useTokenStyles();
   return (
     <div style={{ overflow: "hidden", ...style }}>
       {tokens.map((token, i) => (
-        <span key={i} style={themeStylesByType[token.type] || {}}>
+        <span key={i} style={getStyleForToken(token)}>
           {token.content}
         </span>
       ))}
@@ -129,10 +119,10 @@ function CodeSurferContainer(props) {
   return (
     <div
       style={{
+        ...useContainerStyle(),
         width: "100%",
         height: dimensions.containerHeight,
-        maxHeight: "100%",
-        ...theme.plain
+        maxHeight: "100%"
       }}
     >
       <CodeSurfer steps={steps} dimensions={dimensions} />
