@@ -6,9 +6,8 @@ export function parseSteps(rawSteps, lang) {
 
   const stepsLines = getSlides(codes.reverse(), lang).reverse();
   const steps = rawSteps.map((step, i) => {
-    const { focus, code } = step;
     const lines = stepsLines[i];
-    return parseStep(focus, code, lines);
+    return parseStep(step, lines);
   });
 
   steps.forEach(step => {
@@ -38,7 +37,8 @@ export function parseSteps(rawSteps, lang) {
   return steps;
 }
 
-function parseStep(focus, code, lines) {
+function parseStep(step, lines) {
+  const { focus, ...rest } = step;
   let focusIndexes = parseFocus(focus);
 
   if (!focusIndexes) {
@@ -53,13 +53,13 @@ function parseStep(focus, code, lines) {
   const focusEnd = Math.max(...focusIndexes);
 
   return {
-    code,
     lines,
     focusIndexes,
     focusStart,
     focusEnd,
     focusCenter: (focusStart + focusEnd + 1) / 2,
-    focusCount: focusEnd - focusStart + 1
+    focusCount: focusEnd - focusStart + 1,
+    ...rest
   };
 }
 

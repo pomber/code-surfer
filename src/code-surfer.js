@@ -33,7 +33,6 @@ function CodeSurfer({ steps, dimensions }) {
     nextStep,
     t: stepPlayhead
   });
-  console.log("scale", scale);
 
   const frame = styles.map((style, i) => {
     return {
@@ -111,6 +110,7 @@ function CodeSurferContainer(props) {
   ]);
 
   useWindowResize(() => setDimensions(null), [setDimensions]);
+  const containerStyle = useContainerStyle();
 
   if (!dimensions) {
     return <CodeSurferMeasurer steps={steps} setDimensions={setDimensions} />;
@@ -119,7 +119,7 @@ function CodeSurferContainer(props) {
   return (
     <div
       style={{
-        ...useContainerStyle(),
+        ...containerStyle,
         width: "100%",
         height: dimensions.containerHeight,
         maxHeight: "100%"
