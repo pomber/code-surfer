@@ -34,7 +34,7 @@ function usePreStyle() {
   const theme = useTheme();
   return {
     color: theme.colors.pre || "inherit",
-    background: theme.colors.preBackround || "inherit"
+    background: theme.colors.preBackground || "inherit"
   };
 }
 
