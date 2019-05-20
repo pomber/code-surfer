@@ -102,31 +102,60 @@ export function runAnimation({ lineHeight, lines, t }) {
   return run(animation, t);
 }
 
-export function scrollAnimation({
-  lineHeight,
-  containerHeight,
-  currentFocus,
-  prevFocus,
-  nextFocus,
-  prevStep,
-  currStep,
-  nextStep,
-  t
-}) {
-  const currZoom = getZoom(currStep, lineHeight, containerHeight);
-  const prevZoom = getZoom(prevStep, lineHeight, containerHeight) || currZoom;
-  const nextZoom = getZoom(nextStep, lineHeight, containerHeight) || currZoom;
+export function scrollAnimation({ info, currentStepIndex, t }) {
+  // TODO calc params using info
+  const { steps, dimensions } = info;
+  const { lineHeight, containerHeight } = dimensions;
+
+  const prevStepDims = steps[currentStepIndex - 1]
+    ? steps[currentStepIndex - 1].dimensions
+    : {};
+  const stepDimensions = steps[currentStepIndex].dimensions;
+
+  const nextStepDims = steps[currentStepIndex + 1]
+    ? steps[currentStepIndex + 1].dimensions
+    : {};
+
+  const prevStep = steps[currentStepIndex - 1];
+  const currStep = steps[currentStepIndex];
+  const nextStep = steps[currentStepIndex + 1];
+  const currentFocus = steps[currentStepIndex].focusCenter || 0;
+  const prevFocus = prevStep ? prevStep.focusCenter || 0 : 0;
+  const nextFocus = nextStep ? nextStep.focusCenter || 0 : 0;
+
+  const currZoom = getZoom(
+    currStep,
+    lineHeight,
+    containerHeight,
+    stepDimensions
+  );
+  const prevZoom =
+    getZoom(prevStep, lineHeight, containerHeight, prevStepDims) || currZoom;
+  const nextZoom =
+    getZoom(nextStep, lineHeight, containerHeight, nextStepDims) || currZoom;
 
   const animation = (
     <chain durations={[0.5, 0.5]}>
       <tween
-        from={{ focusY: prevFocus * lineHeight, scale: prevZoom }}
-        to={{ focusY: currentFocus * lineHeight, scale: currZoom }}
+        from={{
+          focusY: prevFocus * lineHeight,
+          scale: prevZoom
+        }}
+        to={{
+          focusY: currentFocus * lineHeight,
+          scale: currZoom
+        }}
         ease={easing.easeInOutQuad}
       />
       <tween
-        from={{ focusY: currentFocus * lineHeight, scale: currZoom }}
-        to={{ focusY: nextFocus * lineHeight, scale: nextZoom }}
+        from={{
+          focusY: currentFocus * lineHeight,
+          scale: currZoom
+        }}
+        to={{
+          focusY: nextFocus * lineHeight,
+          scale: nextZoom
+        }}
         ease={easing.easeInOutQuad}
       />
     </chain>

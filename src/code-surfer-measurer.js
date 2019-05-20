@@ -1,94 +1,124 @@
 import React from "react";
-import { useContainerStyle } from "./theming";
-
-// numer of extra lines to show at top and buttom when zooming in
-const paddingLines = 2;
+import CodeSurferFrame from "./code-surfer-frame";
 
 function CodeSurferMeasurer({ steps, setDimensions }) {
-  const container = React.useRef();
+  const frames = steps.map((step, i) => {
+    return {
+      title: step.title,
+      subtitle: step.subtitle,
+      lines: step.lines
+        .filter(line => line.middle)
+        .map(line => ({
+          ...line,
+          style: {}
+        }))
+    };
+  });
 
-  const longestLine = steps
-    .map(step =>
-      step.lines.reduce((a, b) => (a.content.length > b.content.length ? a : b))
-    )
-    .reduce((a, b) => (a.content.length > b.content.length ? a : b));
-  longestLine.style = {};
-  const longestStep = steps.reduce((a, b) =>
-    a.lines.filter(l => l.middle).length > b.lines.filter(l => l.middle).length
-      ? a
-      : b
-  );
-  const frame = longestStep.lines
-    .filter(l => l.middle)
-    .map(l => ({ ...l, style: {} }));
-  frame[0] = longestLine;
+  const ref = React.useRef();
 
   React.useLayoutEffect(() => {
-    const $container = container.current;
-    const currentScale =
-      $container.getBoundingClientRect().height / $container.clientHeight;
-
-    const containerWidth = $container.clientWidth;
-
-    const lineHeight = $container.querySelector(".cs-line").clientHeight;
-    const maxLineWidth =
-      $container.querySelector(".cs-line-tokens").getBoundingClientRect()
-        .width / currentScale;
-
-    const $parent = $container.parentElement;
-    const heightOverflow = $parent.scrollHeight - $parent.clientHeight;
-    const availableHeight = $container.scrollHeight - heightOverflow;
-
-    const contentHeight =
-      lineHeight * longestStep.lines.filter(l => l.middle).length;
-    const containerHeight = Math.min(
-      availableHeight,
-      (contentHeight + paddingLines * lineHeight) * 2
+    const containers = ref.current.querySelectorAll(".cs-container");
+    const stepsDimensions = [...containers].map((container, i) =>
+      getStepDimensions(container, steps[i])
     );
-    // debugger;
-    setDimensions({
-      lineHeight,
-      maxLineWidth,
-      currentScale,
-      containerHeight,
-      containerWidth,
-      availableHeight
-    });
+
+    const dimensions = {
+      lineHeight: stepsDimensions[0].lineHeight,
+      maxLineWidth: Math.max(...stepsDimensions.map(d => d.contentWidth)),
+      containerHeight: Math.max(...stepsDimensions.map(d => d.containerHeight)),
+      containerWidth: Math.max(...stepsDimensions.map(d => d.containerWidth)),
+      steps: stepsDimensions.map(d => ({
+        paddingTop: d.paddingTop,
+        paddingBottom: d.paddingBottom
+      }))
+    };
+    console.log("dimensions", dimensions);
+    setDimensions(dimensions);
   });
 
   return (
-    <div
-      ref={container}
-      style={{ ...useContainerStyle(), width: "100%", height: "100vh" }}
-    >
-      <pre
-        style={{
-          margin: 0,
-          color: "inherit",
-          height: "100%",
-          padding: `0`
-        }}
-      >
-        {frame.map((line, i) => (
-          <div
-            key={i}
-            style={{ overflow: "hidden", ...line.style }}
-            className="cs-line"
-          >
-            <span className="cs-line-tokens">{line.content}</span>
-          </div>
-        ))}
-      </pre>
+    <div ref={ref} style={{ overflow: "auto", height: "100%", width: "100%" }}>
+      {frames.map((frame, i) => (
+        <div
+          key={i}
+          style={{
+            overflow: "auto",
+            height: "100%",
+            width: "100%"
+          }}
+        >
+          <CodeSurferFrame frame={frame} />
+        </div>
+      ))}
     </div>
   );
 }
 
-function getZoom(step, lineHeight, containerHeight) {
+function getStepDimensions(container, step) {
+  const longestLineIndex = getLongestLineIndex(step);
+  const lines = container.querySelectorAll(".cs-line");
+  const firstLine = lines[0];
+  const longestLine = lines[longestLineIndex];
+  const containerParent = container.parentElement;
+  const title = container.querySelector(".cs-title");
+  const subtitle = container.querySelector(".cs-subtitle");
+
+  const lineCount = step.lines.filter(line => line.middle).length;
+  const heightOverflow =
+    containerParent.scrollHeight - containerParent.clientHeight;
+  const avaliableHeight = container.scrollHeight - heightOverflow;
+
+  const lineHeight = firstLine.clientHeight;
+  const paddingTop = title ? outerHeight(title) : lineHeight;
+  const paddingBottom = subtitle ? outerHeight(subtitle) : lineHeight;
+
+  const codeHeight = lineCount * lineHeight * 2;
+  const maxContentHeight = codeHeight + paddingTop + paddingBottom;
+  const containerHeight = Math.min(maxContentHeight, avaliableHeight);
+  const containerWidth = container.clientWidth;
+  const contentHeight = codeHeight + containerHeight;
+
+  const contentWidth = longestLine.clientWidth;
+  return {
+    lineHeight,
+    contentHeight,
+    contentWidth,
+    paddingTop,
+    paddingBottom,
+    containerHeight,
+    containerWidth
+  };
+}
+
+function outerHeight(element) {
+  var styles = window.getComputedStyle(element);
+  var margin =
+    parseFloat(styles["marginTop"]) + parseFloat(styles["marginBottom"]);
+  return element.offsetHeight + margin;
+}
+
+function getLongestLineIndex(step) {
+  const lines = step.lines.filter(line => line.middle);
+  const longestLine = lines.reduce((a, b) =>
+    a.content.length > b.content.length ? a : b
+  );
+  return lines.indexOf(longestLine);
+}
+
+function getZoom(step, lineHeight, containerHeight, stepDimensions) {
   if (!step) return null;
-  const contentHeight = (step.focusCount + paddingLines * 2) * lineHeight;
-  const zoom = containerHeight / contentHeight;
-  console.log("z", containerHeight, lineHeight, contentHeight);
+  const { paddingBottom, paddingTop } = stepDimensions;
+  const contentHeight = step.focusCount * lineHeight;
+  const availableHeight =
+    containerHeight - Math.max(paddingBottom, paddingTop) * 2;
+  const zoom = availableHeight / contentHeight;
+  console.log(containerHeight, stepDimensions);
+  console.log(
+    `contentheight: ${contentHeight}, available: ${availableHeight} = ${zoom}`
+  );
   return Math.min(zoom, 1);
+  // return 1;
 }
 
 export { CodeSurferMeasurer, getZoom };

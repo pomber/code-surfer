@@ -105,6 +105,7 @@ const theme = {
     background: "#011627",
     link: "#rgb(173, 219, 103)",
     pre: "#d6deeb",
+    code: "#d6deeb",
     preBackground: "#011627"
   },
   codeSurfer: {
