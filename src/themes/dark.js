@@ -109,7 +109,10 @@ const theme = {
     preBackground: "#011627"
   },
   codeSurfer: {
-    styles: tokenStyles
+    styles: tokenStyles,
+    title: {
+      background: "rgba(1, 22, 39, 0.8)"
+    }
   }
 };
 

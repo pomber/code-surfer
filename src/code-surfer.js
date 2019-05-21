@@ -55,7 +55,7 @@ function CodeSurfer({ steps, info }) {
     lines: step.lines
   });
 
-  const { focusY, scale } = scrollAnimation({
+  const { focusY, scale, opacity } = scrollAnimation({
     currentStepIndex,
     info,
     t: stepPlayhead
@@ -63,7 +63,9 @@ function CodeSurfer({ steps, info }) {
 
   const frame = {
     title: step.title,
+    titleOpacity: opacity,
     subtitle: step.subtitle,
+    subtitleOpacity: opacity,
     lines: styles.map((style, i) => {
       return {
         ...step.lines[i],

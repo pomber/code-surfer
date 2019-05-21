@@ -136,28 +136,72 @@ export function scrollAnimation({ info, currentStepIndex, t }) {
 
   const animation = (
     <chain durations={[0.5, 0.5]}>
-      <tween
-        from={{
-          focusY: prevFocus * lineHeight,
-          scale: prevZoom
-        }}
-        to={{
-          focusY: currentFocus * lineHeight,
-          scale: currZoom
-        }}
-        ease={easing.easeInOutQuad}
-      />
-      <tween
-        from={{
-          focusY: currentFocus * lineHeight,
-          scale: currZoom
-        }}
-        to={{
-          focusY: nextFocus * lineHeight,
-          scale: nextZoom
-        }}
-        ease={easing.easeInOutQuad}
-      />
+      <parallel>
+        <tween
+          from={{
+            focusY: prevFocus * lineHeight,
+            scale: prevZoom
+          }}
+          to={{
+            focusY: currentFocus * lineHeight,
+            scale: currZoom
+          }}
+          ease={easing.easeInOutQuad}
+        />
+        <chain durations={[0.5, 0.5]}>
+          <tween
+            from={{
+              opacity: 1
+            }}
+            to={{
+              opacity: 0
+            }}
+            ease={easing.easeInOutQuad}
+          />
+          <tween
+            from={{
+              opacity: 0
+            }}
+            to={{
+              opacity: 1
+            }}
+            ease={easing.easeInOutQuad}
+          />
+        </chain>
+      </parallel>
+      <parallel>
+        <tween
+          from={{
+            focusY: currentFocus * lineHeight,
+            scale: currZoom
+          }}
+          to={{
+            focusY: nextFocus * lineHeight,
+            scale: nextZoom
+          }}
+          ease={easing.easeInOutQuad}
+        />
+        <chain durations={[0.5, 0.5]}>
+          <tween
+            from={{
+              opacity: 1
+            }}
+            to={{
+              opacity: 0
+            }}
+            ease={easing.easeInOutQuad}
+          />
+          <tween
+            from={{
+              opacity: 0
+            }}
+            to={{
+              opacity: 1
+            }}
+            ease={easing.easeInOutQuad}
+          />
+        </chain>
+      </parallel>
     </chain>
   );
 

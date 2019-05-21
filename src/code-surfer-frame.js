@@ -1,5 +1,6 @@
 import React from "react";
 import { useContainerStyle, usePreStyle, useTokenStyles } from "./theming";
+import { useTheme } from "./use-theme";
 
 function CodeSurferFrame({
   frame,
@@ -63,31 +64,38 @@ function CodeSurferFrame({
         <h4
           className="cs-title"
           style={{
+            ...useTheme().codeSurfer.title,
             position: "absolute",
             top: 0,
             width: "100%",
             margin: 0,
-            padding: "1em 0",
-            background: "rgba(190,20,20,0.4)"
+            padding: "1em 0"
           }}
         >
-          {frame.title}
+          <span style={{ opacity: frame.titleOpacity }}>{frame.title}</span>
         </h4>
       )}
       {frame.subtitle && (
-        <h4
+        <p
           className="cs-subtitle"
           style={{
             position: "absolute",
             bottom: 0,
-            width: "100%",
-            margin: 0,
-            padding: "0.5em 0",
-            background: "rgba(190,20,20,0.4)"
+            width: "calc(100% - 2em)",
+            boxSizing: "border-box",
+            margin: "0.3em 1em",
+            padding: "0.5em",
+            background: "rgba(2,2,2,0.9)"
           }}
         >
-          {frame.subtitle}
-        </h4>
+          <span
+            style={{
+              opacity: frame.subtitleOpacity
+            }}
+          >
+            {frame.subtitle}
+          </span>
+        </p>
       )}
     </div>
   );
