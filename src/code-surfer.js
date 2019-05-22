@@ -7,41 +7,34 @@ import { CodeSurferMeasurer } from "./code-surfer-measurer";
 import CodeSurferFrame from "./code-surfer-frame";
 
 function CodeSurferContainer(props) {
-  const [dimensions, setDimensions] = React.useState(null);
-  const [info, setInfo] = React.useState(null);
+  const ref = React.useRef();
 
   const steps = React.useMemo(() => parseSteps(props.steps, props.lang), [
     props.steps,
     props.lang
   ]);
 
-  function createInfo(dimensions) {
-    const info = {
-      lang: props.lang,
-      dimensions: {
-        containerHeight: dimensions.containerHeight,
-        containerWidth: dimensions.containerWidth,
-        lineHeight: dimensions.lineHeight,
-        contentWidth: dimensions.maxLineWidth
-      },
-      steps: steps.map((step, i) => ({
-        ...step,
-        dimensions: {
-          paddingTop: dimensions.steps[i].paddingTop,
-          paddingBottom: dimensions.steps[i].paddingBottom
-        }
-      }))
-    };
-    setInfo(info);
-    setDimensions(dimensions);
-  }
+  const [info, setInfo] = React.useState({
+    measured: false,
+    lang: props.lang,
+    steps
+  });
 
-  useWindowResize(() => setInfo(null), [setDimensions]);
+  React.useLayoutEffect(() => {
+    if (info.measured) return;
+    setInfo(info => ({ ...ref.current.measure(info), measured: true }));
+  }, [info.measured]);
 
-  if (!info) {
-    return <CodeSurferMeasurer steps={steps} setDimensions={createInfo} />;
+  useWindowResize(() => setInfo(info => ({ ...info, measured: false })), [
+    setInfo
+  ]);
+
+  console.log("indo", info);
+
+  if (!info.measured) {
+    return <CodeSurferMeasurer steps={steps} ref={ref} />;
   }
-  return <CodeSurfer steps={steps} dimensions={dimensions} info={info} />;
+  return <CodeSurfer steps={steps} info={info} />;
 }
 
 function CodeSurfer({ steps, info }) {

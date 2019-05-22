@@ -1,7 +1,7 @@
 import React from "react";
 import CodeSurferFrame from "./code-surfer-frame";
 
-function CodeSurferMeasurer({ steps, setDimensions }) {
+const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
   const frames = steps.map((step, i) => {
     return {
       title: step.title,
@@ -15,30 +15,40 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
     };
   });
 
-  const ref = React.useRef();
+  const cref = React.useRef();
 
-  React.useLayoutEffect(() => {
-    const containers = ref.current.querySelectorAll(".cs-container");
-    const stepsDimensions = [...containers].map((container, i) =>
-      getStepDimensions(container, steps[i])
-    );
+  React.useImperativeHandle(ref, () => ({
+    measure: data => {
+      const containers = cref.current.querySelectorAll(".cs-container");
+      const stepsDimensions = [...containers].map((container, i) =>
+        getStepDimensions(container, steps[i])
+      );
 
-    const dimensions = {
-      lineHeight: stepsDimensions[0].lineHeight,
-      maxLineWidth: Math.max(...stepsDimensions.map(d => d.contentWidth)),
-      containerHeight: Math.max(...stepsDimensions.map(d => d.containerHeight)),
-      containerWidth: Math.max(...stepsDimensions.map(d => d.containerWidth)),
-      steps: stepsDimensions.map(d => ({
-        paddingTop: d.paddingTop,
-        paddingBottom: d.paddingBottom
-      }))
-    };
-    console.log("dimensions", dimensions);
-    setDimensions(dimensions);
-  });
+      return {
+        ...data,
+        dimensions: {
+          lineHeight: stepsDimensions[0].lineHeight,
+          contentWidth: Math.max(...stepsDimensions.map(d => d.contentWidth)),
+          containerHeight: Math.max(
+            ...stepsDimensions.map(d => d.containerHeight)
+          ),
+          containerWidth: Math.max(
+            ...stepsDimensions.map(d => d.containerWidth)
+          )
+        },
+        steps: data.steps.map((step, i) => ({
+          ...step,
+          dimensions: {
+            paddingTop: stepsDimensions[i].paddingTop,
+            paddingBottom: stepsDimensions[i].paddingBottom
+          }
+        }))
+      };
+    }
+  }));
 
   return (
-    <div ref={ref} style={{ overflow: "auto", height: "100%", width: "100%" }}>
+    <div ref={cref} style={{ overflow: "auto", height: "100%", width: "100%" }}>
       {frames.map((frame, i) => (
         <div
           key={i}
@@ -53,7 +63,7 @@ function CodeSurferMeasurer({ steps, setDimensions }) {
       ))}
     </div>
   );
-}
+});
 
 function getStepDimensions(container, step) {
   const longestLineIndex = getLongestLineIndex(step);
