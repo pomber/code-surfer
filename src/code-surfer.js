@@ -34,13 +34,13 @@ function CodeSurferContainer(props) {
   if (!info.measured) {
     return <CodeSurferMeasurer steps={steps} ref={ref} />;
   }
-  return <CodeSurfer steps={steps} info={info} />;
+  return <CodeSurfer info={info} />;
 }
 
-function CodeSurfer({ steps, info }) {
+function CodeSurfer({ info }) {
+  const { steps, dimensions } = info;
   const { currentStepIndex, stepPlayhead } = useStepSpring(steps.length);
   const step = steps[currentStepIndex];
-  const { dimensions } = info;
 
   const styles = runAnimation({
     lineHeight: dimensions.lineHeight,
@@ -77,6 +77,7 @@ function CodeSurfer({ steps, info }) {
       scrollTop={focusY}
       scale={scale}
       verticalOrigin={verticalOrigin}
+      t={stepPlayhead}
     />
   );
 }
