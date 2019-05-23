@@ -104,7 +104,7 @@ function getLongestLineIndex(step) {
   const longestLine = lines.reduce((a, b) =>
     a.content.length > b.content.length ? a : b
   );
-  return lines.indexOf(longestLine);
+  return step.lines.indexOf(longestLine);
 }
 
 export { CodeSurferMeasurer };

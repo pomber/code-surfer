@@ -17,7 +17,7 @@ const SlideToLeft = () => (
 
 function ShrinkHeight(props, context) {
   if (!context.lineHeight) {
-    return <step from={{}} to={{ height: 0 }} />;
+    return <step from={{ height: null }} to={{ height: 0 }} />;
   }
   return (
     <tween
@@ -37,7 +37,7 @@ const SlideFromRight = () => (
 );
 function GrowHeight(props, context) {
   if (!context.lineHeight) {
-    return <step from={{ height: 0 }} to={{}} />;
+    return <step from={{ height: 0 }} to={{ height: null }} />;
   }
   return (
     <tween

@@ -44,7 +44,6 @@ function CodeSurfer({ info }) {
 
   return (
     <CodeSurferFrame
-      dimensions={dimensions}
       t={stepPlayhead}
       info={info}
       stepIndex={currentStepIndex}
