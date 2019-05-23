@@ -123,21 +123,33 @@ function Line({ style, tokens }) {
 }
 
 function Title({ t, prev, curr, next }) {
-  let opacity = tweenOpacity(t, prev, curr, next);
   return (
-    <h4 className="cs-title" style={useTitleStyle()}>
-      <span style={{ opacity }}>{curr.value}</span>
+    <h4
+      className="cs-title"
+      style={{
+        ...useTitleStyle(),
+        opacity: tweenBackgroundOpacity(t, prev, curr, next)
+      }}
+    >
+      <span style={{ opacity: tweenTextOpacity(t, prev, curr, next) }}>
+        {curr.value}
+      </span>
     </h4>
   );
 }
 
 function Subtitle({ t, prev, curr, next }) {
-  let opacity = tweenOpacity(t, prev, curr, next);
   return (
-    <p className="cs-subtitle" style={useSubtitleStyle()}>
+    <p
+      className="cs-subtitle"
+      style={{
+        ...useSubtitleStyle(),
+        opacity: tweenBackgroundOpacity(t, prev, curr, next)
+      }}
+    >
       <span
         style={{
-          opacity
+          opacity: tweenTextOpacity(t, prev, curr, next)
         }}
       >
         {curr.value}
@@ -146,7 +158,17 @@ function Subtitle({ t, prev, curr, next }) {
   );
 }
 
-function tweenOpacity(t, prev, curr, next) {
+function tweenBackgroundOpacity(t, prev, curr, next) {
+  let opacity;
+  if (t && t < 0.5 && !prev) {
+    opacity = (t - 0.25) * 4;
+  } else if (t && t >= 0.5 && !next) {
+    opacity = (0.75 - t) * 4;
+  }
+  return opacity;
+}
+
+function tweenTextOpacity(t, prev, curr, next) {
   let opacity;
   if (t && t < 0.5 && prev && prev.value != curr.value) {
     opacity = (t - 0.25) * 4;
