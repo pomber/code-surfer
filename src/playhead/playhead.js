@@ -25,6 +25,13 @@ function mergeResults(results, composite) {
 }
 
 const playhead = {
+  always: (props, context) => t => {
+    return props.value;
+  },
+  step: (props, context) => t => {
+    const { from, to } = props;
+    return t < 0.5 ? from : to;
+  },
   tween: (props, context) => t => {
     const { from, to, ease = easing.linear } = props;
 

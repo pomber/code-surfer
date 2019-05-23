@@ -1,15 +1,14 @@
 import React from "react";
 import { useContainerStyle, usePreStyle, useTokenStyles } from "./theming";
 import { useTheme } from "./use-theme";
+import { runAnimation, scrollAnimation } from "./animation";
 
-function CodeSurferContainer({
-  frame,
-  dimensions,
-  scale,
-  verticalOrigin,
-  scrollTop,
-  t
-}) {
+function CodeSurferContainer({ t, stepIndex, info }) {
+  const { dimensions, steps } = info;
+  const step = steps[stepIndex];
+  const prev = steps[stepIndex - 1];
+  const next = steps[stepIndex + 1];
+
   return (
     <div
       className="cs-container"
@@ -23,29 +22,51 @@ function CodeSurferContainer({
     >
       <CodeSurferContent
         dimensions={dimensions}
-        scale={scale}
-        verticalOrigin={verticalOrigin}
-        frame={frame}
-        scrollTop={scrollTop}
+        t={t}
+        prev={prev}
+        curr={step}
+        next={next}
       />
-      {frame.title && <Title text={frame.title} t={t} />}
-      {frame.subtitle && <Subitle text={frame.subtitle} t={t} />}
+      {step.title && (
+        <Title
+          t={t}
+          prev={prev && prev.title}
+          curr={step.title}
+          next={next && next.title}
+        />
+      )}
+      {step.subtitle && (
+        <Subtitle
+          t={t}
+          prev={prev && prev.subtitle}
+          curr={step.subtitle}
+          next={next && next.subtitle}
+        />
+      )}
     </div>
   );
 }
 
-function CodeSurferContent({
-  dimensions,
-  scale,
-  verticalOrigin,
-  frame,
-  scrollTop
-}) {
+function CodeSurferContent({ dimensions, prev, curr, next, t }) {
   const ref = React.useRef();
+
+  const { scrollTop, scale } = curr.dimensions
+    ? scrollAnimation({ t, curr, prev, next })
+    : { scrollTop: 0, scale: 1 };
+
+  const styles = runAnimation({
+    lineHeight: curr.dimensions && curr.dimensions.lineHeight,
+    t,
+    lines: curr.lines
+  });
 
   React.useLayoutEffect(() => {
     ref.current.scrollTop = scrollTop;
   }, [scrollTop]);
+
+  const verticalOrigin = dimensions
+    ? dimensions.containerHeight / 2 + scrollTop
+    : 0;
 
   return (
     <pre
@@ -71,8 +92,8 @@ function CodeSurferContent({
         }}
       >
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-        {frame.lines.map(line => (
-          <Line {...line} />
+        {curr.lines.map((line, i) => (
+          <Line {...line} style={styles[i]} />
         ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </div>
@@ -95,13 +116,8 @@ function Line({ style, tokens }) {
   );
 }
 
-function Title({ text, t }) {
-  let o;
-  // if (t && t < 0.5 && prev) {
-  //   o = (t - 0.25) * 4;
-  // } else if (t && t >= 0.5 && next) {
-  //   o = (0.75 - t) * 4;
-  // }
+function Title({ t, prev, curr, next }) {
+  let opacity = tweenOpacity(t, prev, curr, next);
   return (
     <h4
       className="cs-title"
@@ -114,17 +130,13 @@ function Title({ text, t }) {
         padding: "1em 0"
       }}
     >
-      <span style={{ opacity: o }}>{text}</span>
+      <span style={{ opacity }}>{curr.value}</span>
     </h4>
   );
 }
-function Subitle({ text, t }) {
-  let o;
-  // if (t && t < 0.5 && prev) {
-  //   o = (t - 0.25) * 4;
-  // } else if (t && t >= 0.5 && next) {
-  //   o = (0.75 - t) * 4;
-  // }
+
+function Subtitle({ t, prev, curr, next }) {
+  let opacity = tweenOpacity(t, prev, curr, next);
   return (
     <p
       className="cs-subtitle"
@@ -140,13 +152,23 @@ function Subitle({ text, t }) {
     >
       <span
         style={{
-          opacity: o
+          opacity
         }}
       >
-        {text}
+        {curr.value}
       </span>
     </p>
   );
+}
+
+function tweenOpacity(t, prev, curr, next) {
+  let opacity;
+  if (t && t < 0.5 && prev && prev.value != curr.value) {
+    opacity = (t - 0.25) * 4;
+  } else if (t && t >= 0.5 && next && next.value != curr.value) {
+    opacity = (0.75 - t) * 4;
+  }
+  return opacity;
 }
 
 export default CodeSurferContainer;

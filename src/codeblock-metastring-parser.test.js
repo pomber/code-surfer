@@ -21,20 +21,24 @@ describe("Parsing Codeblock Metastring", () => {
   });
 
   it("return any string property", () => {
-    expect(parseMetastring("title=foo")).toEqual({ title: "foo" });
+    expect(parseMetastring("title=foo")).toEqual({ title: { value: "foo" } });
   });
 
   it("return properties with spaces", () => {
-    expect(parseMetastring(`title="foo bar"`)).toEqual({ title: "foo bar" });
+    expect(parseMetastring(`title="foo bar"`)).toEqual({
+      title: { value: "foo bar" }
+    });
   });
 
   it("return properties containing the equals sign", () => {
-    expect(parseMetastring(`title="foo=bar"`)).toEqual({ title: "foo=bar" });
+    expect(parseMetastring(`title="foo=bar"`)).toEqual({
+      title: { value: "foo=bar" }
+    });
   });
 
   it("return properties with quotes", () => {
     expect(parseMetastring(`title="foo \\"bar"`)).toEqual({
-      title: `foo "bar`
+      title: { value: `foo "bar` }
     });
   });
 });

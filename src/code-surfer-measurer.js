@@ -1,27 +1,18 @@
 import React from "react";
 import CodeSurferFrame from "./code-surfer-frame";
 
-const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
-  const frames = steps.map((step, i) => {
-    return {
-      title: step.title,
-      subtitle: step.subtitle,
-      lines: step.lines
-        .filter(line => line.middle)
-        .map(line => ({
-          ...line,
-          style: {}
-        }))
-    };
-  });
-
+const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
   const cref = React.useRef();
 
   React.useImperativeHandle(ref, () => ({
     measure: data => {
       const containers = cref.current.querySelectorAll(".cs-container");
       const stepsDimensions = [...containers].map((container, i) =>
-        getStepDimensions(container, steps[i])
+        getStepDimensions(container, data.steps[i])
+      );
+
+      const containerHeight = Math.max(
+        ...stepsDimensions.map(d => d.containerHeight)
       );
 
       return {
@@ -29,9 +20,7 @@ const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
         dimensions: {
           lineHeight: stepsDimensions[0].lineHeight,
           contentWidth: Math.max(...stepsDimensions.map(d => d.contentWidth)),
-          containerHeight: Math.max(
-            ...stepsDimensions.map(d => d.containerHeight)
-          ),
+          containerHeight,
           containerWidth: Math.max(
             ...stepsDimensions.map(d => d.containerWidth)
           )
@@ -40,7 +29,9 @@ const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
           ...step,
           dimensions: {
             paddingTop: stepsDimensions[i].paddingTop,
-            paddingBottom: stepsDimensions[i].paddingBottom
+            paddingBottom: stepsDimensions[i].paddingBottom,
+            lineHeight: stepsDimensions[i].lineHeight,
+            containerHeight
           }
         }))
       };
@@ -49,7 +40,7 @@ const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
 
   return (
     <div ref={cref} style={{ overflow: "auto", height: "100%", width: "100%" }}>
-      {frames.map((frame, i) => (
+      {info.steps.map((step, i) => (
         <div
           key={i}
           style={{
@@ -58,7 +49,7 @@ const CodeSurferMeasurer = React.forwardRef(({ steps }, ref) => {
             width: "100%"
           }}
         >
-          <CodeSurferFrame frame={frame} />
+          <CodeSurferFrame info={info} stepIndex={i} t={0.5} />
         </div>
       ))}
     </div>
@@ -116,19 +107,4 @@ function getLongestLineIndex(step) {
   return lines.indexOf(longestLine);
 }
 
-function getZoom(step, lineHeight, containerHeight, stepDimensions) {
-  if (!step) return null;
-  const { paddingBottom, paddingTop } = stepDimensions;
-  const contentHeight = step.focusCount * lineHeight;
-  const availableHeight =
-    containerHeight - Math.max(paddingBottom, paddingTop) * 2;
-  const zoom = availableHeight / contentHeight;
-  console.log(containerHeight, stepDimensions);
-  console.log(
-    `contentheight: ${contentHeight}, available: ${availableHeight} = ${zoom}`
-  );
-  return Math.min(zoom, 1);
-  // return 1;
-}
-
-export { CodeSurferMeasurer, getZoom };
+export { CodeSurferMeasurer };

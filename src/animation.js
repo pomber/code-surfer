@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { createAnimation, Stagger, Context, run } from "./playhead/playhead";
 import easing from "./playhead/easing";
-import { getZoom } from "./code-surfer-measurer";
 
 const dx = 250;
 const offOpacity = 0.3;
@@ -17,6 +16,9 @@ const SlideToLeft = () => (
 );
 
 function ShrinkHeight(props, context) {
+  if (!context.lineHeight) {
+    return <step from={{}} to={{ height: 0 }} />;
+  }
   return (
     <tween
       from={{ height: context.lineHeight }}
@@ -34,6 +36,9 @@ const SlideFromRight = () => (
   />
 );
 function GrowHeight(props, context) {
+  if (!context.lineHeight) {
+    return <step from={{ height: 0 }} to={{}} />;
+  }
   return (
     <tween
       from={{ height: 0 }}
@@ -102,108 +107,62 @@ export function runAnimation({ lineHeight, lines, t }) {
   return run(animation, t);
 }
 
-export function scrollAnimation({ info, currentStepIndex, t }) {
+export function scrollAnimation({ t, prev, curr, next }) {
   // TODO calc params using info
-  const { steps, dimensions } = info;
-  const { lineHeight, containerHeight } = dimensions;
+  const { lineHeight, containerHeight } = curr.dimensions;
 
-  const prevStepDims = steps[currentStepIndex - 1]
-    ? steps[currentStepIndex - 1].dimensions
-    : {};
-  const stepDimensions = steps[currentStepIndex].dimensions;
+  const prevStepDims = prev ? prev.dimensions : {};
+  const stepDimensions = curr.dimensions;
 
-  const nextStepDims = steps[currentStepIndex + 1]
-    ? steps[currentStepIndex + 1].dimensions
-    : {};
+  const nextStepDims = next ? next.dimensions : {};
 
-  const prevStep = steps[currentStepIndex - 1];
-  const currStep = steps[currentStepIndex];
-  const nextStep = steps[currentStepIndex + 1];
-  const currentFocus = steps[currentStepIndex].focusCenter || 0;
-  const prevFocus = prevStep ? prevStep.focusCenter || 0 : 0;
-  const nextFocus = nextStep ? nextStep.focusCenter || 0 : 0;
+  const currentFocus = curr.focusCenter || 0;
+  const prevFocus = prev ? prev.focusCenter || 0 : 0;
+  const nextFocus = next ? next.focusCenter || 0 : 0;
 
-  const currZoom = getZoom(
-    currStep,
-    lineHeight,
-    containerHeight,
-    stepDimensions
-  );
+  const currZoom = getZoom(curr, lineHeight, containerHeight, stepDimensions);
   const prevZoom =
-    getZoom(prevStep, lineHeight, containerHeight, prevStepDims) || currZoom;
+    getZoom(prev, lineHeight, containerHeight, prevStepDims) || currZoom;
   const nextZoom =
-    getZoom(nextStep, lineHeight, containerHeight, nextStepDims) || currZoom;
+    getZoom(next, lineHeight, containerHeight, nextStepDims) || currZoom;
 
   const animation = (
     <chain durations={[0.5, 0.5]}>
-      <parallel>
-        <tween
-          from={{
-            focusY: prevFocus * lineHeight,
-            scale: prevZoom
-          }}
-          to={{
-            focusY: currentFocus * lineHeight,
-            scale: currZoom
-          }}
-          ease={easing.easeInOutQuad}
-        />
-        <chain durations={[0.5, 0.5]}>
-          <tween
-            from={{
-              opacity: 1
-            }}
-            to={{
-              opacity: 0
-            }}
-            ease={easing.easeInOutQuad}
-          />
-          <tween
-            from={{
-              opacity: 0
-            }}
-            to={{
-              opacity: 1
-            }}
-            ease={easing.easeInOutQuad}
-          />
-        </chain>
-      </parallel>
-      <parallel>
-        <tween
-          from={{
-            focusY: currentFocus * lineHeight,
-            scale: currZoom
-          }}
-          to={{
-            focusY: nextFocus * lineHeight,
-            scale: nextZoom
-          }}
-          ease={easing.easeInOutQuad}
-        />
-        <chain durations={[0.5, 0.5]}>
-          <tween
-            from={{
-              opacity: 1
-            }}
-            to={{
-              opacity: 0
-            }}
-            ease={easing.easeInOutQuad}
-          />
-          <tween
-            from={{
-              opacity: 0
-            }}
-            to={{
-              opacity: 1
-            }}
-            ease={easing.easeInOutQuad}
-          />
-        </chain>
-      </parallel>
+      <tween
+        from={{
+          scrollTop: prevFocus * lineHeight,
+          scale: prevZoom
+        }}
+        to={{
+          scrollTop: currentFocus * lineHeight,
+          scale: currZoom
+        }}
+        ease={easing.easeInOutQuad}
+      />
+      <tween
+        from={{
+          scrollTop: currentFocus * lineHeight,
+          scale: currZoom
+        }}
+        to={{
+          scrollTop: nextFocus * lineHeight,
+          scale: nextZoom
+        }}
+        ease={easing.easeInOutQuad}
+      />
     </chain>
   );
 
   return run(animation, t);
+}
+
+function getZoom(step, lineHeight, containerHeight, stepDimensions) {
+  if (!step) return null;
+  const { paddingBottom, paddingTop } = stepDimensions;
+  const contentHeight = step.focusCount * lineHeight;
+  const availableHeight =
+    containerHeight - Math.max(paddingBottom, paddingTop) * 2;
+  const zoom = availableHeight / contentHeight;
+  return Math.min(zoom, 1);
+  // return 1;
 }
