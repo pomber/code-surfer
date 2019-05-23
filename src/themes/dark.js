@@ -112,6 +112,9 @@ const theme = {
     styles: tokenStyles,
     title: {
       background: "rgba(1, 22, 39, 0.8)"
+    },
+    subtitle: {
+      background: "rgba(2,2,2,0.9)"
     }
   }
 };

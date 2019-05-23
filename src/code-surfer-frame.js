@@ -1,5 +1,11 @@
 import React from "react";
-import { useContainerStyle, usePreStyle, useTokenStyles } from "./theming";
+import {
+  useContainerStyle,
+  usePreStyle,
+  useTokenStyles,
+  useSubtitleStyle,
+  useTitleStyle
+} from "./theming";
 import { useTheme } from "./use-theme";
 import { runAnimation, scrollAnimation } from "./animation";
 
@@ -119,17 +125,7 @@ function Line({ style, tokens }) {
 function Title({ t, prev, curr, next }) {
   let opacity = tweenOpacity(t, prev, curr, next);
   return (
-    <h4
-      className="cs-title"
-      style={{
-        ...useTheme().codeSurfer.title,
-        position: "absolute",
-        top: 0,
-        width: "100%",
-        margin: 0,
-        padding: "1em 0"
-      }}
-    >
+    <h4 className="cs-title" style={useTitleStyle()}>
       <span style={{ opacity }}>{curr.value}</span>
     </h4>
   );
@@ -138,18 +134,7 @@ function Title({ t, prev, curr, next }) {
 function Subtitle({ t, prev, curr, next }) {
   let opacity = tweenOpacity(t, prev, curr, next);
   return (
-    <p
-      className="cs-subtitle"
-      style={{
-        position: "absolute",
-        bottom: 0,
-        width: "calc(100% - 2em)",
-        boxSizing: "border-box",
-        margin: "0.3em 1em",
-        padding: "0.5em",
-        background: "rgba(2,2,2,0.9)"
-      }}
-    >
+    <p className="cs-subtitle" style={useSubtitleStyle()}>
       <span
         style={{
           opacity

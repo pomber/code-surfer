@@ -46,4 +46,38 @@ function useContainerStyle() {
   };
 }
 
-export { useTokenStyles, usePreStyle, useContainerStyle };
+function useTitleStyle() {
+  const theme = useTheme();
+  const base = {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    margin: 0,
+    padding: "1em 0"
+  };
+  const style = (theme.codeSurfer && theme.codeSurfer.title) || {};
+  return { ...base, ...style };
+}
+
+function useSubtitleStyle() {
+  const theme = useTheme();
+  const base = {
+    position: "absolute",
+    bottom: 0,
+    width: "calc(100% - 2em)",
+    boxSizing: "border-box",
+    margin: "0.3em 1em",
+    padding: "0.5em",
+    background: "rgba(2,2,2,0.9)"
+  };
+  const style = (theme.codeSurfer && theme.codeSurfer.subtitle) || {};
+  return { ...base, ...style };
+}
+
+export {
+  useTokenStyles,
+  usePreStyle,
+  useContainerStyle,
+  useSubtitleStyle,
+  useTitleStyle
+};
