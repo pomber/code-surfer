@@ -109,22 +109,15 @@ export function runAnimation({ lineHeight, lines, t }) {
 
 export function scrollAnimation({ t, prev, curr, next }) {
   // TODO calc params using info
-  const { lineHeight, containerHeight } = curr.dimensions;
-
-  const prevStepDims = prev ? prev.dimensions : {};
-  const stepDimensions = curr.dimensions;
-
-  const nextStepDims = next ? next.dimensions : {};
+  const { lineHeight } = curr.dimensions;
 
   const currentFocus = curr.focusCenter || 0;
   const prevFocus = prev ? prev.focusCenter || 0 : 0;
   const nextFocus = next ? next.focusCenter || 0 : 0;
 
-  const currZoom = getZoom(curr, lineHeight, containerHeight, stepDimensions);
-  const prevZoom =
-    getZoom(prev, lineHeight, containerHeight, prevStepDims) || currZoom;
-  const nextZoom =
-    getZoom(next, lineHeight, containerHeight, nextStepDims) || currZoom;
+  const currZoom = getZoom(curr);
+  const prevZoom = getZoom(prev) || currZoom;
+  const nextZoom = getZoom(next) || currZoom;
 
   const animation = (
     <chain durations={[0.5, 0.5]}>
@@ -156,13 +149,26 @@ export function scrollAnimation({ t, prev, curr, next }) {
   return run(animation, t);
 }
 
-function getZoom(step, lineHeight, containerHeight, stepDimensions) {
+function getZoom(step) {
   if (!step) return null;
-  const { paddingBottom, paddingTop } = stepDimensions;
+
+  const {
+    paddingBottom,
+    paddingTop,
+    containerHeight,
+    containerWidth,
+    contentWidth,
+    lineHeight
+  } = step.dimensions;
+
   const contentHeight = step.focusCount * lineHeight;
   const availableHeight =
     containerHeight - Math.max(paddingBottom, paddingTop) * 2;
-  const zoom = availableHeight / contentHeight;
-  return Math.min(zoom, 1);
+  const yZoom = availableHeight / contentHeight;
+
+  // if there are lines that are too long for the container
+  const xZoom = (0.9 * containerWidth) / contentWidth;
+
+  return Math.min(yZoom, 1, xZoom);
   // return 1;
 }

@@ -15,15 +15,21 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
         ...stepsDimensions.map(d => d.containerHeight)
       );
 
+      const containerWidth = Math.max(
+        ...stepsDimensions.map(d => d.containerWidth)
+      );
+
+      const contentWidth = Math.max(
+        ...stepsDimensions.map(d => d.contentWidth)
+      );
+
       return {
         ...data,
         dimensions: {
           lineHeight: stepsDimensions[0].lineHeight,
-          contentWidth: Math.max(...stepsDimensions.map(d => d.contentWidth)),
+          contentWidth,
           containerHeight,
-          containerWidth: Math.max(
-            ...stepsDimensions.map(d => d.containerWidth)
-          )
+          containerWidth
         },
         steps: data.steps.map((step, i) => ({
           ...step,
@@ -31,7 +37,9 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
             paddingTop: stepsDimensions[i].paddingTop,
             paddingBottom: stepsDimensions[i].paddingBottom,
             lineHeight: stepsDimensions[i].lineHeight,
-            containerHeight
+            contentWidth,
+            containerHeight,
+            containerWidth
           }
         }))
       };

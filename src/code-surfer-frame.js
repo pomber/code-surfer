@@ -76,17 +76,17 @@ function CodeSurferContent({ dimensions, prev, curr, next, t }) {
         ...usePreStyle(),
         margin: 0,
         height: "100%",
-        overflowY: "hidden",
-        overflowX: "hidden",
-        padding:
-          dimensions &&
-          `0 ${(dimensions.containerWidth - dimensions.contentWidth) / 2}px`
+        overflow: "hidden"
       }}
     >
       <div
         className="cs-scaled-content"
         style={{
           height: dimensions ? dimensions.contentHeight : "100%",
+          width: dimensions && dimensions.contentWidth,
+          margin:
+            dimensions &&
+            `0 ${(dimensions.containerWidth - dimensions.contentWidth) / 2}px`,
           transform: `scale(${scale})`,
           transformOrigin: `center ${verticalOrigin}px`
         }}
