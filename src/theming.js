@@ -2,14 +2,24 @@ import React from "react";
 
 // TODO remove this after https://github.com/jxnblk/mdx-deck/pull/359
 import { useTheme } from "./use-theme";
+import base from "./themes/github";
+
+function useSafeTheme() {
+  const unsafeTheme = useTheme();
+  return unsafeTheme.codeSurfer
+    ? unsafeTheme
+    : { ...unsafeTheme, codeSurfer: base.codeSurfer };
+}
 
 function useTokenStyles() {
-  const theme = useTheme();
+  const theme = useSafeTheme();
 
   const themeStylesByType = React.useMemo(() => {
     const themeStylesByType = Object.create(null);
+
+    const styles = theme.codeSurfer.styles;
     // TODO check theme.codeSurfer is defined or use default
-    theme.codeSurfer.styles.forEach(({ types, style }) => {
+    styles.forEach(({ types, style }) => {
       types.forEach(type => {
         themeStylesByType[type] = Object.assign(
           themeStylesByType[type] || {},
@@ -31,23 +41,21 @@ function useTokenStyles() {
 }
 
 function usePreStyle() {
-  const theme = useTheme();
-  return {
-    color: theme.colors.pre || "inherit",
-    background: theme.colors.preBackground || "inherit"
-  };
+  const theme = useSafeTheme();
+  return theme.codeSurfer.pre || {};
+}
+function useCodeStyle() {
+  const theme = useSafeTheme();
+  return theme.codeSurfer.code || {};
 }
 
 function useContainerStyle() {
-  const theme = useTheme();
-  return {
-    color: theme.colors.text || "inherit",
-    background: theme.colors.background || "inherit"
-  };
+  const theme = useSafeTheme();
+  return theme.codeSurfer.container || {};
 }
 
 function useTitleStyle() {
-  const theme = useTheme();
+  const theme = useSafeTheme();
   const base = {
     position: "absolute",
     top: 0,
@@ -55,12 +63,12 @@ function useTitleStyle() {
     margin: 0,
     padding: "1em 0"
   };
-  const style = (theme.codeSurfer && theme.codeSurfer.title) || {};
+  const style = theme.codeSurfer.title || {};
   return { ...base, ...style };
 }
 
 function useSubtitleStyle() {
-  const theme = useTheme();
+  const theme = useSafeTheme();
   const base = {
     position: "absolute",
     bottom: 0,
@@ -70,13 +78,14 @@ function useSubtitleStyle() {
     padding: "0.5em",
     background: "rgba(2,2,2,0.9)"
   };
-  const style = (theme.codeSurfer && theme.codeSurfer.subtitle) || {};
+  const style = theme.codeSurfer.subtitle || {};
   return { ...base, ...style };
 }
 
 export {
   useTokenStyles,
   usePreStyle,
+  useCodeStyle,
   useContainerStyle,
   useSubtitleStyle,
   useTitleStyle

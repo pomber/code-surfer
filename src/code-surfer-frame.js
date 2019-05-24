@@ -6,7 +6,6 @@ import {
   useSubtitleStyle,
   useTitleStyle
 } from "./theming";
-import { useTheme } from "./use-theme";
 import { runAnimation, scrollAnimation } from "./animation";
 
 function CodeSurferContainer({ t, stepIndex, info }) {
@@ -85,9 +84,11 @@ function CodeSurferContent({ dimensions, prev, curr, next, t }) {
         overflow: "hidden"
       }}
     >
-      <div
+      <code
         className="cs-scaled-content"
         style={{
+          ...usePreStyle(),
+          display: "block",
           height: dimensions ? dimensions.contentHeight : "100%",
           width: dimensions && dimensions.contentWidth,
           margin:
@@ -102,7 +103,7 @@ function CodeSurferContent({ dimensions, prev, curr, next, t }) {
           <Line {...line} style={styles[i]} />
         ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-      </div>
+      </code>
     </pre>
   );
 }
