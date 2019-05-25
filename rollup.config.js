@@ -7,33 +7,53 @@ import url from "rollup-plugin-url";
 import svgr from "@svgr/rollup";
 
 import pkg from "./package.json";
+import themesPkg from "./themes/package.json";
 
-export default {
-  input: "src/index.js",
-  output: [
-    {
-      file: pkg.main,
-      format: "cjs",
-      sourcemap: true
-    },
-    {
-      file: pkg.module,
-      format: "es",
-      sourcemap: true
-    }
-  ],
-  plugins: [
-    external(),
-    postcss({
-      modules: true
-    }),
-    url(),
-    svgr(),
-    babel({
-      exclude: "node_modules/**",
-      plugins: ["external-helpers"]
-    }),
-    resolve(),
-    commonjs()
-  ]
-};
+const plugins = [
+  external(),
+  postcss({
+    modules: true
+  }),
+  url(),
+  svgr(),
+  babel({
+    exclude: "node_modules/**",
+    plugins: ["external-helpers"]
+  }),
+  resolve(),
+  commonjs()
+];
+export default [
+  {
+    input: "themes/src/index.js",
+    output: [
+      {
+        file: "themes/" + themesPkg.main,
+        format: "cjs",
+        sourcemap: true
+      },
+      {
+        file: "themes/" + themesPkg.module,
+        format: "es",
+        sourcemap: true
+      }
+    ],
+    plugins
+  },
+  {
+    input: "src/index.js",
+    output: [
+      {
+        file: pkg.main,
+        format: "cjs",
+        sourcemap: true
+      },
+      {
+        file: pkg.module,
+        format: "es",
+        sourcemap: true
+      }
+    ],
+    plugins
+  }
+];

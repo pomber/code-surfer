@@ -2,7 +2,7 @@ import React from "react";
 
 // TODO remove this after https://github.com/jxnblk/mdx-deck/pull/359
 import { useTheme } from "./use-theme";
-import base from "./themes/github";
+import { githubLight as base } from "../themes";
 
 function useSafeTheme() {
   const unsafeTheme = useTheme();
