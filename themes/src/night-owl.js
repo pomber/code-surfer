@@ -1,11 +1,8 @@
-import { base } from "mdx-deck/themes";
-const theme = {
-  ...base,
-  colors: {
-    text: "#d6deeb",
-    background: "#011627",
-    link: "#rgb(173, 219, 103)"
-  },
+import { addColors, makeTheme } from "./utils";
+
+// From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
+
+const prismTheme = {
   plain: {
     color: "#d6deeb",
     backgroundColor: "#011627"
@@ -111,4 +108,9 @@ const theme = {
   ]
 };
 
-export default theme;
+const theme = makeTheme(prismTheme, {
+  title: { background: "rgba(1, 22, 39, 0.8)" }
+});
+const fullTheme = addColors(theme, prismTheme);
+
+export { theme, fullTheme };

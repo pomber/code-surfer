@@ -1,3 +1,27 @@
+export function makeTheme(prismTheme, override = {}) {
+  return {
+    codeSurfer: {
+      styles: prismTheme.styles,
+      title: {
+        background: prismTheme.plain.backgroundColor
+      },
+      subtitle: {
+        color: "#d6deeb",
+        background: "rgba(10,10,10,0.9)"
+      },
+      pre: {
+        color: prismTheme.plain.color,
+        background: prismTheme.plain.backgroundColor
+      },
+      code: {
+        color: prismTheme.plain.color,
+        background: prismTheme.plain.backgroundColor
+      },
+      ...override
+    }
+  };
+}
+
 export function addColors(theme, prismTheme) {
   const stringStyle = theme.codeSurfer.styles.find(s =>
     s.types.includes("string")

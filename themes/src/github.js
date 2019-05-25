@@ -1,6 +1,6 @@
-import base from "mdx-deck/themes";
+import { addColors, makeTheme } from "./utils";
 
-// Original: https://raw.githubusercontent.com/PrismJS/prism-themes/master/themes/prism-ghcolors.css
+// From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
 
 const prismTheme = {
   plain: {
@@ -77,34 +77,7 @@ const prismTheme = {
   ]
 };
 
-const theme = {
-  ...base,
-  colors: {
-    text: prismTheme.plain.color,
-    background: prismTheme.plain.backgroundColor,
-    link: "#rgb(173, 219, 103)",
-    pre: prismTheme.plain.color,
-    code: prismTheme.plain.color,
-    preBackground: prismTheme.plain.backgroundColor
-  },
-  codeSurfer: {
-    styles: prismTheme.styles,
-    title: {
-      background: "rgb(246, 248, 250, 0.8)"
-    },
-    subtitle: {
-      color: "#d6deeb",
-      background: "rgba(2,2,2,0.9)"
-    },
-    pre: {
-      color: prismTheme.plain.color,
-      background: prismTheme.plain.backgroundColor
-    },
-    code: {
-      color: prismTheme.plain.color,
-      background: prismTheme.plain.backgroundColor
-    }
-  }
-};
+const theme = makeTheme(prismTheme);
+const fullTheme = addColors(theme, prismTheme);
 
-export default theme;
+export { theme, fullTheme };
