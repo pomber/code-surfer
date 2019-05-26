@@ -5,8 +5,7 @@ import useWindowResize from "./use-window-resize";
 import { CodeSurferMeasurer } from "./code-surfer-measurer";
 import CodeSurferFrame from "./code-surfer-frame";
 
-// TODO lazy
-import "prismjs/components/prism-jsx";
+import "./default-syntaxes";
 
 function CodeSurferContainer(props) {
   const ref = React.useRef();
