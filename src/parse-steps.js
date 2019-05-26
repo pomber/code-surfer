@@ -1,7 +1,8 @@
-import { getSlides } from "./differ";
+import { getSlides, getCodes } from "./differ";
 
 export function parseSteps(rawSteps, lang) {
-  const codes = rawSteps.map(s => s.code);
+  console.log(rawSteps);
+  const codes = getCodes(rawSteps);
 
   const stepsLines = getSlides(codes.reverse(), lang).reverse();
   const steps = rawSteps.map((step, i) => {

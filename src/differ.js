@@ -1,4 +1,4 @@
-import { diffLines } from "diff";
+import { diffLines, applyPatch } from "diff";
 import tokenize from "./tokenizer";
 const newlineRe = /\r\n|\r|\n/;
 
@@ -115,4 +115,18 @@ export function getChanges(lines) {
   }
 
   return changes;
+}
+
+export function getCodes(rawSteps) {
+  const codes = [];
+
+  rawSteps.forEach((s, i) => {
+    if (s.lang === "diff" && i > 0) {
+      codes[i] = applyPatch(codes[i - 1], s.code);
+    } else {
+      codes[i] = s.code;
+    }
+  });
+
+  return codes;
 }
