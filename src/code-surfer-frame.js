@@ -7,12 +7,18 @@ import {
   useTitleStyle
 } from "./theming";
 import { runAnimation, scrollAnimation } from "./animation";
+import { useAnimationContext } from "./animation-context";
+import { fadeIn, fadeOutIn, fadeOut } from "./animations";
+import { prefixed } from "eventemitter3";
 
 function CodeSurferContainer({ t, stepIndex, info }) {
   const { dimensions, steps } = info;
   const step = steps[stepIndex];
   const prev = steps[stepIndex - 1];
   const next = steps[stepIndex + 1];
+
+  const playhead = stepIndex + (t * 2 - 1);
+  const ctx = useAnimationContext(steps, playhead);
 
   return (
     <div
@@ -31,6 +37,7 @@ function CodeSurferContainer({ t, stepIndex, info }) {
         prev={prev}
         curr={step}
         next={next}
+        ctx={ctx}
       />
       {step.title && (
         <Title
@@ -38,6 +45,7 @@ function CodeSurferContainer({ t, stepIndex, info }) {
           prev={prev && prev.title}
           curr={step.title}
           next={next && next.title}
+          ctx={ctx.select(step => step.title)}
         />
       )}
       {step.subtitle && (
@@ -46,13 +54,14 @@ function CodeSurferContainer({ t, stepIndex, info }) {
           prev={prev && prev.subtitle}
           curr={step.subtitle}
           next={next && next.subtitle}
+          ctx={ctx.select(step => step.subtitle)}
         />
       )}
     </div>
   );
 }
 
-function CodeSurferContent({ dimensions, prev, curr, next, t }) {
+function CodeSurferContent({ dimensions, prev, curr, next, t, ctx }) {
   const ref = React.useRef();
 
   const { scrollTop, scale } = curr.dimensions
@@ -99,16 +108,28 @@ function CodeSurferContent({ dimensions, prev, curr, next, t }) {
         }}
       >
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-        {curr.lines.map((line, i) => (
-          <Line {...line} style={styles[i]} />
-        ))}
+        {ctx
+          .select(step => step.lines)
+          .map(({ key, ctx }, i) => (
+            <Line {...ctx.current()} style={styles[i]} ctx={ctx} key={key} />
+          ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </code>
     </pre>
   );
 }
 
-function Line({ style, tokens }) {
+function Line({ style, tokens, ctx }) {
+  // const lineStyle = ctx.useAnimations([
+  //   {
+  //     animation: exitLine,
+  //     when: (prev, next) => prev && prev.show && (!next || !next.show),
+  //     stagger: 0.2
+  //   }
+  // ]);
+
+  // console.log(lineStyle);
+
   const getStyleForToken = useTokenStyles();
   return (
     <div style={{ overflow: "hidden", ...style }}>
@@ -123,60 +144,55 @@ function Line({ style, tokens }) {
   );
 }
 
-function Title({ t, prev, curr, next }) {
+function Title({ ctx }) {
   return (
     <h4
       className="cs-title"
       style={{
         ...useTitleStyle(),
-        opacity: tweenBackgroundOpacity(t, prev, curr, next)
+        ...ctx.useAnimation(fadeBackground)
       }}
     >
-      <span style={{ opacity: tweenTextOpacity(t, prev, curr, next) }}>
-        {curr.value}
-      </span>
+      <span style={ctx.useAnimation(fadeText)}>{ctx.current().value}</span>
     </h4>
   );
 }
-
-function Subtitle({ t, prev, curr, next }) {
+function Subtitle({ ctx }) {
   return (
     <p
       className="cs-subtitle"
       style={{
         ...useSubtitleStyle(),
-        opacity: tweenBackgroundOpacity(t, prev, curr, next)
+        ...ctx.useAnimation(fadeBackground)
       }}
     >
-      <span
-        style={{
-          opacity: tweenTextOpacity(t, prev, curr, next)
-        }}
-      >
-        {curr.value}
-      </span>
+      <span style={ctx.useAnimation(fadeText)}>{ctx.current().value}</span>
     </p>
   );
 }
 
-function tweenBackgroundOpacity(t, prev, curr, next) {
-  let opacity;
-  if (t && t < 0.5 && !prev) {
-    opacity = (t - 0.25) * 4;
-  } else if (t && t >= 0.5 && !next) {
-    opacity = (0.75 - t) * 4;
+function fadeBackground(prev, next, t) {
+  let opacity = 1;
+  if (!prev) {
+    opacity = t;
   }
-  return opacity;
+  if (!next) {
+    opacity = 1 - t;
+  }
+  return { opacity };
 }
 
-function tweenTextOpacity(t, prev, curr, next) {
-  let opacity;
-  if (t && t < 0.5 && prev && prev.value != curr.value) {
-    opacity = (t - 0.25) * 4;
-  } else if (t && t >= 0.5 && next && next.value != curr.value) {
-    opacity = (0.75 - t) * 4;
+function fadeText(prev, next, t) {
+  if (prev && next && prev.value !== next.value) {
+    return fadeOutIn(t);
   }
-  return opacity;
+  if (!prev) {
+    return fadeIn(t);
+  }
+  if (!next) {
+    return fadeOut(t);
+  }
+  return { opacity: 1 };
 }
 
 export default CodeSurferContainer;

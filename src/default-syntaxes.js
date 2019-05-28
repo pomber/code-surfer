@@ -13,7 +13,6 @@ import "prismjs/components/prism-diff";
 import "prismjs/components/prism-git";
 import "prismjs/components/prism-go";
 import "prismjs/components/prism-graphql";
-import "prismjs/components/prism-handlebars";
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-less";
 import "prismjs/components/prism-makefile";
