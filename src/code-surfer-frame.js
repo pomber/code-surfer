@@ -6,19 +6,24 @@ import {
   useSubtitleStyle,
   useTitleStyle
 } from "./theming";
-import { runAnimation, scrollAnimation } from "./animation";
 import { useAnimationContext } from "./animation-context";
-import { fadeIn, fadeOutIn, fadeOut } from "./animations";
-import { prefixed } from "eventemitter3";
+import {
+  fadeIn,
+  fadeOutIn,
+  fadeOut,
+  exitLine,
+  enterLine,
+  scrollToFocus,
+  scaleToFocus,
+  switchText,
+  focusLine
+} from "./animations";
 
-function CodeSurferContainer({ t, stepIndex, info }) {
+function CodeSurferContainer({ stepPlayhead, info }) {
   const { dimensions, steps } = info;
-  const step = steps[stepIndex];
-  const prev = steps[stepIndex - 1];
-  const next = steps[stepIndex + 1];
+  const ctx = useAnimationContext(steps, stepPlayhead);
 
-  const playhead = stepIndex + (t * 2 - 1);
-  const ctx = useAnimationContext(steps, playhead);
+  const step = ctx.current();
 
   return (
     <div
@@ -31,48 +36,24 @@ function CodeSurferContainer({ t, stepIndex, info }) {
         position: "relative"
       }}
     >
-      <CodeSurferContent
-        dimensions={dimensions}
-        t={t}
-        prev={prev}
-        curr={step}
-        next={next}
-        ctx={ctx}
-      />
-      {step.title && (
-        <Title
-          t={t}
-          prev={prev && prev.title}
-          curr={step.title}
-          next={next && next.title}
-          ctx={ctx.select(step => step.title)}
-        />
-      )}
-      {step.subtitle && (
-        <Subtitle
-          t={t}
-          prev={prev && prev.subtitle}
-          curr={step.subtitle}
-          next={next && next.subtitle}
-          ctx={ctx.select(step => step.subtitle)}
-        />
-      )}
+      <CodeSurferContent dimensions={dimensions} ctx={ctx} />
+      {step.title && <Title ctx={ctx.select(step => step.title)} />}
+      {step.subtitle && <Subtitle ctx={ctx.select(step => step.subtitle)} />}
     </div>
   );
 }
 
-function CodeSurferContent({ dimensions, prev, curr, next, t, ctx }) {
+function CodeSurferContent({ dimensions, ctx }) {
   const ref = React.useRef();
 
-  const { scrollTop, scale } = curr.dimensions
-    ? scrollAnimation({ t, curr, prev, next })
-    : { scrollTop: 0, scale: 1 };
+  const { scrollTop } = ctx.useAnimation(scrollToFocus);
+  const { scale } = ctx.useAnimation(scaleToFocus);
 
-  const styles = runAnimation({
-    lineHeight: curr.dimensions && curr.dimensions.lineHeight,
-    t,
-    lines: curr.lines
-  });
+  // const styles = runAnimation({
+  //   lineHeight: curr.dimensions && curr.dimensions.lineHeight,
+  //   t,
+  //   lines: curr.lines
+  // });
 
   React.useLayoutEffect(() => {
     ref.current.scrollTop = scrollTop;
@@ -111,7 +92,7 @@ function CodeSurferContent({ dimensions, prev, curr, next, t, ctx }) {
         {ctx
           .select(step => step.lines)
           .map(({ key, ctx }, i) => (
-            <Line {...ctx.current()} style={styles[i]} ctx={ctx} key={key} />
+            <Line ctx={ctx} key={key} />
           ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </code>
@@ -119,21 +100,35 @@ function CodeSurferContent({ dimensions, prev, curr, next, t, ctx }) {
   );
 }
 
-function Line({ style, tokens, ctx }) {
-  // const lineStyle = ctx.useAnimations([
-  //   {
-  //     animation: exitLine,
-  //     when: (prev, next) => prev && prev.show && (!next || !next.show),
-  //     stagger: 0.2
-  //   }
-  // ]);
+function Line({ ctx }) {
+  const lineStyle = ctx.useAnimations([
+    {
+      animation: exitLine,
+      when: (prev, next) => prev && !next,
+      stagger: 0.2
+    },
+    {
+      animation: enterLine,
+      when: (prev, next) => next && !prev,
+      stagger: 0.2
+    },
+    {
+      animation: focusLine
+    }
+  ]);
 
-  // console.log(lineStyle);
+  const { tokens, key } = ctx.useAnimation((prev, next) => ({
+    tokens: (prev || next).tokens,
+    key: (prev || next).key
+  }));
 
   const getStyleForToken = useTokenStyles();
   return (
-    <div style={{ overflow: "hidden", ...style }}>
-      <div style={{ display: "inline-block" }} className="cs-line">
+    <div style={{ overflow: "hidden", ...lineStyle }}>
+      <div
+        style={{ display: "inline-block" }}
+        className={`cs-line cs-line-${key}`}
+      >
         {tokens.map((token, i) => (
           <span key={i} style={getStyleForToken(token)}>
             {token.content}
@@ -153,7 +148,9 @@ function Title({ ctx }) {
         ...ctx.useAnimation(fadeBackground)
       }}
     >
-      <span style={ctx.useAnimation(fadeText)}>{ctx.current().value}</span>
+      <span style={ctx.useAnimation(fadeText)}>
+        {ctx.useAnimation(switchText)}
+      </span>
     </h4>
   );
 }
@@ -166,7 +163,9 @@ function Subtitle({ ctx }) {
         ...ctx.useAnimation(fadeBackground)
       }}
     >
-      <span style={ctx.useAnimation(fadeText)}>{ctx.current().value}</span>
+      <span style={ctx.useAnimation(fadeText)}>
+        {ctx.useAnimation(switchText)}
+      </span>
     </p>
   );
 }

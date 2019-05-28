@@ -38,16 +38,10 @@ function CodeSurferContainer(props) {
 }
 
 function CodeSurfer({ info }) {
-  const { steps, dimensions } = info;
-  const { currentStepIndex, stepPlayhead } = useStepSpring(steps.length);
+  const { steps } = info;
+  const stepPlayhead = useStepSpring(steps.length);
 
-  return (
-    <CodeSurferFrame
-      t={stepPlayhead}
-      info={info}
-      stepIndex={currentStepIndex}
-    />
-  );
+  return <CodeSurferFrame stepPlayhead={stepPlayhead} info={info} />;
 }
 
 export default CodeSurferContainer;

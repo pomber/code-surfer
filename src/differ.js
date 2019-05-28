@@ -81,10 +81,11 @@ export function getSlides(codes, language) {
         tokens: line.tokens,
         left: line.slides.includes(slideIndex + 1),
         middle: line.slides.includes(slideIndex),
+        show: line.slides.includes(slideIndex),
         right: line.slides.includes(slideIndex - 1),
         key: lineIndex
       }))
-      .filter(line => line.middle || line.left || line.right);
+      .filter(line => line.middle);
   });
 }
 

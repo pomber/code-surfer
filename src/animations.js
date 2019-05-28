@@ -52,12 +52,137 @@ function ExitLine({ lineHeight }) {
   );
 }
 
+const SlideFromRight = () => (
+  <tween
+    from={{ x: dx, opacity: 0 }}
+    to={{ x: 0, opacity: 1 }}
+    ease={easing.easeOutQuad}
+  />
+);
+
+function GrowHeight({ lineHeight }) {
+  if (!lineHeight) {
+    return <step from={{ height: 0 }} to={{ height: null }} />;
+  }
+  return (
+    <tween
+      from={{ height: 0 }}
+      to={{ height: lineHeight }}
+      ease={easing.easeInOutQuad}
+    />
+  );
+}
+
+function EnterLine({ lineHeight }) {
+  return (
+    <chain durations={[0.35, 0.3, 0.35]}>
+      <delay />
+      <GrowHeight lineHeight={lineHeight} />
+      <SlideFromRight />
+    </chain>
+  );
+}
+
 export const fadeIn = t => run(<FadeIn />, t);
 export const fadeOut = t => run(<FadeOut />, t);
 export const fadeOutIn = t => run(<FadeOutIn />, t);
+
+export function switchText(prev, next, t) {
+  // TODO merge with fadeBackground and fadeText
+  if (t < 0.5) {
+    return prev && prev.value;
+  } else {
+    return next && next.value;
+  }
+}
+
 export const exitLine = (prev, next, t) => {
+  const dimensions = (prev || next).dimensions;
+  return run(<ExitLine lineHeight={dimensions && dimensions.lineHeight} />, t);
+};
+export const enterLine = (prev, next, t) => {
+  const dimensions = (prev || next).dimensions;
+  return run(<EnterLine lineHeight={dimensions && dimensions.lineHeight} />, t);
+};
+export const focusLine = (prev, next, t) => {
   return run(
-    <ExitLine lineHeight={prev.dimensions && prev.dimensions.lineHeight} />,
+    <tween
+      from={{ opacity: prev && prev.focus ? 1 : offOpacity }}
+      to={{ opacity: next && next.focus ? 1 : offOpacity }}
+    />,
     t
   );
 };
+
+export const scrollToFocus = (prev, next, t) => {
+  const dimensions = (prev || next).dimensions;
+
+  if (!dimensions) {
+    return t => ({
+      scrollTop: 0
+    });
+  }
+
+  const lineHeight = dimensions.lineHeight;
+  const prevFocus = prev ? prev.focusCenter || 0 : 0;
+  const nextFocus = next ? next.focusCenter || 0 : 0;
+
+  return run(
+    <tween
+      from={{ scrollTop: prevFocus * lineHeight }}
+      to={{ scrollTop: nextFocus * lineHeight }}
+      ease={easing.easeInOutQuad}
+    />,
+    t
+  );
+};
+
+export const scaleToFocus = (prev, next, t) => {
+  const dimensions = (prev || next).dimensions;
+
+  if (!dimensions) {
+    return t => ({
+      scale: 1
+    });
+  }
+
+  const prevZoom = getZoom(prev);
+  const nextZoom = getZoom(next);
+
+  return run(
+    <tween
+      from={{
+        scale: prevZoom || nextZoom
+      }}
+      to={{
+        scale: nextZoom || prevZoom
+      }}
+      ease={easing.easeInOutQuad}
+    />,
+    t
+  );
+};
+
+function getZoom(step) {
+  if (!step) return null;
+
+  const {
+    paddingBottom,
+    paddingTop,
+    containerHeight,
+    containerWidth,
+    contentWidth,
+    lineHeight
+  } = step.dimensions;
+
+  const contentHeight = step.focusCount * lineHeight;
+  const availableHeight =
+    containerHeight - Math.max(paddingBottom, paddingTop) * 2;
+  const yZoom = availableHeight / contentHeight;
+
+  // if there are lines that are too long for the container
+  const xZoom = (0.9 * containerWidth) / contentWidth;
+
+  return Math.min(yZoom, 1, xZoom);
+  // return 1;
+}

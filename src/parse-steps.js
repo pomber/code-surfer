@@ -1,7 +1,6 @@
 import { getSlides, getCodes } from "./differ";
 
 export function parseSteps(rawSteps, lang) {
-  console.log(rawSteps);
   const codes = getCodes(rawSteps);
 
   const stepsLines = getSlides(codes.reverse(), lang).reverse();

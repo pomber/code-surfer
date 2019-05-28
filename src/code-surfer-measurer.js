@@ -33,6 +33,10 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
         },
         steps: data.steps.map((step, i) => ({
           ...step,
+          lines: step.lines.map(l => ({
+            ...l,
+            dimensions: { lineHeight: stepsDimensions[i].lineHeight }
+          })),
           dimensions: {
             paddingTop: stepsDimensions[i].paddingTop,
             paddingBottom: stepsDimensions[i].paddingBottom,
@@ -57,7 +61,7 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
             width: "100%"
           }}
         >
-          <CodeSurferFrame info={info} stepIndex={i} t={0.5} />
+          <CodeSurferFrame info={info} stepPlayhead={i} />
         </div>
       ))}
     </div>
@@ -65,10 +69,10 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
 });
 
 function getStepDimensions(container, step) {
-  const longestLineIndex = getLongestLineIndex(step);
+  const longestLine = getLongestLine(step);
+  const longestLineKey = longestLine && longestLine.key;
   const lines = container.querySelectorAll(".cs-line");
   const firstLine = lines[0];
-  const longestLine = lines[longestLineIndex];
   const containerParent = container.parentElement;
   const title = container.querySelector(".cs-title");
   const subtitle = container.querySelector(".cs-subtitle");
@@ -88,7 +92,9 @@ function getStepDimensions(container, step) {
   const containerWidth = container.clientWidth;
   const contentHeight = codeHeight + containerHeight;
 
-  const contentWidth = longestLine.clientWidth;
+  const contentWidth = container.querySelector(`.cs-line-${longestLineKey}`)
+    .clientWidth;
+
   return {
     lineHeight,
     contentHeight,
@@ -107,12 +113,11 @@ function outerHeight(element) {
   return element.offsetHeight + margin;
 }
 
-function getLongestLineIndex(step) {
-  const lines = step.lines.filter(line => line.middle);
-  const longestLine = lines.reduce((a, b) =>
+function getLongestLine(step) {
+  const longestLine = step.lines.reduce((a, b) =>
     a.content.length > b.content.length ? a : b
   );
-  return step.lines.indexOf(longestLine);
+  return longestLine;
 }
 
 export { CodeSurferMeasurer };
