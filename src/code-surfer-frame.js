@@ -23,8 +23,6 @@ function CodeSurferContainer({ stepPlayhead, info }) {
   const { dimensions, steps } = info;
   const ctx = useAnimationContext(steps, stepPlayhead);
 
-  const step = ctx.current();
-
   return (
     <div
       className="cs-container"
@@ -37,8 +35,8 @@ function CodeSurferContainer({ stepPlayhead, info }) {
       }}
     >
       <CodeSurferContent dimensions={dimensions} ctx={ctx} />
-      {step.title && <Title ctx={ctx.select(step => step.title)} />}
-      {step.subtitle && <Subtitle ctx={ctx.select(step => step.subtitle)} />}
+      <Title ctx={ctx.useSelect(step => step.title)} />
+      <Subtitle ctx={ctx.useSelect(step => step.subtitle)} />
     </div>
   );
 }
@@ -46,14 +44,8 @@ function CodeSurferContainer({ stepPlayhead, info }) {
 function CodeSurferContent({ dimensions, ctx }) {
   const ref = React.useRef();
 
-  const { scrollTop } = ctx.useAnimation(scrollToFocus);
-  const { scale } = ctx.useAnimation(scaleToFocus);
-
-  // const styles = runAnimation({
-  //   lineHeight: curr.dimensions && curr.dimensions.lineHeight,
-  //   t,
-  //   lines: curr.lines
-  // });
+  const { scrollTop } = ctx.animate(scrollToFocus);
+  const { scale } = ctx.animate(scaleToFocus);
 
   React.useLayoutEffect(() => {
     ref.current.scrollTop = scrollTop;
@@ -90,8 +82,8 @@ function CodeSurferContent({ dimensions, ctx }) {
       >
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
         {ctx
-          .select(step => step.lines)
-          .map(({ key, ctx }, i) => (
+          .useSelect(step => step.lines)
+          .map((ctx, key) => (
             <Line ctx={ctx} key={key} />
           ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
@@ -101,7 +93,7 @@ function CodeSurferContent({ dimensions, ctx }) {
 }
 
 function Line({ ctx }) {
-  const lineStyle = ctx.useAnimations([
+  const lineStyle = ctx.animations([
     {
       animation: exitLine,
       when: (prev, next) => prev && !next,
@@ -117,7 +109,7 @@ function Line({ ctx }) {
     }
   ]);
 
-  const { tokens, key } = ctx.useAnimation((prev, next) => ({
+  const { tokens, key } = ctx.animate((prev, next) => ({
     tokens: (prev || next).tokens,
     key: (prev || next).key
   }));
@@ -140,32 +132,40 @@ function Line({ ctx }) {
 }
 
 function Title({ ctx }) {
+  const text = ctx.animate(switchText);
+  const bgStyle = ctx.animate(fadeBackground);
+  const textStyle = ctx.animate(fadeText);
+
+  if (!text) return null;
+
   return (
     <h4
       className="cs-title"
       style={{
         ...useTitleStyle(),
-        ...ctx.useAnimation(fadeBackground)
+        ...bgStyle
       }}
     >
-      <span style={ctx.useAnimation(fadeText)}>
-        {ctx.useAnimation(switchText)}
-      </span>
+      <span style={textStyle}>{text}</span>
     </h4>
   );
 }
 function Subtitle({ ctx }) {
+  const text = ctx.animate(switchText);
+  const bgStyle = ctx.animate(fadeBackground);
+  const textStyle = ctx.animate(fadeText);
+
+  if (!text) return null;
+
   return (
     <p
       className="cs-subtitle"
       style={{
         ...useSubtitleStyle(),
-        ...ctx.useAnimation(fadeBackground)
+        ...bgStyle
       }}
     >
-      <span style={ctx.useAnimation(fadeText)}>
-        {ctx.useAnimation(switchText)}
-      </span>
+      <span style={textStyle}>{text}</span>
     </p>
   );
 }

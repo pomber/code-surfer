@@ -18,7 +18,6 @@ function useTokenStyles() {
     const themeStylesByType = Object.create(null);
 
     const styles = theme.codeSurfer.styles;
-    // TODO check theme.codeSurfer is defined or use default
     styles.forEach(({ types, style }) => {
       types.forEach(type => {
         themeStylesByType[type] = Object.assign(
