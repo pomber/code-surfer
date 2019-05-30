@@ -36,9 +36,6 @@ function slideDiff(lines, codes, slideIndex, language) {
   const prevCode = codes[slideIndex - 1] || "";
   const currCode = codes[slideIndex];
 
-  //todo
-  // const isDiff = currCode.startsWith("foo")
-
   const changes = myDiff(prevCode, currCode);
 
   changes.forEach(change => {
