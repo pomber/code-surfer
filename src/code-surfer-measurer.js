@@ -77,7 +77,7 @@ function getStepDimensions(container, step) {
   const title = container.querySelector(".cs-title");
   const subtitle = container.querySelector(".cs-subtitle");
 
-  const lineCount = step.lines.filter(line => line.middle).length;
+  const lineCount = step.lines.length;
   const heightOverflow =
     containerParent.scrollHeight - containerParent.clientHeight;
   const avaliableHeight = container.scrollHeight - heightOverflow;

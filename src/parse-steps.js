@@ -11,11 +11,9 @@ export function parseSteps(rawSteps, lang) {
 
   steps.forEach(step => {
     const { lines, focusIndexes } = step;
-    lines
-      .filter(l => l.middle)
-      .forEach((line, index) => {
-        line.focus = focusIndexes.includes(index);
-      });
+    lines.forEach((line, index) => {
+      line.focus = focusIndexes.includes(index);
+    });
   });
 
   return steps;
@@ -27,10 +25,7 @@ function parseStep(step, lines) {
 
   if (!focusIndexes) {
     // default focus
-    focusIndexes = lines
-      .filter(line => line.middle)
-      .map((line, index) => (line.left ? null : index))
-      .filter(index => index != null);
+    focusIndexes = lines.filter(line => line.isNew).map((line, index) => index);
   }
 
   const focusStart = Math.min(...focusIndexes);

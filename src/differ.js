@@ -76,43 +76,12 @@ export function getSlides(codes, language) {
       .map((line, lineIndex) => ({
         content: line.content,
         tokens: line.tokens,
-        left: line.slides.includes(slideIndex + 1),
-        middle: line.slides.includes(slideIndex),
+        isNew: !line.slides.includes(slideIndex + 1),
         show: line.slides.includes(slideIndex),
-        right: line.slides.includes(slideIndex - 1),
         key: lineIndex
       }))
-      .filter(line => line.middle);
+      .filter(line => line.show);
   });
-}
-
-export function getChanges(lines) {
-  const changes = [];
-  let currentChange = null;
-  let i = 0;
-  const isNewLine = i => !lines[i].left && lines[i].middle;
-  while (i < lines.length) {
-    if (isNewLine(i)) {
-      if (!currentChange) {
-        currentChange = { start: i };
-      }
-    } else {
-      if (currentChange) {
-        currentChange.end = i - 1;
-        changes.push(currentChange);
-        currentChange = null;
-      }
-    }
-    i++;
-  }
-
-  if (currentChange) {
-    currentChange.end = i - 1;
-    changes.push(currentChange);
-    currentChange = null;
-  }
-
-  return changes;
 }
 
 export function getCodes(rawSteps) {
