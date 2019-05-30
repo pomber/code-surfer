@@ -177,8 +177,8 @@ function Line({ ctx }) {
     <div
       style={{
         overflow: "hidden",
-        ...lineStyle,
-        background: "green"
+        ...lineStyle
+        // background: "green"
       }}
     >
       <div

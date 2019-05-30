@@ -21,11 +21,13 @@ function FadeOutIn() {
 
 const dx = 250;
 const offOpacity = 0.3;
+const outOpacity = 0;
+const outHieght = 0;
 
 const SlideToLeft = () => (
   <tween
     from={{ x: 0, opacity: 1 }}
-    to={{ x: -dx, opacity: 0.4 }}
+    to={{ x: -dx, opacity: outOpacity }}
     ease={easing.easeInQuad}
   />
 );
@@ -37,7 +39,7 @@ function ShrinkHeight({ lineHeight }) {
   return (
     <tween
       from={{ height: lineHeight }}
-      to={{ height: 4 }}
+      to={{ height: outHieght }}
       ease={easing.easeInOutQuad}
     />
   );
@@ -54,7 +56,7 @@ function ExitLine({ lineHeight }) {
 
 const SlideFromRight = () => (
   <tween
-    from={{ x: dx, opacity: 0.4 }}
+    from={{ x: dx, opacity: outOpacity }}
     to={{ x: 0, opacity: 1 }}
     ease={easing.easeOutQuad}
   />
@@ -66,7 +68,7 @@ function GrowHeight({ lineHeight }) {
   }
   return (
     <tween
-      from={{ height: 4 }}
+      from={{ height: outHieght }}
       to={{ height: lineHeight }}
       ease={easing.easeInOutQuad}
     />

@@ -1,21 +1,49 @@
 import React from "react";
 import Tuple from "./tuple";
 
-function context(tuple, t) {
+function context(tuple, t, parentCtx) {
   const ctx = {
     useSelect: selector => {
       const newTuple = React.useMemo(() => tuple.select(selector), [tuple]);
-      return context(newTuple, t);
+      return context(newTuple, t, ctx);
     },
     map: mapper =>
-      tuple.map((childTuple, key) => mapper(context(childTuple, t), key)),
+      tuple.map((childTuple, key) => mapper(context(childTuple, t, ctx), key)),
     animate: (animation, config = {}) => {
-      // TODO config.stagger
       const [prev, next] = tuple.spread();
+
       if (config.when && !config.when(prev, next)) {
         return {};
       }
-      return animation(prev, next, t);
+
+      let staggeredT = t;
+
+      if (config.stagger) {
+        const items = parentCtx
+          .map(childCtx => {
+            const [prevChild, nextChild] = childCtx.spread();
+            if (!config.when(prevChild, nextChild)) {
+              return null;
+            }
+            return {
+              isThisChild: prevChild === prev && nextChild === next
+            };
+          })
+          .filter(x => x != null);
+
+        const N = items.length;
+        if (N > 1) {
+          const currentIndex = items.findIndex(x => x.isThisChild);
+          const duration = 1 - config.stagger;
+          const tick = config.stagger / (N - 1);
+          staggeredT = Math.min(
+            1,
+            Math.max(0, (t - currentIndex * tick) / duration)
+          );
+        }
+      }
+
+      return animation(prev, next, staggeredT);
     },
     animations: animations => {
       const results = animations.map(({ animation, ...config }) =>
