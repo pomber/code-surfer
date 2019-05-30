@@ -18,21 +18,6 @@ export function parseSteps(rawSteps, lang) {
       });
   });
 
-  steps.forEach((step, i) => {
-    const prevStep = steps[i - 1];
-    const prevLines = prevStep ? prevStep.lines : [];
-    const prevFocusKeys = prevLines.filter(l => l.focus).map(l => l.key);
-
-    const nextStep = steps[i + 1];
-    const nextLines = nextStep ? nextStep.lines : [];
-    const nextFocusKeys = nextLines.filter(l => l.focus).map(l => l.key);
-
-    step.lines.forEach(l => {
-      l.prevFocus = prevFocusKeys.includes(l.key);
-      l.nextFocus = nextFocusKeys.includes(l.key);
-    });
-  });
-
   return steps;
 }
 

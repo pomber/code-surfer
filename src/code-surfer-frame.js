@@ -13,10 +13,10 @@ import {
   fadeOut,
   exitLine,
   enterLine,
-  scrollToFocus,
   scaleToFocus,
   switchText,
-  focusLine
+  focusLine,
+  tween
 } from "./animations";
 
 function CodeSurferContainer({ stepPlayhead, info }) {
@@ -41,19 +41,88 @@ function CodeSurferContainer({ stepPlayhead, info }) {
   );
 }
 
+const heightChangingAnimations = [
+  {
+    animation: exitLine,
+    when: (prev, next) => prev && !next,
+    stagger: 0.2
+  },
+  {
+    animation: enterLine,
+    when: (prev, next) => next && !prev,
+    stagger: 0.2
+  }
+];
+/**
+ * This part wasn't easy...
+ * We need to adjust the scroll as the lines keep changing height
+ * So we animate between the prev focus center and the next focus center
+ * but taking into acount the height of the lines that are on top of the center
+ * for each frame
+ */
+function useScrollTop(dimensions, stepCtx) {
+  if (!dimensions) return 0;
+
+  const linesCtx = stepCtx.useSelect(step => step.lines);
+  const [prevStep, nextStep] = stepCtx.spread();
+
+  const [realPrevCenter, realNextCenter] = React.useMemo(() => {
+    const allPrevLines = linesCtx.map(ctx => ctx.animate((prev, next) => prev));
+    const allNextLines = linesCtx.map(ctx => ctx.animate((prev, next) => next));
+
+    const prevCenter = prevStep ? prevStep.focusCenter : 0;
+    const nextCenter = nextStep ? nextStep.focusCenter : 0;
+
+    const prevCenterLine = prevStep && prevStep.lines[Math.floor(prevCenter)];
+    const nextCenterLine = nextStep && nextStep.lines[Math.floor(nextCenter)];
+
+    const realPrevCenter = prevStep
+      ? allPrevLines.indexOf(prevCenterLine) + (prevCenter % 1)
+      : 0;
+    const realNextCenter = nextStep
+      ? allNextLines.indexOf(nextCenterLine) + (nextCenter % 1)
+      : 0;
+
+    return [realPrevCenter, realNextCenter];
+  }, [prevStep, nextStep]);
+
+  const currentCenter = stepCtx.animate(tween(realPrevCenter, realNextCenter));
+
+  let scrollTop = 0;
+
+  const lineStyles = linesCtx.map(ctx =>
+    ctx.animations(heightChangingAnimations)
+  );
+
+  let i = 0;
+  while (i <= currentCenter - 1) {
+    const h = lineStyles[i].height;
+    scrollTop += h == null ? dimensions.lineHeight : h;
+    i += 1;
+  }
+  if (i != currentCenter) {
+    const h = lineStyles[i].height;
+    const height = h == null ? dimensions.lineHeight : h;
+    scrollTop += height * (currentCenter - i);
+  }
+
+  return scrollTop;
+}
+
 function CodeSurferContent({ dimensions, ctx }) {
   const ref = React.useRef();
 
-  const { scrollTop } = ctx.animate(scrollToFocus);
-  const { scale } = ctx.animate(scaleToFocus);
-
+  const scrollTop = useScrollTop(dimensions, ctx);
   React.useLayoutEffect(() => {
     ref.current.scrollTop = scrollTop;
   }, [scrollTop]);
 
+  const { scale } = ctx.animate(scaleToFocus);
   const verticalOrigin = dimensions
     ? dimensions.containerHeight / 2 + scrollTop
     : 0;
+
+  const linesCtx = ctx.useSelect(step => step.lines);
 
   return (
     <pre
@@ -81,11 +150,9 @@ function CodeSurferContent({ dimensions, ctx }) {
         }}
       >
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-        {ctx
-          .useSelect(step => step.lines)
-          .map((ctx, key) => (
-            <Line ctx={ctx} key={key} />
-          ))}
+        {linesCtx.map((ctx, key) => (
+          <Line ctx={ctx} key={key} />
+        ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </code>
     </pre>
@@ -94,16 +161,7 @@ function CodeSurferContent({ dimensions, ctx }) {
 
 function Line({ ctx }) {
   const lineStyle = ctx.animations([
-    {
-      animation: exitLine,
-      when: (prev, next) => prev && !next,
-      stagger: 0.2
-    },
-    {
-      animation: enterLine,
-      when: (prev, next) => next && !prev,
-      stagger: 0.2
-    },
+    ...heightChangingAnimations,
     {
       animation: focusLine
     }
@@ -116,7 +174,13 @@ function Line({ ctx }) {
 
   const getStyleForToken = useTokenStyles();
   return (
-    <div style={{ overflow: "hidden", ...lineStyle }}>
+    <div
+      style={{
+        overflow: "hidden",
+        ...lineStyle,
+        background: "green"
+      }}
+    >
       <div
         style={{ display: "inline-block" }}
         className={`cs-line cs-line-${key}`}

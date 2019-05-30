@@ -25,7 +25,7 @@ const offOpacity = 0.3;
 const SlideToLeft = () => (
   <tween
     from={{ x: 0, opacity: 1 }}
-    to={{ x: -dx, opacity: 0 }}
+    to={{ x: -dx, opacity: 0.4 }}
     ease={easing.easeInQuad}
   />
 );
@@ -37,7 +37,7 @@ function ShrinkHeight({ lineHeight }) {
   return (
     <tween
       from={{ height: lineHeight }}
-      to={{ height: 0 }}
+      to={{ height: 4 }}
       ease={easing.easeInOutQuad}
     />
   );
@@ -54,7 +54,7 @@ function ExitLine({ lineHeight }) {
 
 const SlideFromRight = () => (
   <tween
-    from={{ x: dx, opacity: 0 }}
+    from={{ x: dx, opacity: 0.4 }}
     to={{ x: 0, opacity: 1 }}
     ease={easing.easeOutQuad}
   />
@@ -66,7 +66,7 @@ function GrowHeight({ lineHeight }) {
   }
   return (
     <tween
-      from={{ height: 0 }}
+      from={{ height: 4 }}
       to={{ height: lineHeight }}
       ease={easing.easeInOutQuad}
     />
@@ -114,27 +114,17 @@ export const focusLine = (prev, next, t) => {
   );
 };
 
-export const scrollToFocus = (prev, next, t) => {
-  const dimensions = (prev || next).dimensions;
-
-  if (!dimensions) {
-    return t => ({
-      scrollTop: 0
-    });
-  }
-
-  const lineHeight = dimensions.lineHeight;
-  const prevFocus = prev ? prev.focusCenter || 0 : 0;
-  const nextFocus = next ? next.focusCenter || 0 : 0;
-
-  return run(
+export const tween = (from, to) => (prev, next, t) => {
+  const result = run(
     <tween
-      from={{ scrollTop: prevFocus * lineHeight }}
-      to={{ scrollTop: nextFocus * lineHeight }}
-      ease={easing.easeInOutQuad}
+      from={{ value: from || 0 }}
+      to={{ value: to || 0 }}
+      ease={easing.easeInOut}
     />,
     t
   );
+
+  return result.value;
 };
 
 export const scaleToFocus = (prev, next, t) => {

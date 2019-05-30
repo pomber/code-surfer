@@ -10,6 +10,7 @@ function context(tuple, t) {
     map: mapper =>
       tuple.map((childTuple, key) => mapper(context(childTuple, t), key)),
     animate: (animation, config = {}) => {
+      // TODO config.stagger
       const [prev, next] = tuple.spread();
       if (config.when && !config.when(prev, next)) {
         return {};
@@ -21,7 +22,8 @@ function context(tuple, t) {
         ctx.animate(animation, config)
       );
       return merge(results);
-    }
+    },
+    spread: () => tuple.spread()
   };
   return ctx;
 }
