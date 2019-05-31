@@ -115,6 +115,11 @@ export const focusLine = (prev, next, t) => {
     t
   );
 };
+export const focusToken = (prev, next, t) => {
+  const from = prev && prev.focus === false ? offOpacity : 1;
+  const to = next && next.focus === false ? offOpacity : 1;
+  return run(<tween from={{ opacity: from }} to={{ opacity: to }} />, t);
+};
 
 export const tween = (from, to) => (prev, next, t) => {
   const result = run(

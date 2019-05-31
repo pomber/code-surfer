@@ -1,4 +1,5 @@
 import { getSlides, getCodes } from "./differ";
+import { parseFocus as newParseFocus } from "./focus-parser";
 
 export function parseSteps(rawSteps, lang) {
   const codes = getCodes(rawSteps);
@@ -10,9 +11,16 @@ export function parseSteps(rawSteps, lang) {
   });
 
   steps.forEach(step => {
-    const { lines, focusIndexes } = step;
+    const { lines, focusMap } = step;
     lines.forEach((line, index) => {
-      line.focus = focusIndexes.includes(index);
+      line.focus = focusMap.has(index);
+      const columnFocus = focusMap.get(index);
+      line.focusPerToken = Array.isArray(columnFocus);
+      if (line.focusPerToken) {
+        // this mutates the tokens array in order to change it to the same line in other steps
+        splitTokensToColumns(line.tokens);
+        line.tokens = setTokenFocus(line.tokens, columnFocus);
+      }
     });
   });
 
@@ -21,19 +29,23 @@ export function parseSteps(rawSteps, lang) {
 
 function parseStep(step, lines) {
   const { focus, ...rest } = step;
-  let focusIndexes = parseFocus(focus);
+  let focusMap = newParseFocus(focus);
 
-  if (!focusIndexes) {
+  if (!focusMap) {
     // default focus
-    focusIndexes = lines.filter(line => line.isNew).map((line, index) => index);
+    const indexes = lines
+      .filter(line => line.isNew)
+      .map((line, index) => index);
+    focusMap = new Map(indexes.map(i => [i, true]));
   }
 
+  const focusIndexes = [...focusMap.keys()];
   const focusStart = Math.min(...focusIndexes);
   const focusEnd = Math.max(...focusIndexes);
 
   return {
     lines,
-    focusIndexes,
+    focusMap,
     focusStart,
     focusEnd,
     focusCenter: (focusStart + focusEnd + 1) / 2,
@@ -42,29 +54,23 @@ function parseStep(step, lines) {
   };
 }
 
-function parseFocus(focus) {
-  if (!focus) {
-    // we'll replace the null by some default later in the code
-    return null;
-  }
-  const focusStringValue = "" + focus;
-  const lineNumbers = [].concat(
-    ...focusStringValue.split(",").map(expandString)
-  );
-  return lineNumbers.map(ln => ln - 1);
+function splitTokensToColumns(tokenArray) {
+  const tokens = [...tokenArray];
+  let key = 0;
+  tokenArray.splice(0, tokenArray.length);
+  tokens.forEach(token => {
+    const chars = [...token.content];
+    chars.forEach(char =>
+      tokenArray.push({ ...token, content: char, key: key++ })
+    );
+  });
 }
 
-function expandString(part) {
-  // Transforms something like
-  // - "1:3" to [1,2,3]
-  // - "4" to [4]
-  const [start, end] = part.split(":");
-  if (!end) {
-    return [+start];
-  }
-  const list = [];
-  for (let i = +start; i <= +end; i++) {
-    list.push(i);
-  }
-  return list;
+function setTokenFocus(tokens, focusColumns) {
+  // Assumes that tokens are already splitted in columns
+  // Return new token objects to avoid changing other steps tokens
+  return tokens.map((token, i) => ({
+    ...token,
+    focus: focusColumns.includes(i)
+  }));
 }

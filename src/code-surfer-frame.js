@@ -16,7 +16,8 @@ import {
   scaleToFocus,
   switchText,
   focusLine,
-  tween
+  tween,
+  focusToken
 } from "./animations";
 
 function CodeSurferContainer({ stepPlayhead, info }) {
@@ -167,12 +168,27 @@ function Line({ ctx }) {
     }
   ]);
 
-  const { tokens, key } = ctx.animate((prev, next) => ({
-    tokens: (prev || next).tokens,
-    key: (prev || next).key
+  const { lineTokens, key, focusPerToken } = ctx.animate((prev, next) => ({
+    lineTokens: (prev || next).tokens,
+    key: (prev || next).key,
+    focusPerToken: (prev && prev.focusPerToken) || (next && next.focusPerToken)
   }));
 
   const getStyleForToken = useTokenStyles();
+
+  let tokens = [];
+
+  let tokensCtx = ctx.useSelect(line => line.tokens);
+
+  if (focusPerToken) {
+    tokens = tokensCtx.map(tokenCtx => ({
+      ...tokenCtx.animate((prev, next) => prev || next),
+      animatedStyle: tokenCtx.animate(focusToken)
+    }));
+  } else {
+    tokens = lineTokens.map(token => ({ ...token, animatedStyle: {} }));
+  }
+
   return (
     <div
       style={{
@@ -186,7 +202,10 @@ function Line({ ctx }) {
         className={`cs-line cs-line-${key}`}
       >
         {tokens.map((token, i) => (
-          <span key={i} style={getStyleForToken(token)}>
+          <span
+            key={i}
+            style={{ ...getStyleForToken(token), ...token.animatedStyle }}
+          >
             {token.content}
           </span>
         ))}

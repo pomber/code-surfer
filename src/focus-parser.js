@@ -4,10 +4,19 @@ export function parseFocus(focus) {
     return null;
   }
   const focusStringValue = "" + focus;
-  const lineNumbers = [].concat(
-    ...focusStringValue.split(",").map(expandString)
-  );
-  return lineNumbers.map(ln => ln - 1);
+  const parts = focusStringValue.split(/,(?![^\[]*\])/g).map(part => {
+    const columnsMatch = part.match(/(\d+)\[(.+)\]/);
+    if (columnsMatch) {
+      const [_, line, columns] = columnsMatch;
+      const columnsList = columns.split(",").map(expandString);
+      const index = line - 1;
+      const columnIndexes = [].concat(...columnsList).map(c => c - 1);
+      return [[index, columnIndexes]];
+    }
+
+    return expandString(part).map(lineNumber => [lineNumber - 1, true]);
+  });
+  return new Map([].concat(...parts));
 }
 
 function expandString(part) {
