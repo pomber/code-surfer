@@ -32,9 +32,10 @@ const getStepsFromChildren = children => () => {
         return null;
       }
       const { props } = c.props.children;
+      const classNames = props.className;
       return {
         code: props.children,
-        lang: props.className[0].substring("language-".length),
+        lang: classNames && classNames[0].substring("language-".length),
         ...parseMetastring(props.metastring)
       };
     })
