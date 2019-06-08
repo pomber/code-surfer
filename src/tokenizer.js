@@ -1,3 +1,5 @@
+import { grammarNotFound } from "./errors";
+
 // https://github.com/PrismJS/prism/issues/1303#issuecomment-375353987
 global.Prism = { disableWorkerMessageHandler: true };
 const Prism = require("prismjs");
@@ -35,6 +37,10 @@ function tokenizeStrings(prismTokens, parentType = "plain") {
 }
 
 export default function tokenize(code, language = "javascript") {
+  const grammar = Prism.languages[language];
+  if (!grammar) {
+    throw grammarNotFound({ lang: language });
+  }
   const prismTokens = Prism.tokenize(code, Prism.languages[language]);
   const nestedTokens = tokenizeStrings(prismTokens);
   const tokens = flattenTokens(nestedTokens);

@@ -41,4 +41,32 @@ const getStepsFromChildren = children => () => {
     .filter(x => x);
 };
 
-export default CodeSurferLayout;
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+
+  componentDidCatch(error, info) {
+    // console.log(error, info);
+  }
+
+  render() {
+    if (!this.state.error) {
+      return this.props.children;
+    } else if (this.state.error.element) {
+      return this.state.error.element;
+    } else {
+      throw this.state.error;
+    }
+  }
+}
+export default props => (
+  <ErrorBoundary>
+    <CodeSurferLayout {...props} />
+  </ErrorBoundary>
+);

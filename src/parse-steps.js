@@ -1,5 +1,5 @@
 import { getSlides, getCodes } from "./differ";
-import { parseFocus as newParseFocus } from "./focus-parser";
+import { parseFocus } from "./focus-parser";
 
 export function parseSteps(rawSteps, lang) {
   const codes = getCodes(rawSteps);
@@ -7,7 +7,15 @@ export function parseSteps(rawSteps, lang) {
   const stepsLines = getSlides(codes.reverse(), lang).reverse();
   const steps = rawSteps.map((step, i) => {
     const lines = stepsLines[i];
-    return parseStep(step, lines);
+    try {
+      return parseStep(step, lines);
+    } catch (e) {
+      if (e.withStepIndex) {
+        throw e.withStepIndex(i);
+      } else {
+        throw e;
+      }
+    }
   });
 
   steps.forEach(step => {
@@ -29,7 +37,7 @@ export function parseSteps(rawSteps, lang) {
 
 function parseStep(step, lines) {
   const { focus, ...rest } = step;
-  let focusMap = newParseFocus(focus);
+  let focusMap = parseFocus(focus);
 
   if (!focusMap) {
     // default focus

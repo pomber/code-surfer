@@ -61,4 +61,12 @@ describe("Parsing Focus String", () => {
     expect(result.get(4)).toBeTruthy();
     expect(result.get(5)).toBeTruthy();
   });
+
+  it("throws when string is invalid", () => {
+    const runParseFocus = v => () => parseFocus(v);
+    expect(runParseFocus("foo")).toThrow();
+    expect(runParseFocus("12:foo")).toThrow();
+    expect(runParseFocus("1,2,3[4,-10]")).toThrow();
+    expect(runParseFocus("0:10")).toThrow();
+  });
 });
