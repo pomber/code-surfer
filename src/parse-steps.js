@@ -42,8 +42,8 @@ function parseStep(step, lines) {
   if (!focusMap) {
     // default focus
     const indexes = lines
-      .filter(line => line.isNew)
-      .map((line, index) => index);
+      .map((line, index) => (line.isNew ? index : null))
+      .filter(index => index !== null);
     focusMap = new Map(indexes.map(i => [i, true]));
   }
 
