@@ -1,3 +1,3 @@
-export { default as Step } from "./step";
+export { default as Code } from "./code";
 
 export { default as CodeSurferLayout } from "./code-surfer-layout";

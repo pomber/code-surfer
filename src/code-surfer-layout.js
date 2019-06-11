@@ -2,7 +2,7 @@ import React from "react";
 import { useDeck } from "mdx-deck";
 import CodeSurfer from "./code-surfer";
 import { parseMetastring } from "./codeblock-metastring-parser";
-import Step from "./step";
+import Code from "./code";
 
 function CodeSurferLayout({ children, ...props }) {
   const deck = useDeck();
@@ -32,8 +32,12 @@ const getStepsFromChildren = children => () => {
 };
 
 function getStepFromChild(child) {
-  if (child.type === Step) {
-    return child.props;
+  if (child.type === Code) {
+    // wrap everything except [code, lang, focus] in {value}
+    const stepEntries = Object.entries(child.props).map(([key, value]) => ({
+      [key]: ["code", "focus", "lang"].includes(key) ? value : { value }
+    }));
+    return Object.assign({}, ...stepEntries);
   }
   if (!child.props.children || !child.props.children.props) {
     return null;

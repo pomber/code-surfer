@@ -4,13 +4,16 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "react": "link:../node_modules/react",
-    "react-dom": "link:../node_modules/react-dom",
+    "code-surfer": "link:..",
     "mdx-deck": "link:../node_modules/mdx-deck",
-    "code-surfer": "link:.."
+    "react": "link:../node_modules/react",
+    "react-dom": "link:../node_modules/react-dom"
   },
   "scripts": {
     "start": "../node_modules/.bin/mdx-deck deck.mdx",
     "build": "../node_modules/.bin/mdx-deck build deck.mdx"
+  },
+  "devDependencies": {
+    "raw-loader": "^3.0.0"
   }
 }

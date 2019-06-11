@@ -1,4 +1,4 @@
-import { CodeSurferLayout, Step } from "code-surfer"
+import { CodeSurferLayout, Code } from "code-surfer"
 export { nightOwlFull as theme } from "code-surfer/themes"
 
 <CodeSurferLayout>
@@ -13,7 +13,7 @@ var x0 = 3
 ```js
 var x0 = 3
 var x0 = 3
-var x1 = 1
+var x1 = 2
 var x0 = 3
 ```
 
@@ -27,22 +27,18 @@ var x1 = 1
 
 <CodeSurferLayout>
 
-<Step
-  lang="js"
-  focus="3"
-  code={`
-var x0 = 3
-var x0 = 3
-var x1 = 1
-var x0 = 3`}
+<Code
+  lang="py"
+  focus="1:37"
+  code={require("!!raw-loader!./foo.py").default}
+  title="Some Python"
+  subtitle="from pythonforbeginners.com"
 />
 
-<Step
-  focus="1:2"
-  code={`var x0 = 3
-var x0 = 2
-var x1 = 1
-var x0 = 3`}
+<Code
+  focus="8[16:84]"
+  code={require("!!raw-loader!./foo.py").default}
+  subtitle="Wait for input"
 />
 
 </CodeSurferLayout>
