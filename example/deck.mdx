@@ -1,4 +1,4 @@
-import { CodeSurferLayout } from "code-surfer"
+import { CodeSurferLayout, Step } from "code-surfer"
 export { nightOwlFull as theme } from "code-surfer/themes"
 
 <CodeSurferLayout>
@@ -20,6 +20,30 @@ var x0 = 3
 ```js 1
 var x1 = 1
 ```
+
+</CodeSurferLayout>
+
+---
+
+<CodeSurferLayout>
+
+<Step
+  lang="js"
+  focus="3"
+  code={`
+var x0 = 3
+var x0 = 3
+var x1 = 1
+var x0 = 3`.trim()}
+/>
+
+<Step
+  focus="1:2"
+  code={`var x0 = 3
+var x0 = 2
+var x1 = 1
+var x0 = 3`}
+/>
 
 </CodeSurferLayout>
 

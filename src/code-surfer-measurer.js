@@ -1,6 +1,7 @@
 import React from "react";
 import CodeSurferFrame from "./code-surfer-frame";
 
+// TODO fix lineHeight when first line is empty
 const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
   const cref = React.useRef();
 
