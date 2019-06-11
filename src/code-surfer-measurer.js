@@ -1,7 +1,6 @@
 import React from "react";
 import CodeSurferFrame from "./code-surfer-frame";
 
-// TODO fix lineHeight when first line is empty
 const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
   const cref = React.useRef();
 
@@ -72,8 +71,7 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
 function getStepDimensions(container, step) {
   const longestLine = getLongestLine(step);
   const longestLineKey = longestLine && longestLine.key;
-  const lines = container.querySelectorAll(".cs-line");
-  const firstLine = lines[0];
+  const longestLineSpan = container.querySelector(`.cs-line-${longestLineKey}`);
   const containerParent = container.parentElement;
   const title = container.querySelector(".cs-title");
   const subtitle = container.querySelector(".cs-subtitle");
@@ -83,7 +81,7 @@ function getStepDimensions(container, step) {
     containerParent.scrollHeight - containerParent.clientHeight;
   const avaliableHeight = container.scrollHeight - heightOverflow;
 
-  const lineHeight = firstLine.clientHeight;
+  const lineHeight = longestLineSpan.clientHeight;
   const paddingTop = title ? outerHeight(title) : lineHeight;
   const paddingBottom = subtitle ? outerHeight(subtitle) : lineHeight;
 
@@ -93,8 +91,7 @@ function getStepDimensions(container, step) {
   const containerWidth = container.clientWidth;
   const contentHeight = codeHeight + containerHeight;
 
-  const contentWidth = container.querySelector(`.cs-line-${longestLineKey}`)
-    .clientWidth;
+  const contentWidth = longestLineSpan.clientWidth;
 
   return {
     lineHeight,
