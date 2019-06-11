@@ -23,10 +23,12 @@ const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
         ...stepsDimensions.map(d => d.contentWidth)
       );
 
+      const lineHeight = Math.max(...stepsDimensions.map(d => d.lineHeight));
+
       return {
         ...data,
         dimensions: {
-          lineHeight: stepsDimensions[0].lineHeight,
+          lineHeight,
           contentWidth,
           containerHeight,
           containerWidth
@@ -81,7 +83,7 @@ function getStepDimensions(container, step) {
     containerParent.scrollHeight - containerParent.clientHeight;
   const avaliableHeight = container.scrollHeight - heightOverflow;
 
-  const lineHeight = longestLineSpan.clientHeight;
+  const lineHeight = longestLineSpan ? longestLineSpan.clientHeight : 0;
   const paddingTop = title ? outerHeight(title) : lineHeight;
   const paddingBottom = subtitle ? outerHeight(subtitle) : lineHeight;
 
@@ -91,7 +93,7 @@ function getStepDimensions(container, step) {
   const containerWidth = container.clientWidth;
   const contentHeight = codeHeight + containerHeight;
 
-  const contentWidth = longestLineSpan.clientWidth;
+  const contentWidth = longestLineSpan ? longestLineSpan.clientWidth : 0;
 
   return {
     lineHeight,
@@ -112,10 +114,12 @@ function outerHeight(element) {
 }
 
 function getLongestLine(step) {
-  const longestLine = step.lines.reduce((a, b) =>
+  if (!step || step.lines.length === 0) {
+    return null;
+  }
+  return step.lines.reduce((a, b) =>
     a.content.length > b.content.length ? a : b
   );
-  return longestLine;
 }
 
 export { CodeSurferMeasurer };
