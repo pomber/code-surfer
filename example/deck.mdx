@@ -1,27 +1,43 @@
-import { CodeSurferLayout, Code } from "code-surfer"
+import {
+  CodeSurferLayout,
+  CodeSurferColumnLayout,
+  Code,
+  Step,
+} from "code-surfer"
 export { nightOwlFull as theme } from "code-surfer/themes"
+import { Horizontal } from "mdx-deck/layouts"
 
-<CodeSurferLayout>
+<CodeSurferColumnLayout sizes={[1, 1]}>
 
-```js
-var x0 = 3
-var x0 = 3
-var x1 = 2
-var x0 = 3
-```
+<Step>
 
 ```js
-var x0 = 3
-var x0 = 3
-var x1 = 2
-var x0 = 3
-```
-
-```js 1
 var x1 = 1
 ```
 
-</CodeSurferLayout>
+```python
+x1 = 1
+```
+
+</Step>
+
+<Step>
+
+```js
+var x0 = 3
+var x1 = 1
+var x2 = 3
+```
+
+```py
+x0 = 3
+x1 = 1
+x2 = 3
+```
+
+</Step>
+
+</CodeSurferColumnLayout>
 
 ---
 

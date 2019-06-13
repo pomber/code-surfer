@@ -1,8 +1,7 @@
 import React from "react";
 import { useDeck } from "mdx-deck";
 import CodeSurfer from "./code-surfer";
-import { parseMetastring } from "./codeblock-metastring-parser";
-import Code from "./code";
+import { readStepFromElement } from "./step-reader";
 
 function CodeSurferLayout({ children, ...props }) {
   const deck = useDeck();
@@ -13,6 +12,7 @@ function CodeSurferLayout({ children, ...props }) {
     <div
       style={{
         width: "100vw",
+        maxWidth: "100%",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -27,29 +27,9 @@ function CodeSurferLayout({ children, ...props }) {
 
 const getStepsFromChildren = children => () => {
   return React.Children.toArray(children)
-    .map(getStepFromChild)
+    .map(readStepFromElement)
     .filter(x => x);
 };
-
-function getStepFromChild(child) {
-  if (child.type === Code) {
-    // wrap everything except [code, lang, focus] in {value}
-    const stepEntries = Object.entries(child.props).map(([key, value]) => ({
-      [key]: ["code", "focus", "lang"].includes(key) ? value : { value }
-    }));
-    return Object.assign({}, ...stepEntries);
-  }
-  if (!child.props.children || !child.props.children.props) {
-    return null;
-  }
-  const { props } = child.props.children;
-  const classNames = props.className;
-  return {
-    code: props.children,
-    lang: classNames && classNames[0].substring("language-".length),
-    ...parseMetastring(props.metastring)
-  };
-}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
