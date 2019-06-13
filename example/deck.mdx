@@ -9,30 +9,21 @@ import { Horizontal } from "mdx-deck/layouts"
 
 <CodeSurferColumnLayout sizes={[1, 1]}>
 
-<Step>
+<Step subtitle="S1" >
 
-```js
-var x1 = 1
-```
-
-```python
-x1 = 1
-```
+<Code code={require("!!raw-loader!./greeting.class.0.js").default} lang="jsx" title="Before Hooks" />
+<Code code={require("!!raw-loader!./greeting.hooks.0.js").default} lang="jsx" title="After Hooks" />
 
 </Step>
 
-<Step>
+<Step subtitle="S2" title="1">
 
-```js
-var x0 = 3
-var x1 = 1
-var x2 = 3
+```diff 1
+
 ```
 
-```py
-x0 = 3
-x1 = 1
-x2 = 3
+```diff 1
+
 ```
 
 </Step>
