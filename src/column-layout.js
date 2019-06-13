@@ -23,7 +23,7 @@ function ColumnLayout({ children, themes, sizes }) {
           key={i}
           style={{ flex: column.flex, overflow: "hidden", height: "100%" }}
         >
-          <CodeSurfer steps={column.steps} />
+          <CodeSurfer steps={column.steps} lang={column.steps[0].lang} />
         </div>
       ))}
     </div>
