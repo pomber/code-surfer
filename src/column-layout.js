@@ -26,16 +26,7 @@ function ColumnLayout({ children, themes, sizes }) {
         }}
       >
         {columns.map((column, i) => (
-          <div
-            key={i}
-            style={{
-              flex: column.flex,
-              overflow: "hidden",
-              height: "100%"
-            }}
-          >
-            <CodeSurfer steps={column.steps} lang={column.steps[0].lang} />
-          </div>
+          <Column column={column} key={i} stepIndex={stepIndex} />
         ))}
       </div>
       {titles[stepIndex] && (
@@ -48,16 +39,39 @@ function ColumnLayout({ children, themes, sizes }) {
   );
 }
 
+function Column({ column, stepIndex }) {
+  return (
+    <div
+      style={{
+        flex: column.flex,
+        overflow: "hidden",
+        height: "100%"
+      }}
+    >
+      {column.isCode ? (
+        <CodeSurfer steps={column.steps} lang={column.steps[0].lang} />
+      ) : (
+        column.steps[stepIndex].element
+      )}
+    </div>
+  );
+}
+
 function getColumnsFromChildren(children, sizes = []) {
   const columns = [];
   const stepElements = React.Children.toArray(children);
   stepElements.forEach((stepElement, stepIndex) => {
     React.Children.toArray(stepElement.props.children).forEach(
       (codeElement, columnIndex) => {
-        columns[columnIndex] = columns[columnIndex] || { steps: [] };
-        columns[columnIndex].steps[stepIndex] = readStepFromElement(
-          codeElement
-        );
+        columns[columnIndex] = columns[columnIndex] || {
+          steps: [],
+          isCode: true
+        };
+        const step = readStepFromElement(codeElement);
+        columns[columnIndex].isCode = columns[columnIndex].isCode && step;
+        columns[columnIndex].steps[stepIndex] = step || {
+          element: codeElement
+        };
       }
     );
   });
