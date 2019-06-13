@@ -88,8 +88,9 @@ function getStepDimensions(container, step) {
   const paddingBottom = subtitle ? outerHeight(subtitle) : lineHeight;
 
   const codeHeight = lineCount * lineHeight * 2;
-  const maxContentHeight = codeHeight + paddingTop + paddingBottom;
-  const containerHeight = Math.min(maxContentHeight, avaliableHeight);
+  // const maxContentHeight = codeHeight + paddingTop + paddingBottom;
+  // const containerHeight = Math.min(maxContentHeight, avaliableHeight);
+  const containerHeight = avaliableHeight;
   const containerWidth = container.clientWidth;
   const contentHeight = codeHeight + containerHeight;
 
