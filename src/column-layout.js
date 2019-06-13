@@ -18,8 +18,11 @@ function ColumnLayout({ children, themes, sizes }) {
         fontSize: "0.8em"
       }}
     >
-      {columns.map(column => (
-        <div style={{ flex: column.flex }}>
+      {columns.map((column, i) => (
+        <div
+          key={i}
+          style={{ flex: column.flex, overflow: "hidden", height: "100%" }}
+        >
           <CodeSurfer steps={column.steps} />
         </div>
       ))}
