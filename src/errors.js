@@ -1,5 +1,10 @@
 import React from "react";
 
+export function UnknownError({ error }) {
+  // TODO link to create issue
+  return <ErrorBox header="Oops, there's a problem" body={error.toString()} />;
+}
+
 export function grammarNotFound({ lang }) {
   return {
     element: (

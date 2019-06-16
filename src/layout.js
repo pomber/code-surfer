@@ -2,6 +2,7 @@ import React from "react";
 import { useDeck } from "mdx-deck";
 import CodeSurfer from "./code-surfer";
 import { readStepFromElement } from "./step-reader";
+import ErrorBoundary from "./error-boundary";
 
 function CodeSurferLayout({ children, ...props }) {
   const deck = useDeck();
@@ -31,30 +32,6 @@ const getStepsFromChildren = children => () => {
     .filter(x => x);
 };
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  static getDerivedStateFromError(error) {
-    return { error };
-  }
-
-  componentDidCatch(error, info) {
-    // console.log(error, info);
-  }
-
-  render() {
-    if (!this.state.error) {
-      return this.props.children;
-    } else if (this.state.error.element) {
-      return this.state.error.element;
-    } else {
-      throw this.state.error;
-    }
-  }
-}
 export default props => (
   <ErrorBoundary>
     <CodeSurferLayout {...props} />

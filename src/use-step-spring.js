@@ -1,4 +1,4 @@
-import { useSteps } from "mdx-deck";
+import useSteps from "./use-steps";
 import useSpring from "./use-spring";
 
 function useStepSpring(stepsCount) {

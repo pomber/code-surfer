@@ -1,7 +1,9 @@
 import React from "react";
 import { readStepFromElement } from "./step-reader";
 import CodeSurfer from "./code-surfer";
-import { useSteps, useDeck } from "mdx-deck";
+import useSteps from "./use-steps";
+import { useDeck } from "mdx-deck";
+import ErrorBoundary from "./error-boundary";
 import { useSubtitleStyle, useTitleStyle } from "./theming";
 
 function ColumnLayout({ children, themes, sizes }) {
@@ -29,12 +31,8 @@ function ColumnLayout({ children, themes, sizes }) {
           <Column column={column} key={i} stepIndex={stepIndex} />
         ))}
       </div>
-      {titles[stepIndex] && (
-        <div style={useTitleStyle()}>{titles[stepIndex]}</div>
-      )}
-      {subtitles[stepIndex] && (
-        <div style={useSubtitleStyle()}>{subtitles[stepIndex]}</div>
-      )}
+      <Title text={titles[stepIndex]} />
+      <Subtitle text={subtitles[stepIndex]} />
     </React.Fragment>
   );
 }
@@ -54,6 +52,22 @@ function Column({ column, stepIndex }) {
         column.steps[stepIndex].element
       )}
     </div>
+  );
+}
+function Title({ text }) {
+  if (!text) return null;
+  return (
+    <h4 className="cs-title" style={useTitleStyle()}>
+      <span>{text}</span>
+    </h4>
+  );
+}
+function Subtitle({ text }) {
+  if (!text) return null;
+  return (
+    <p className="cs-subtitle" style={useSubtitleStyle()}>
+      <span>{text}</span>
+    </p>
   );
 }
 
@@ -86,4 +100,8 @@ function getColumnsFromChildren(children, sizes = []) {
   return [columns, titles, subtitles];
 }
 
-export default ColumnLayout;
+export default props => (
+  <ErrorBoundary>
+    <ColumnLayout {...props} />
+  </ErrorBoundary>
+);
