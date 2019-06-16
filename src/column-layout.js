@@ -24,15 +24,16 @@ function ColumnLayout({ children, themes, sizes }) {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          fontSize: "0.8em"
+          fontSize: "0.8em",
+          position: "relative"
         }}
       >
         {columns.map((column, i) => (
           <Column column={column} key={i} stepIndex={stepIndex} />
         ))}
+        <Title text={titles[stepIndex]} />
+        <Subtitle text={subtitles[stepIndex]} />
       </div>
-      <Title text={titles[stepIndex]} />
-      <Subtitle text={subtitles[stepIndex]} />
     </React.Fragment>
   );
 }
@@ -65,7 +66,10 @@ function Title({ text }) {
 function Subtitle({ text }) {
   if (!text) return null;
   return (
-    <p className="cs-subtitle" style={useSubtitleStyle()}>
+    <p
+      className="cs-subtitle"
+      style={{ ...useSubtitleStyle(), margin: "0.3em 0" }}
+    >
       <span>{text}</span>
     </p>
   );
