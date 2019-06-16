@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "../node_modules/.bin/mdx-deck deck.mdx",
+    "build": "../node_modules/.bin/mdx-deck build deck.mdx"
+  },
+  "dependencies": {
+    "code-surfer": "link:.."
+  },
+  "devDependencies": {
+    "raw-loader": "^3.0.0"
+  }
+}
