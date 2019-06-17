@@ -1,4 +1,12 @@
 {
   "trailingComma": "es5",
-  "printWidth": 60
+  "printWidth": 60,
+  "overrides": [
+    {
+      "files": "*.mdx",
+      "options": {
+        "printWidth": 80
+      }
+    }
+  ]
 }

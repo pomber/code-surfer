@@ -30,6 +30,10 @@ export default class Greeting extends React.Component {
       this.state.name + " " + this.state.surname;
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
   handleNameChange(e) {
     this.setState({ name: e.target.value });
   }
