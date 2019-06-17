@@ -1,7 +1,7 @@
 {
   "name": "code-surfer",
   "description": "Code transitions for mdx-deck: scroll, zoom, highlight and morph code.",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",
