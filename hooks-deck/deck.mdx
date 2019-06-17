@@ -220,7 +220,7 @@ But let's take a step back
       lang="jsx"
     />
   </Step>
-  <Step subtitle="we can declare a second state for surname">
+  <Step subtitle="we just declare a second state for surname and render it">
     <GreetingLoader version="hooks.2.1" theme={hooksTheme} />
     <Code
       code={require("!!raw-loader!./src/greeting.hooks.2.1.js").default}
@@ -232,7 +232,7 @@ But let's take a step back
 ---
 
 <CodeSurferColumnLayout sizes={[1, 2]}>
-  <Step subtitle="Now we want to read context">
+  <Step subtitle="Let's read stuff from context">
     <GreetingLoader version="class.2.1" />
     <Code
       code={require("!!raw-loader!./src/greeting.class.2.1.js").default}
@@ -273,7 +273,7 @@ But let's take a step back
       lang="jsx"
     />
   </Step>
-  <Step subtitle="there's a hook for that: we import useContext from React">
+  <Step subtitle="we import useContext from React">
     <GreetingLoader version="hooks.3.1" theme={hooksTheme} />
     <Code
       code={require("!!raw-loader!./src/greeting.hooks.3.1.js").default}
@@ -301,7 +301,7 @@ But let's take a step back
 ---
 
 <CodeSurferColumnLayout themes={[null, hooksTheme]}>
-  <Step subtitle="With the context hook we get rid of the render prop wrapper">
+  <Step subtitle="with the context hook we get rid of the render prop wrapper">
     <Code
       code={require("!!raw-loader!./src/greeting.class.3.3.js").default}
       lang="jsx"
@@ -327,7 +327,7 @@ But let's take a step back
       lang="jsx"
     />
   </Step>
-  <Step subtitle="we add componentDidMount and componentDidUpdate">
+  <Step subtitle="we do it by implementing componentDidMount and componentDidUpdate">
     <GreetingLoader version="class.4.1" />
     <Code
       code={require("!!raw-loader!./src/greeting.class.4.1.js").default}
@@ -501,7 +501,7 @@ But let's take a step back
 ---
 
 <CodeSurferColumnLayout sizes={[1, 2]} themes={[null, hooksTheme]}>
-  <Step subtitle="This function is getting pretty large">
+  <Step subtitle="this function is getting pretty large">
     <GreetingLoader version="hooks.5.3" theme={hooksTheme} />
     <Code
       code={require("!!raw-loader!./src/greeting.hooks.5.3.js").default}
