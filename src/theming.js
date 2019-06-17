@@ -4,8 +4,12 @@ import React from "react";
 import { useTheme } from "./use-theme";
 import { default as base } from "../themes";
 
+export const ThemeContext = React.createContext();
+
 function useSafeTheme() {
-  const unsafeTheme = useTheme();
+  const themeOverride = React.useContext(ThemeContext);
+  let unsafeTheme = useTheme();
+  unsafeTheme = Object.assign({}, unsafeTheme, themeOverride || {});
   return unsafeTheme.codeSurfer
     ? unsafeTheme
     : { ...unsafeTheme, codeSurfer: base.codeSurfer };

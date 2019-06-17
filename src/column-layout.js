@@ -4,9 +4,9 @@ import CodeSurfer from "./code-surfer";
 import useSteps from "./use-steps";
 import { useDeck } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
-import { useSubtitleStyle, useTitleStyle } from "./theming";
+import { useSubtitleStyle, useTitleStyle, ThemeContext } from "./theming";
 
-function ColumnLayout({ children, themes, sizes }) {
+function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
   const [columns, titles, subtitles] = React.useMemo(
     () => getColumnsFromChildren(children, sizes, themes),
@@ -14,27 +14,30 @@ function ColumnLayout({ children, themes, sizes }) {
   );
   const stepIndex = useSteps(columns[0].length);
   return (
-    <React.Fragment>
-      <div
-        style={{
-          width: "100vw",
-          maxWidth: "100%",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "0.8em",
-          position: "relative"
-        }}
-      >
-        {columns.map((column, i) => (
-          <Column column={column} key={i} stepIndex={stepIndex} />
-        ))}
-        <Title text={titles[stepIndex]} />
-        <Subtitle text={subtitles[stepIndex]} />
-      </div>
-    </React.Fragment>
+    <div
+      style={{
+        width: "100vw",
+        maxWidth: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "0.8em",
+        position: "relative"
+      }}
+    >
+      {columns.map((column, i) => (
+        <ThemeContext.Provider
+          key={i}
+          value={themes[i] ? themes[i] : undefined}
+        >
+          <Column column={column} stepIndex={stepIndex} />
+        </ThemeContext.Provider>
+      ))}
+      <Title text={titles[stepIndex]} />
+      <Subtitle text={subtitles[stepIndex]} />
+    </div>
   );
 }
 
