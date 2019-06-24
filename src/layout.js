@@ -1,13 +1,16 @@
 import React from "react";
-import { useDeck } from "mdx-deck";
+import { useDeck, Notes } from "mdx-deck";
 import CodeSurfer from "./code-surfer";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
+import { useNotes } from "./notes";
 
 function CodeSurferLayout({ children, ...props }) {
   const deck = useDeck();
   const steps = React.useMemo(getStepsFromChildren(children), [deck.index]);
   const lang = steps.length && steps[0].lang;
+
+  useNotes(steps.map(s => s.notesElement));
 
   return (
     <div
@@ -27,8 +30,17 @@ function CodeSurferLayout({ children, ...props }) {
 }
 
 const getStepsFromChildren = children => () => {
-  return React.Children.toArray(children)
-    .map(readStepFromElement)
+  const kids = React.Children.toArray(children);
+  return kids
+    .map((child, i) => {
+      const step = readStepFromElement(child);
+      if (!step) return;
+      const nextChild = kids[i + 1];
+      if (nextChild && nextChild.type === Notes) {
+        step.notesElement = nextChild;
+      }
+      return step;
+    })
     .filter(x => x);
 };
 

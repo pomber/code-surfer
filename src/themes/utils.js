@@ -1,3 +1,5 @@
+import Presenter from "../presenter";
+
 export function makeTheme(prismTheme, override = {}) {
   return {
     codeSurfer: {
@@ -36,6 +38,7 @@ export function addColors(theme, prismTheme) {
       code: prismTheme.plain.color,
       preBackground: prismTheme.plain.backgroundColor
     },
+    Presenter,
     ...theme
   };
 }

@@ -2,16 +2,18 @@ import React from "react";
 import { readStepFromElement } from "./step-reader";
 import CodeSurfer from "./code-surfer";
 import useSteps from "./use-steps";
-import { useDeck } from "mdx-deck";
+import { useDeck, Notes } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
 import { useSubtitleStyle, useTitleStyle, ThemeContext } from "./theming";
+import { useNotes } from "./notes";
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
-  const [columns, titles, subtitles] = React.useMemo(
+  const [columns, titles, subtitles, notesElements] = React.useMemo(
     () => getColumnsFromChildren(children, sizes, themes),
     [deck.index]
   );
+  useNotes(notesElements);
   const stepIndex = useSteps(columns[0].length);
   return (
     <div
@@ -82,8 +84,9 @@ function getColumnsFromChildren(children, sizes = []) {
   const columns = [];
   const stepElements = React.Children.toArray(children);
   stepElements.forEach((stepElement, stepIndex) => {
-    React.Children.toArray(stepElement.props.children).forEach(
-      (codeElement, columnIndex) => {
+    React.Children.toArray(stepElement.props.children)
+      .filter(element => element.type !== Notes)
+      .forEach((codeElement, columnIndex) => {
         columns[columnIndex] = columns[columnIndex] || {
           steps: [],
           isCode: true
@@ -93,8 +96,7 @@ function getColumnsFromChildren(children, sizes = []) {
         columns[columnIndex].steps[stepIndex] = step || {
           element: codeElement
         };
-      }
-    );
+      });
   });
 
   columns.forEach((column, columnIndex) => {
@@ -103,8 +105,13 @@ function getColumnsFromChildren(children, sizes = []) {
 
   const titles = stepElements.map(stepElement => stepElement.props.title);
   const subtitles = stepElements.map(stepElement => stepElement.props.subtitle);
+  const notesElements = stepElements.map(stepElement => {
+    const stepChildren = React.Children.toArray(stepElement.props.children);
+    const notesElement = stepChildren.find(element => element.type === Notes);
+    return notesElement;
+  });
 
-  return [columns, titles, subtitles];
+  return [columns, titles, subtitles, notesElements];
 }
 
 export default props => (

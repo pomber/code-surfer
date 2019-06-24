@@ -973,10 +973,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
-"@mdx-deck/components@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/components/-/components-2.3.2.tgz#1c51b4cf905d098b75e845b1431c6a2719a70c84"
-  integrity sha512-Q1hZMVGYsBSfsNuDhxn8POjoiUIiB1xO8kHQWoicY+1P0BoV0rV9xBPBdEQNHmPRBnrMLpHPXjxw1gPxlUlf+g==
+"@mdx-deck/components@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/components/-/components-2.4.0.tgz#9bc6f1c74f9d97197f11a6d96a669da465affca2"
+  integrity sha512-h17zqj4vqZRI0sz0K8o4ltcG2rB5R2TlNJ12stW1zh/mn3C/K+QBdOZnjoV8h6a4jinVoHwGHpiSq2uZsw9XSA==
   dependencies:
     "@emotion/core" "^10.0.7"
     "@emotion/styled" "^10.0.7"
@@ -988,45 +988,45 @@
     react-swipeable "^5.0.1"
     resize-observer-polyfill "^1.5.1"
 
-"@mdx-deck/layouts@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/layouts/-/layouts-2.3.2.tgz#e85240602ae5e2198abbbfce54523a332b6c8954"
-  integrity sha512-+8vXKmKzijQIW+wW7C9LmMnltnEmq2/AUTTX0xfgwEJyYMz3892u/T3vIzVQQL6ndQgcQ6/PMnd24/l5bifeeA==
+"@mdx-deck/layouts@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/layouts/-/layouts-2.4.0.tgz#56b186698dd3a21aa45623545e53e70656e6fd7d"
+  integrity sha512-Zolf1e4w0DTKdZjQoZloTcRFCCO2RdRt8EQQO3L9t+8Ic0WlDWlUI5/F2y2uL1ayc7avS739AWkz7y1O6l91nQ==
   dependencies:
     "@emotion/core" "^10.0.7"
     "@emotion/styled" "^10.0.7"
     styled-system "^4.0.1"
 
-"@mdx-deck/loader@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/loader/-/loader-2.3.2.tgz#cfd83d5fedec8411029eedddffcd6da815c96029"
-  integrity sha512-IyIm/aXY4b+bK1Ccb0UV5H9Wk5moGH7EKqMSivuc7dlTw4YeZyHoupY3V0lBbWxK63VfNhEU/yrdp1bU3qEVSw==
+"@mdx-deck/loader@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/loader/-/loader-2.4.0.tgz#4756a884d0351a87f07d33ea05425dc3f6a334f7"
+  integrity sha512-v0N/g6oi9XGltep4U1ZXUVb4WF7hqJ+HKqN6kjA2J66Vgr985waruYNIKwbssYdpkePn6WIApA6P79bEgATEBg==
   dependencies:
-    "@mdx-deck/mdx-plugin" "^2.3.2"
+    "@mdx-deck/mdx-plugin" "^2.4.0"
     "@mdx-js/mdx" "^1.0.1"
     loader-utils "^1.2.3"
 
-"@mdx-deck/mdx-plugin@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/mdx-plugin/-/mdx-plugin-2.3.2.tgz#40e5b117e10bc02d30cd11b26a1bcd71c6fc9038"
-  integrity sha512-v5BQQp1dmu/gMpvDhwwF7NXlXoY1fcJ51gSQEzvdvYwbx9H4EuniZ0E3nnglAq94GwLoue1nBPjVoryobr/Gjg==
+"@mdx-deck/mdx-plugin@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/mdx-plugin/-/mdx-plugin-2.4.0.tgz#046eb4b9b2e91df34ccbf749ef8f0dd43ed666f3"
+  integrity sha512-ISsKdXuMBeJ6/lYiZ9Ae9dLT3lUrR23y9VeInRqOeotJb3ed5uWvbBgesoDNkHMpyrxL/eV3JXHMwqWbrURUhQ==
   dependencies:
     "@mdx-js/mdx" "^1.0.1"
     unist-util-is "^2.1.2"
     unist-util-visit "^1.4.0"
 
-"@mdx-deck/themes@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/themes/-/themes-2.3.2.tgz#9044363c2f2dba5b6514d7ae4fd884211758cdba"
-  integrity sha512-OHf3lx7cRfY2Nn6p/Lx4tj6kfPKb4UroqpMrdKLWf33l90zNNSMa7FCKMjsSL77p4A1/cIaw1/8AJv6ypX0BBQ==
+"@mdx-deck/themes@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/themes/-/themes-2.4.0.tgz#d86a9b6daf79b877fbe56a705a794896c97155b8"
+  integrity sha512-+Vpi/vV0T48qZ9bfXmQlvCCrq59f7S5eVBA5V0qy2llILxOPwocrJeK7iwfQIfY7C1rr5ooiubZSV/FCgWIa+Q==
   dependencies:
     lodash.merge "^4.6.1"
     react-syntax-highlighter "^10.1.3"
 
-"@mdx-deck/webpack-html-plugin@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/webpack-html-plugin/-/webpack-html-plugin-2.3.2.tgz#7a44691475a23789be329f760d4f9cdc1ae394c2"
-  integrity sha512-rUqALomA0L/XwmkmAXEM8AQw1xCkSTCfspu32yQPgMRU9FiSRwPDHdgGeUfvu7vmeBNbjB0ppA9uRqe6EaW3gQ==
+"@mdx-deck/webpack-html-plugin@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/webpack-html-plugin/-/webpack-html-plugin-2.4.0.tgz#41bd61359d8fb0050c03814856608c4726d066b6"
+  integrity sha512-CjzbZNAZM59lGlMr0HCpLBpOLYEBESBhgQJuOFV8QZh6TGT7QPPJFq5a+Gmefr+PO/dbsO4HATyg8cTJEjQpqg==
   dependencies:
     webpack-sources "^1.3.0"
 
@@ -7671,10 +7671,10 @@ mdurl@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
 
-mdx-deck@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-2.3.2.tgz#4f9826d6169dc13d02b80572176e84ab64f86580"
-  integrity sha512-x67SPzz8EoJWkB1HJoKB5WRkvERdHeJM3tWnool6FLp5LkuHuo3+Smu1i4xUIxW+xexLjwbfJqGDRvt1GS0TyQ==
+mdx-deck@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-2.4.0.tgz#053e65d6cd97b05fc031ae5cbca565bcd3db10d7"
+  integrity sha512-bIA/hZG7bi7pgHaZ+RqflXfsIElf7OHtb8CWQqo7Xxmy2YfY+7WhtbvX9leCSaQZ9RjN5mMs2I7yVj6CIcdAgw==
   dependencies:
     "@babel/core" "^7.3.4"
     "@babel/plugin-proposal-class-properties" "^7.3.4"
@@ -7686,11 +7686,11 @@ mdx-deck@2.3.2:
     "@emotion/babel-preset-css-prop" "^10.0.7"
     "@emotion/core" "^10.0.7"
     "@emotion/styled" "^10.0.7"
-    "@mdx-deck/components" "^2.3.2"
-    "@mdx-deck/layouts" "^2.3.2"
-    "@mdx-deck/loader" "^2.3.2"
-    "@mdx-deck/themes" "^2.3.2"
-    "@mdx-deck/webpack-html-plugin" "^2.3.2"
+    "@mdx-deck/components" "^2.4.0"
+    "@mdx-deck/layouts" "^2.4.0"
+    "@mdx-deck/loader" "^2.4.0"
+    "@mdx-deck/themes" "^2.4.0"
+    "@mdx-deck/webpack-html-plugin" "^2.4.0"
     "@mdx-js/mdx" "^1.0.1"
     "@mdx-js/react" "^1.0.1"
     babel-loader "^8.0.5"

@@ -7,7 +7,6 @@ import url from "rollup-plugin-url";
 import svgr from "@svgr/rollup";
 
 import pkg from "./package.json";
-import themesPkg from "./themes/package.json";
 
 const plugins = [
   external(),
@@ -23,23 +22,8 @@ const plugins = [
   resolve(),
   commonjs()
 ];
+
 export default [
-  {
-    input: "themes/src/index.js",
-    output: [
-      {
-        file: "themes/" + themesPkg.main,
-        format: "cjs",
-        sourcemap: true
-      },
-      {
-        file: "themes/" + themesPkg.module,
-        format: "es",
-        sourcemap: true
-      }
-    ],
-    plugins
-  },
   {
     input: "src/index.js",
     output: [

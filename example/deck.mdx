@@ -4,8 +4,43 @@ import {
   Code,
   Step,
 } from "code-surfer"
-export { nightOwlFull as theme } from "code-surfer/themes"
+export { nightOwlFull as theme } from "code-surfer"
 import { Horizontal } from "mdx-deck/layouts"
+import { Notes } from "mdx-deck"
+
+# Foo 1
+
+<Notes>Notes for slide 1, lorem ipsum blah blah</Notes>
+
+---
+
+Foo
+
+---
+
+<CodeSurferLayout>
+  <Code
+    lang="py"
+    focus="1:37"
+    code={require("!!raw-loader!./foo.py").default}
+    title="Some Python"
+    subtitle="from pythonforbeginners.com"
+  />
+  <Notes inline>Notes for step 111.</Notes>
+  <Code
+    focus="5:20"
+    code={require("!!raw-loader!./foo.py").default}
+    subtitle="Wait for input"
+  />
+  <Code
+    focus="8[16:84]"
+    code={require("!!raw-loader!./foo.py").default}
+    subtitle="Wait for input"
+  />
+  <Notes>Notes for step 322</Notes>
+</CodeSurferLayout>
+
+---
 
 <CodeSurferColumnLayout sizes={[1, 1]}>
 
@@ -14,6 +49,7 @@ import { Horizontal } from "mdx-deck/layouts"
 <Code code={require("!!raw-loader!./greeting.class.0.js").default} lang="jsx" title="Before Hooks" />
 <Code code={require("!!raw-loader!./greeting.hooks.0.js").default} lang="jsx" title="After Hooks" />
 
+  <Notes>Notes for step 1. </Notes>
 </Step>
 
 <Step subtitle="S2" title="1">
@@ -26,29 +62,11 @@ import { Horizontal } from "mdx-deck/layouts"
 
 ```
 
+<Notes>Step 2</Notes>
+
 </Step>
 
 </CodeSurferColumnLayout>
-
----
-
-<CodeSurferLayout>
-
-<Code
-  lang="py"
-  focus="1:37"
-  code={require("!!raw-loader!./foo.py").default}
-  title="Some Python"
-  subtitle="from pythonforbeginners.com"
-/>
-
-<Code
-  focus="8[16:84]"
-  code={require("!!raw-loader!./foo.py").default}
-  subtitle="Wait for input"
-/>
-
-</CodeSurferLayout>
 
 ---
 
@@ -58,11 +76,15 @@ import { Horizontal } from "mdx-deck/layouts"
 var x1 = 1
 ```
 
+<Notes>step 1</Notes>
+
 ```js
 var x0 = 3
 var x1 = 1
 var x0 = 3
 ```
+
+<Notes>step 2</Notes>
 
 </CodeSurferLayout>
 
@@ -86,6 +108,11 @@ let bar = 2
 var fly = foo + bar
 ```
 
+<Notes>
+  This is a note not a subtitle with words words words words and maybe
+  emojis 🏰
+</Notes>
+
 ```js 7:12 title="My Title 2" subtitle="This is another subtitle with words and maybe emojis 🏰"
 const foo = 1
 let bar = 2
@@ -103,6 +130,11 @@ console.log("2")
 console.log("3")
 console.log("3")
 ```
+
+<Notes>
+  This is a second note not a subtitle with words words words words
+  and maybe emojis 🏰
+</Notes>
 
 ```js 2:3 title="My Title 2" subtitle="This is a subtitle with words words words words and maybe emojis 🏰"
 const foo = 1
@@ -127,6 +159,11 @@ const element = <h1 title="foo">Hello</h1>
 const container = document.getElementById("root")
 ReactDOM.render(element, container)
 ```
+
+<Notes>
+  const container = document.getElementById("root")
+  ReactDOM.render(element, container)
+</Notes>
 
 ```jsx 1
 const element = <h1 title="foo">Hello</h1>
@@ -393,3 +430,5 @@ var x = 1
 ---
 
 ## Title
+
+<Notes>The End</Notes>
