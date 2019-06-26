@@ -4,8 +4,9 @@ import { Zoom, Clock, Slide } from "mdx-deck";
 import useSpring from "./use-spring";
 import { getTextFromNotes } from "./notes";
 import { Global, css } from "@emotion/core";
+import { Swipeable } from "react-swipeable";
 
-const Teleprompter = ({ index, children, style }) => {
+const Teleprompter = ({ index, children, ...rest }) => {
   const ref = React.useRef();
   const [target, setTarget] = React.useState(0);
   const scrollTop = useSpring({
@@ -29,7 +30,7 @@ const Teleprompter = ({ index, children, style }) => {
   }, [scrollTop]);
 
   return (
-    <div style={style} ref={ref}>
+    <div {...rest} ref={ref}>
       <div style={{ height: "50%" }} />
       {children}
       <div style={{ height: "50%" }} />
@@ -50,12 +51,12 @@ function AllSlides({ context, slides, style }) {
 }
 
 function MobilePresenter({
-  slides,
-  index,
   allNotes,
   noteIndex,
   children,
-  windowWidth
+  windowWidth,
+  previous,
+  next
 }) {
   const ratio = 16 / 9;
   const deckHeight = windowWidth / ratio;
@@ -80,23 +81,31 @@ function MobilePresenter({
       />
       <div style={{ height: deckHeight }}>{children}</div>
       <div style={{ flex: 1 }}>
-        <Teleprompter
-          index={noteIndex}
-          style={{
-            color: "#111",
-            whiteSpace: "pre-wrap",
-            overflow: "hidden",
-            height: "100%",
-            width: "90%",
-            margin: "5px auto"
-          }}
+        <Swipeable
+          onSwipedRight={previous}
+          onSwipedLeft={next}
+          onSwipedDown={previous}
+          onSwipedUp={next}
         >
-          {allNotes.map((note, i) => (
-            <span style={{ opacity: noteIndex === i ? 1 : 0.5 }} key={i}>
-              {note.notes}
-            </span>
-          ))}
-        </Teleprompter>
+          <Teleprompter
+            index={noteIndex}
+            style={{
+              color: "#111",
+              whiteSpace: "pre-wrap",
+              overflow: "hidden",
+              height: "100%",
+              width: "90%",
+              margin: "5px auto"
+            }}
+            onClick={next}
+          >
+            {allNotes.map((note, i) => (
+              <span style={{ opacity: noteIndex === i ? 1 : 0.5 }} key={i}>
+                {note.notes}
+              </span>
+            ))}
+          </Teleprompter>
+        </Swipeable>
       </div>
     </div>
   );
@@ -172,7 +181,7 @@ function DesktopPresenter({ slides, index, allNotes, noteIndex, children }) {
 }
 
 export const Presenter = props => {
-  const { slides, metadata, index, step, children } = props;
+  const { slides, metadata, index, step, children, previous, next } = props;
   const windowWidth = useWindowWidth();
 
   const [areNotesReady, setNotesReady] = React.useState(false);
@@ -222,7 +231,16 @@ export const Presenter = props => {
         />
       ) : (
         <MobilePresenter
-          {...{ allNotes, index, slides, noteIndex, children, windowWidth }}
+          {...{
+            allNotes,
+            index,
+            slides,
+            noteIndex,
+            children,
+            windowWidth,
+            previous,
+            next
+          }}
         />
       )}
     </React.Fragment>
