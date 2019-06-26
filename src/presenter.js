@@ -3,6 +3,7 @@ import { globalHistory } from "@reach/router";
 import { Zoom, Clock, Slide } from "mdx-deck";
 import useSpring from "./use-spring";
 import { getTextFromNotes } from "./notes";
+import { Global, css } from "@emotion/core";
 
 const Teleprompter = ({ index, children, style }) => {
   const ref = React.useRef();
@@ -48,42 +49,60 @@ function AllSlides({ context, slides, style }) {
   );
 }
 
-export const Presenter = props => {
-  const { slides, metadata, index, step } = props;
-
-  const [areNotesReady, setNotesReady] = React.useState(false);
-  React.useEffect(() => {
-    setNotesReady(true);
-  }, []);
-
-  const allNotes = React.useMemo(() => {
-    return slides.flatMap((slide, slideIndex) => {
-      const { notes: slideNotes } = metadata[slideIndex] || { notes: "" };
-
-      if (Array.isArray(slideNotes)) {
-        return slideNotes.map((stepNotes, stepIndex) => ({
-          notes: getTextFromNotes(stepNotes),
-          slideIndex,
-          stepIndex
-        }));
-      } else {
-        return {
-          notes: getTextFromNotes(slideNotes),
-          slideIndex,
-          stepIndex: "any"
-        };
-      }
-    });
-  }, [areNotesReady]);
-
-  console.log(allNotes);
-
-  const noteIndex = allNotes.findIndex(
-    stepNotes =>
-      stepNotes.slideIndex === index &&
-      (stepNotes.stepIndex === "any" || stepNotes.stepIndex === step)
+function MobilePresenter({
+  slides,
+  index,
+  allNotes,
+  noteIndex,
+  children,
+  windowWidth
+}) {
+  const ratio = 16 / 9;
+  const deckHeight = windowWidth / ratio;
+  return (
+    <div
+      className="presenter"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        background: "#fafafa"
+      }}
+    >
+      <Global
+        styles={css`
+          .css-qyiweq-Root,
+          .cs-layout,
+          cs-col-layout {
+            height: ${deckHeight}px !important;
+          }
+        `}
+      />
+      <div style={{ height: deckHeight }}>{children}</div>
+      <div style={{ flex: 1 }}>
+        <Teleprompter
+          index={noteIndex}
+          style={{
+            color: "#111",
+            whiteSpace: "pre-wrap",
+            overflow: "hidden",
+            height: "100%",
+            width: "90%",
+            margin: "5px auto"
+          }}
+        >
+          {allNotes.map((note, i) => (
+            <span style={{ opacity: noteIndex === i ? 1 : 0.5 }} key={i}>
+              {note.notes}
+            </span>
+          ))}
+        </Teleprompter>
+      </div>
+    </div>
   );
+}
 
+function DesktopPresenter({ slides, index, allNotes, noteIndex, children }) {
   return (
     <div
       style={{
@@ -94,14 +113,6 @@ export const Presenter = props => {
         width: "100vw"
       }}
     >
-      {!areNotesReady && (
-        // Need to render all slides to run the effects that set the notes
-        <AllSlides
-          style={{ display: "none" }}
-          context={props}
-          slides={slides}
-        />
-      )}
       <div
         style={{
           display: "flex",
@@ -112,7 +123,7 @@ export const Presenter = props => {
           boxSizing: "border-box"
         }}
       >
-        <Zoom zoom={5 / 8}>{props.children}</Zoom>
+        <Zoom zoom={5 / 8}>{children}</Zoom>
         <div
           style={{
             display: "flex",
@@ -158,6 +169,74 @@ export const Presenter = props => {
       </div>
     </div>
   );
+}
+
+export const Presenter = props => {
+  const { slides, metadata, index, step, children } = props;
+  const windowWidth = useWindowWidth();
+
+  const [areNotesReady, setNotesReady] = React.useState(false);
+  React.useEffect(() => {
+    setNotesReady(true);
+  }, []);
+
+  const allNotes = React.useMemo(() => {
+    return slides.flatMap((slide, slideIndex) => {
+      const { notes: slideNotes } = metadata[slideIndex] || { notes: "" };
+
+      if (Array.isArray(slideNotes)) {
+        return slideNotes.map((stepNotes, stepIndex) => ({
+          notes: getTextFromNotes(stepNotes),
+          slideIndex,
+          stepIndex
+        }));
+      } else {
+        return {
+          notes: getTextFromNotes(slideNotes),
+          slideIndex,
+          stepIndex: "any"
+        };
+      }
+    });
+  }, [areNotesReady]);
+
+  const noteIndex = allNotes.findIndex(
+    stepNotes =>
+      stepNotes.slideIndex === index &&
+      (stepNotes.stepIndex === "any" || stepNotes.stepIndex === step)
+  );
+
+  return (
+    <React.Fragment>
+      {!areNotesReady && (
+        // Need to render all slides to run the effects that set the notes
+        <AllSlides
+          style={{ display: "none" }}
+          context={props}
+          slides={slides}
+        />
+      )}
+      {windowWidth > 700 ? (
+        <DesktopPresenter
+          {...{ allNotes, index, slides, noteIndex, children }}
+        />
+      ) : (
+        <MobilePresenter
+          {...{ allNotes, index, slides, noteIndex, children, windowWidth }}
+        />
+      )}
+    </React.Fragment>
+  );
 };
+
+function useWindowWidth() {
+  const [width, changeWidth] = React.useState(window && window.innerWidth);
+  React.useEffect(() => {
+    const handleResize = () => changeWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [changeWidth]);
+  return width;
+}
 
 export default Presenter;

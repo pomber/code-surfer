@@ -28,6 +28,7 @@ function ColumnLayout({ children, themes = [], sizes }) {
         fontSize: "0.8em",
         position: "relative"
       }}
+      className="cs-col-layout"
     >
       {columns.map((column, i) => (
         <ThemeContext.Provider

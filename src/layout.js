@@ -23,6 +23,7 @@ function CodeSurferLayout({ children, ...props }) {
         justifyContent: "center",
         alignItems: "center"
       }}
+      className="cs-layout"
     >
       <CodeSurfer steps={steps} lang={lang} />
     </div>
