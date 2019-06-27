@@ -80,7 +80,7 @@ function MobilePresenter({
     >
       <Global
         styles={css`
-          .css-qyiweq-Root,
+          .ekm8v3h0,
           .cs-layout,
           cs-col-layout {
             height: ${deckHeight}px !important;
