@@ -1,7 +1,6 @@
 import React from "react";
 
-// TODO remove this after https://github.com/jxnblk/mdx-deck/pull/359
-import { useTheme } from "./use-theme";
+import { useTheme } from "mdx-deck";
 import { default as base } from "./themes";
 
 export const ThemeContext = React.createContext();

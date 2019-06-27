@@ -1,6 +1,6 @@
 import React from "react";
 import { globalHistory } from "@reach/router";
-import { Zoom, Clock, Slide } from "mdx-deck";
+import { Zoom, Clock, Slide, useTheme } from "mdx-deck";
 import useSpring from "./use-spring";
 import { getTextFromNotes } from "./notes";
 import { Global, css } from "@emotion/core";
@@ -21,7 +21,7 @@ const Teleprompter = ({ index, children, ...rest }) => {
     const childHeight = child.getBoundingClientRect().height;
     const selfHeight = self.getBoundingClientRect().height;
     if (childHeight) {
-      setTarget(childTop - selfHeight / 2 + (3 * childHeight) / 4);
+      setTarget(childTop - selfHeight / 2 + childHeight / 2);
     }
   }, [index]);
 
@@ -56,18 +56,26 @@ function MobilePresenter({
   children,
   windowWidth,
   previous,
-  next
+  next,
+  slides,
+  index
 }) {
   const ratio = 16 / 9;
   const deckHeight = windowWidth / ratio;
+  const windowHeight = window.innerHeight;
+  const separatorHeight = 6;
+  const notesHeight = windowHeight - deckHeight - separatorHeight;
+  const { colors } = useTheme();
+  const progress = (100 * (index + 1)) / slides.length;
   return (
     <div
       className="presenter"
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
-        background: "#fafafa"
+        height: windowHeight,
+        background: colors.background,
+        overflow: "hidden"
       }}
     >
       <Global
@@ -79,23 +87,48 @@ function MobilePresenter({
           }
         `}
       />
-      <div style={{ height: deckHeight }}>{children}</div>
-      <div style={{ flex: 1 }}>
+      <div
+        style={{
+          height: deckHeight
+        }}
+      >
+        {children}
+      </div>
+      <div
+        style={{
+          height: separatorHeight,
+          background: colors.link,
+          opacity: 0.7,
+          boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.25)"
+        }}
+      >
+        <div
+          style={{
+            height: "100%",
+            width: `${100 - progress}%`,
+            opacity: 0.5,
+            float: "right",
+            background: "#444"
+          }}
+        />
+      </div>
+      <div style={{ height: notesHeight }}>
         <Swipeable
           onSwipedRight={previous}
           onSwipedLeft={next}
           onSwipedDown={previous}
           onSwipedUp={next}
+          style={{ height: "100%" }}
         >
           <Teleprompter
             index={noteIndex}
             style={{
-              color: "#111",
+              color: colors.text,
               whiteSpace: "pre-wrap",
               overflow: "hidden",
               height: "100%",
               width: "90%",
-              margin: "5px auto"
+              margin: "0px auto"
             }}
             onClick={next}
           >
