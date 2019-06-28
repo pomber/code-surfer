@@ -20,13 +20,22 @@ function App() {
         transformStyle: "preserve-3d"
       }}
     >
-      <Header dimensions={dimensions} />
-      <Screen dimensions={dimensions} />
-      <Floor dimensions={dimensions} />
-      <Developer dimensions={dimensions} />
-      <Podium dimensions={dimensions} />
-      <Banners dimensions={dimensions} />
-      <Content dimensions={dimensions} />
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          // transform: "rotateY(57deg) rotateX(-13deg) scale(0.5)",
+          transformStyle: "preserve-3d"
+        }}
+      >
+        {/* <Header dimensions={dimensions} /> */}
+        <Screen dimensions={dimensions} />
+        <Floor dimensions={dimensions} />
+        <Developer dimensions={dimensions} />
+        <Podium dimensions={dimensions} />
+        <Banners dimensions={dimensions} />
+        <Content dimensions={dimensions} />
+      </div>
     </div>
   );
 }
@@ -42,8 +51,7 @@ function Header({ dimensions }) {
         padding: "60px"
       }}
     >
-      <h3>build AWESOME CODE SLIDES with</h3>
-      <h1>CODE SURFER</h1>
+      <h1>Code Surfer</h1>
     </header>
   );
 }
@@ -56,7 +64,12 @@ function Screen({ dimensions }) {
         background: "#666",
         border: `${dimensions.screen.width / 200}px solid #111`
       }}
-    />
+    >
+      <h1>Code Surfer</h1>
+      <h3>Rad Code Slides</h3>
+      <span>Link to GitHub</span>
+      <span>Link to @pomber</span>
+    </div>
   );
 }
 
@@ -77,7 +90,8 @@ function Podium({ dimensions }) {
     <div
       style={{
         ...absoluteStyle(dimensions.podium, dimensions.origin),
-        background: "#999",
+        background: "#222",
+        color: "#fafafa",
         ...vstack,
         fontSize: "1.2rem"
       }}

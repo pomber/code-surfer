@@ -51,8 +51,7 @@
     "rollup-plugin-url": "^1.4.0"
   },
   "peerDependencies": {
-    "@emotion/core": "^10.0.7",
-    "mdx-deck": "2.3.2",
+    "mdx-deck": "2.4.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },

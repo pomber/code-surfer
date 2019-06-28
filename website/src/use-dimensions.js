@@ -15,10 +15,14 @@ export default function useDimensions() {
   const sy = -sh;
 
   // header
-  const hrw = sw;
+  const hz = 300;
+  const hs = (p + hz) / p;
+  const hrw = srw;
   const hrh = hrw / 5;
-  const hx = -hrw / 2;
-  const hy = -srh - hrh;
+  const hw = hrw * hs;
+  const hh = hrh * hs;
+  const hx = -hw / 2;
+  const hy = -sh - hh;
 
   // origin
   const ox = vw / 2;
@@ -82,9 +86,9 @@ export default function useDimensions() {
     header: {
       x: hx,
       y: hy,
-      z: 0,
-      width: hrw,
-      height: hrh
+      z: -hz,
+      width: hw,
+      height: hh
     },
     dev: {
       x: dx,
