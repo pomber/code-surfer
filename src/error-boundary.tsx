@@ -1,6 +1,10 @@
 import React from "react";
 import { UnknownError } from "./errors";
-export default class ErrorBoundary extends React.Component {
+
+export default class ErrorBoundary extends React.Component<
+  {},
+  { error?: any }
+> {
   constructor(props) {
     super(props);
     this.state = {};

@@ -7,7 +7,7 @@ import { Global, css } from "@emotion/core";
 import { Swipeable } from "react-swipeable";
 
 const Teleprompter = ({ index, children, ...rest }) => {
-  const ref = React.useRef();
+  const ref = React.useRef(null);
   const [target, setTarget] = React.useState(0);
   const scrollTop = useSpring({
     target,

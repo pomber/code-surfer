@@ -142,9 +142,7 @@ function Banner({ x, angle, dimensions }) {
       style={{
         ...absoluteStyle(banner, origin),
         background: "#966",
-        transform: `translate3d(${x}px, ${banner.y}px, ${
-          banner.z
-        }px) rotateY(${angle}deg)`,
+        transform: `translate3d(${x}px, ${banner.y}px, ${banner.z}px) rotateY(${angle}deg)`,
         ...vstack,
         justifyContent: "space-around",
         fontSize: "1.3rem",

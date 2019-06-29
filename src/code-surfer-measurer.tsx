@@ -1,13 +1,15 @@
 import React from "react";
 import CodeSurferFrame from "./code-surfer-frame";
 
-const CodeSurferMeasurer = React.forwardRef(({ info }, ref) => {
-  const cref = React.useRef();
+type Props = { info: any };
+export type Ref = { measure: any };
+const CodeSurferMeasurer = React.forwardRef<Ref, Props>(({ info }, ref) => {
+  const cref = React.useRef(null);
 
   React.useImperativeHandle(ref, () => ({
     measure: data => {
       const containers = cref.current.querySelectorAll(".cs-container");
-      const stepsDimensions = [...containers].map((container, i) =>
+      const stepsDimensions = Array.from(containers).map((container, i) =>
         getStepDimensions(container, data.steps[i])
       );
 

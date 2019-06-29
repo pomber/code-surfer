@@ -47,7 +47,7 @@ function parseStep(step, lines) {
     focusMap = new Map(indexes.map(i => [i, true]));
   }
 
-  const focusIndexes = [...focusMap.keys()];
+  const focusIndexes = Array.from(focusMap.keys());
   const focusStart = Math.min(...focusIndexes);
   const focusEnd = Math.max(...focusIndexes);
 
@@ -63,11 +63,11 @@ function parseStep(step, lines) {
 }
 
 function splitTokensToColumns(tokenArray) {
-  const tokens = [...tokenArray];
+  const tokens = Array.from(tokenArray);
   let key = 0;
   tokenArray.splice(0, tokenArray.length);
   tokens.forEach(token => {
-    const chars = [...token.content];
+    const chars = Array.from(token.content);
     chars.forEach(char =>
       tokenArray.push({ ...token, content: char, key: key++ })
     );

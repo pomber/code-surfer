@@ -1,8 +1,9 @@
 import { grammarNotFound } from "./errors";
 
-// https://github.com/PrismJS/prism/issues/1303#issuecomment-375353987
-global.Prism = { disableWorkerMessageHandler: true };
-const Prism = require("prismjs");
+// // https://github.com/PrismJS/prism/issues/1303#issuecomment-375353987
+// global.Prism = { disableWorkerMessageHandler: true };
+// const Prism = require("prismjs");
+import Prism from "prismjs";
 
 const newlineRe = /\r\n|\r|\n/;
 

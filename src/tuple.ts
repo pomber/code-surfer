@@ -1,4 +1,8 @@
 export default class Tuple {
+  prev: any;
+  next: any;
+  _dict: any;
+
   constructor(prev, next) {
     this.prev = prev;
     this.next = next;
@@ -22,13 +26,15 @@ export default class Tuple {
     if (!this._dict) {
       const [prevs = [], nexts = []] = this.spread();
 
-      const unsortedMap = new Map(prevs.map(prev => [prev.key, { prev }]));
+      const unsortedMap = new Map<any, any>(
+        prevs.map(prev => [prev.key, { prev }])
+      );
       nexts.forEach(next => {
-        const { prev } = unsortedMap.get(next.key) || {};
+        const { prev } = unsortedMap.get(next.key) || { prev: undefined };
         unsortedMap.set(next.key, { prev, next });
       });
 
-      const sortedKeys = [...unsortedMap.keys()];
+      const sortedKeys = Array.from(unsortedMap.keys());
       sortedKeys.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
       this._dict = new Map(
         sortedKeys.map(key => {

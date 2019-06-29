@@ -111,7 +111,7 @@ function useScrollTop(dimensions, stepCtx) {
 }
 
 function CodeSurferContent({ dimensions, ctx }) {
-  const ref = React.useRef();
+  const ref = React.useRef(null);
 
   const scrollTop = useScrollTop(dimensions, ctx);
   React.useLayoutEffect(() => {
@@ -124,6 +124,8 @@ function CodeSurferContent({ dimensions, ctx }) {
     : 0;
 
   const linesCtx = ctx.useSelect(step => step.lines);
+
+  console.log(linesCtx.spread());
 
   return (
     <pre

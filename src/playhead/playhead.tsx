@@ -1,8 +1,21 @@
+/* @jsx createAnimation */
 import easing from "./easing";
 const MULTIPLY = "multiply";
 
+declare global {
+  namespace createAnimation.JSX {
+    interface IntrinsicElements {
+      tween;
+      chain;
+      step;
+      delay;
+      parallel;
+    }
+  }
+}
+
 /* eslint-disable */
-function mergeResults(results, composite) {
+function mergeResults(results, composite = null) {
   const firstResult = results[0];
   if (results.length < 2) {
     return firstResult;
@@ -93,7 +106,6 @@ export function createAnimation(type, config, ...children) {
   };
 }
 
-/* @jsx createAnimation */
 export const Stagger = (props, ctx) => t => {
   const targets = props.targets;
   const filter = target => !props.filter || props.filter(target);

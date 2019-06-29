@@ -10,7 +10,7 @@ import { useNotes } from "./notes";
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
   const [columns, titles, subtitles, notesElements] = React.useMemo(
-    () => getColumnsFromChildren(children, sizes, themes),
+    () => getColumnsFromChildren(children, sizes),
     [deck.index]
   );
   useNotes(notesElements);

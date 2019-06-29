@@ -52,7 +52,7 @@ export function invalidFocusNumber(n) {
   };
 }
 
-export function invalidLineOrColumnNumber() {
+export function invalidLineOrColumnNumber(start) {
   return {
     withFocusString: focusString => ({
       withStepIndex: stepIndex => ({

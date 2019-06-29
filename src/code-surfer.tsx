@@ -8,7 +8,7 @@ import CodeSurferFrame from "./code-surfer-frame";
 import "./default-syntaxes";
 
 function CodeSurferContainer(props) {
-  const ref = React.useRef();
+  const ref = React.useRef(null);
 
   const steps = React.useMemo(() => parseSteps(props.steps, props.lang), [
     props.steps,

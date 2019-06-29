@@ -1,7 +1,6 @@
+/* @jsx createAnimation */
 import { createAnimation, Stagger, Context, run } from "./playhead/playhead";
 import easing from "./playhead/easing";
-
-/* @jsx createAnimation */
 
 function FadeIn() {
   return <tween from={{ opacity: 0 }} to={{ opacity: 1 }} />;
