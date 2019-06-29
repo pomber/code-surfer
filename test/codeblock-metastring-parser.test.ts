@@ -1,4 +1,4 @@
-import { parseMetastring } from "./codeblock-metastring-parser";
+import { parseMetastring } from "../src/codeblock-metastring-parser";
 
 /**
  * The metastring is the thing that comes after the language in markdown codeblocks

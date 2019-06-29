@@ -1,7 +1,7 @@
 import React from "react";
 import Tuple from "./tuple";
 
-function context(tuple, t, parentCtx) {
+function context(tuple, t, parentCtx = null) {
   const ctx = {
     useSelect: selector => {
       const newTuple = React.useMemo(() => tuple.select(selector), [tuple]);
@@ -9,7 +9,7 @@ function context(tuple, t, parentCtx) {
     },
     map: mapper =>
       tuple.map((childTuple, key) => mapper(context(childTuple, t, ctx), key)),
-    animate: (animation, config = {}) => {
+    animate: (animation, config = {} as any) => {
       const [prev, next] = tuple.spread();
 
       if (config.when && !config.when(prev, next)) {
@@ -72,7 +72,7 @@ function merge(results, composite = MULTIPLY) {
   }
   if (Array.isArray(firstResult)) {
     return firstResult.map((_, i) => {
-      return mergeResults(results.map(result => result[i]), composite);
+      return merge(results.map(result => result[i]), composite);
     });
   } else {
     const merged = Object.assign({}, ...results);
