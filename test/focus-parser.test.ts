@@ -1,9 +1,9 @@
 import { parseFocus } from "../src/focus-parser";
 
 describe("Parsing Focus String", () => {
-  it("return null when string is empty", () => {
-    expect(parseFocus("")).toBeNull();
-    expect(parseFocus(null)).toBeNull();
+  it("it throws when string is empty", () => {
+    expect(() => parseFocus("")).toThrow();
+    expect(() => parseFocus(null)).toThrow();
   });
 
   it("works with single lines", () => {

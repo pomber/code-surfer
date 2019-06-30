@@ -1,4 +1,4 @@
-import Tuple from "../src/tuple";
+import { Tuple, ArrayTuple } from "../src/tuple";
 
 describe("Tuple", () => {
   it("spread works", () => {
@@ -21,7 +21,7 @@ describe("Tuple", () => {
   });
 
   it("gets by key when items are lists", () => {
-    const tuple = new Tuple(
+    const tuple = new ArrayTuple(
       [{ key: 1, a: 10 }, { key: 3, a: 30 }],
       [{ key: 1, a: 11 }, { key: 2, a: 21 }]
     );
@@ -34,7 +34,7 @@ describe("Tuple", () => {
   });
 
   it("maps entries with keys", () => {
-    const tuple = new Tuple(
+    const tuple = new ArrayTuple(
       [{ key: 1, a: 10 }, { key: 3, a: 30 }],
       [{ key: 1, a: 11 }, { key: 2, a: 21 }]
     );

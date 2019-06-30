@@ -1,7 +1,8 @@
 import { getSlides, getCodes } from "./differ";
 import { parseFocus } from "./focus-parser";
+import { InputStep } from "code-surfer-types";
 
-export function parseSteps(rawSteps, lang) {
+export function parseSteps(rawSteps: InputStep[], lang: string) {
   const codes = getCodes(rawSteps);
 
   const stepsLines = getSlides(codes.reverse(), lang).reverse();
@@ -35,17 +36,20 @@ export function parseSteps(rawSteps, lang) {
   return steps;
 }
 
-function parseStep(step, lines) {
+function parseStep(
+  step: InputStep,
+  lines: {
+    content: string;
+    tokens: { type: string; content: string }[];
+    isNew: boolean;
+    show: boolean;
+    key: number;
+    focus?: boolean;
+    focusPerToken?: boolean;
+  }[]
+) {
   const { focus, ...rest } = step;
-  let focusMap = parseFocus(focus);
-
-  if (!focusMap) {
-    // default focus
-    const indexes = lines
-      .map((line, index) => (line.isNew ? index : null))
-      .filter(index => index !== null);
-    focusMap = new Map(indexes.map(i => [i, true]));
-  }
+  let focusMap = focus ? parseFocus(focus) : getDefaultFocus(lines);
 
   const focusIndexes = Array.from(focusMap.keys());
   const focusStart = Math.min(...focusIndexes);
@@ -62,7 +66,14 @@ function parseStep(step, lines) {
   };
 }
 
-function splitTokensToColumns(tokenArray) {
+function getDefaultFocus(lines) {
+  const indexes = lines
+    .map((line, index) => (line.isNew ? index : null))
+    .filter(index => index !== null);
+  return new Map<number, boolean | number[]>(indexes.map(i => [i, true]));
+}
+
+function splitTokensToColumns(tokenArray: any[]) {
   const tokens = Array.from(tokenArray);
   let key = 0;
   tokenArray.splice(0, tokenArray.length);

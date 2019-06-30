@@ -19,8 +19,17 @@ import {
   tween,
   focusToken
 } from "./animations";
+import { Step } from "code-surfer-types";
 
-function CodeSurferContainer({ stepPlayhead, info }) {
+type ContainerProps = {
+  stepPlayhead: number;
+  info: {
+    dimensions: any;
+    steps: Step[];
+  };
+};
+
+function CodeSurferContainer({ stepPlayhead, info }: ContainerProps) {
   const { dimensions, steps } = info;
   const ctx = useAnimationContext(steps, stepPlayhead);
 
@@ -64,7 +73,7 @@ const heightChangingAnimations = [
 function useScrollTop(dimensions, stepCtx) {
   if (!dimensions) return 0;
 
-  const linesCtx = stepCtx.useSelect(step => step.lines);
+  const linesCtx = stepCtx.useSelectMany(step => step.lines);
   const [prevStep, nextStep] = stepCtx.spread();
 
   const [realPrevCenter, realNextCenter] = React.useMemo(() => {
@@ -123,7 +132,7 @@ function CodeSurferContent({ dimensions, ctx }) {
     ? dimensions.containerHeight / 2 + scrollTop
     : 0;
 
-  const linesCtx = ctx.useSelect(step => step.lines);
+  const linesCtx = ctx.useSelectMany(step => step.lines);
 
   console.log(linesCtx.spread());
 
@@ -180,7 +189,7 @@ function Line({ ctx }) {
 
   let tokens = [];
 
-  let tokensCtx = ctx.useSelect(line => line.tokens);
+  let tokensCtx = ctx.useSelectMany(line => line.tokens);
 
   if (focusPerToken) {
     tokens = tokensCtx.map(tokenCtx => ({

@@ -1,8 +1,9 @@
 import { diffLines, applyPatch } from "diff";
 import tokenize from "./tokenizer";
+import { InputStep } from "code-surfer-types";
 const newlineRe = /\r\n|\r|\n/;
 
-function myDiff(oldCode, newCode) {
+function myDiff(oldCode: string, newCode: string) {
   const changes = diffLines(oldCode || "", newCode);
 
   let oldIndex = -1;
@@ -27,11 +28,22 @@ function myDiff(oldCode, newCode) {
   });
 }
 
-function insert(array, index, elements) {
+function insert<T>(array: T[], index: number, elements: T[]) {
   return array.splice(index, 0, ...elements);
 }
 
-function slideDiff(lines, codes, slideIndex, language) {
+type Line = {
+  content: string;
+  slides: number[];
+  tokens: { type: string; content: string }[];
+};
+
+function slideDiff(
+  lines: Line[],
+  codes: string[],
+  slideIndex: number,
+  language: string
+) {
   const prevLines = lines.filter(l => l.slides.includes(slideIndex - 1));
   const prevCode = codes[slideIndex - 1] || "";
   const currCode = codes[slideIndex];
@@ -44,7 +56,8 @@ function slideDiff(lines, codes, slideIndex, language) {
       const addAtIndex = lines.indexOf(prevLine) + 1;
       const addLines = change.lines.map(content => ({
         content,
-        slides: [slideIndex]
+        slides: [slideIndex],
+        tokens: []
       }));
       insert(lines, addAtIndex, addLines);
     } else if (!change.removed) {
@@ -59,15 +72,15 @@ function slideDiff(lines, codes, slideIndex, language) {
   currLines.forEach((line, index) => (line.tokens = tokenLines[index]));
 }
 
-export function parseLines(codes, language) {
-  const lines = [];
+export function parseLines(codes: string[], language: string) {
+  const lines: Line[] = [];
   for (let slideIndex = 0; slideIndex < codes.length; slideIndex++) {
     slideDiff(lines, codes, slideIndex, language);
   }
   return lines;
 }
 
-export function getSlides(codes, language) {
+export function getSlides(codes: string[], language: string) {
   // codes are in reverse cronological order
   const lines = parseLines(codes, language);
   // console.log("lines", lines);
@@ -84,8 +97,8 @@ export function getSlides(codes, language) {
   });
 }
 
-export function getCodes(rawSteps) {
-  const codes = [];
+export function getCodes(rawSteps: InputStep[]) {
+  const codes: string[] = [];
 
   rawSteps.forEach((s, i) => {
     if (s.lang === "diff" && i > 0) {

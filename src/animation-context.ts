@@ -1,10 +1,14 @@
 import React from "react";
-import Tuple from "./tuple";
+import { Tuple } from "./tuple";
 
-function context(tuple, t, parentCtx = null) {
+function context<T>(tuple: Tuple<T>, t: number, parentCtx = null) {
   const ctx = {
     useSelect: selector => {
       const newTuple = React.useMemo(() => tuple.select(selector), [tuple]);
+      return context(newTuple, t, ctx);
+    },
+    useSelectMany: selector => {
+      const newTuple = React.useMemo(() => tuple.selectMany(selector), [tuple]);
       return context(newTuple, t, ctx);
     },
     map: mapper =>
@@ -56,7 +60,7 @@ function context(tuple, t, parentCtx = null) {
   return ctx;
 }
 
-export function useAnimationContext(items, playhead) {
+export function useAnimationContext<T>(items: T[], playhead: number) {
   const prev = items[Math.floor(playhead)];
   const next = items[Math.floor(playhead) + 1];
   const tuple = React.useMemo(() => new Tuple(prev, next), [prev, next]);
