@@ -134,8 +134,6 @@ function CodeSurferContent({ dimensions, ctx }) {
 
   const linesCtx = ctx.useSelectMany(step => step.lines);
 
-  console.log(linesCtx.spread());
-
   return (
     <pre
       className="cs-content"

@@ -1,4 +1,4 @@
 [build]
   base    = ""
   command = "yarn predeploy"
-  publish = "example/dist/"
+  publish = "examples/dist/"

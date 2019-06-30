@@ -4,11 +4,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "code-surfer": "link:.."
+    "code-surfer": "link:../.."
   },
   "scripts": {
-    "start": "../node_modules/.bin/mdx-deck deck.mdx",
-    "build": "../node_modules/.bin/mdx-deck build deck.mdx"
+    "start": "../../node_modules/.bin/mdx-deck deck.mdx",
+    "build": "../../node_modules/.bin/mdx-deck build deck.mdx"
   },
   "devDependencies": {
     "raw-loader": "^3.0.0"

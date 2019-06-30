@@ -51,7 +51,7 @@ clipboard@^2.0.0:
     select "^1.1.2"
     tiny-emitter "^2.0.0"
 
-"code-surfer@link:..":
+"code-surfer@link:../..":
   version "0.0.0"
   uid ""
 
