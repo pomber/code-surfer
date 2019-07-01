@@ -1,5 +1,5 @@
 import React from "react";
-import { useDeck, Notes } from "mdx-deck";
+import { useDeck, Notes } from "@mdx-deck/components";
 import CodeSurfer from "./code-surfer";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
