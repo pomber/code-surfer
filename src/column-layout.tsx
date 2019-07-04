@@ -38,12 +38,12 @@ function ColumnLayout({ children, themes = [], sizes }) {
       className="cs-col-layout"
     >
       {columns.map((column, i) => (
-        <ThemeContext.Provider
+        <Column
           key={i}
-          value={themes[i] ? themes[i].codeSurfer : theme.codeSurfer}
-        >
-          <Column column={column} progress={progress} />
-        </ThemeContext.Provider>
+          column={column}
+          progress={progress}
+          theme={themes[i] ? themes[i].codeSurfer : theme.codeSurfer}
+        />
       ))}
 
       <ThemeContext.Provider value={theme.codeSurfer}>
@@ -54,7 +54,7 @@ function ColumnLayout({ children, themes = [], sizes }) {
   );
 }
 
-function Column({ column, progress }) {
+function Column({ column, progress, theme }) {
   return (
     <div
       style={{
@@ -64,7 +64,7 @@ function Column({ column, progress }) {
       }}
     >
       {column.isCode ? (
-        <CodeSurfer steps={column.steps} progress={progress} />
+        <CodeSurfer steps={column.steps} progress={progress} theme={theme} />
       ) : (
         column.steps[Math.round(progress)].element
       )}

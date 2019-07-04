@@ -1,8 +1,13 @@
-import Component from "code-surfer/dist/standalone.esm";
+import Component, * as allThemes from "code-surfer/dist/standalone.esm";
 
 /**
  * @typedef { import("code-surfer/dist/standalone/code-surfer").default } CodeSurferComponent
+ * @typedef { import("code-surfer/dist/standalone/themes") } AllThemes
  */
 
 /** @type {CodeSurferComponent} */
-export const CodeSurfer = Component;
+const CodeSurfer = Component;
+
+/** @type {AllThemes} */
+const themes = allThemes;
+export { themes, CodeSurfer };

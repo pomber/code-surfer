@@ -2,7 +2,7 @@
 
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { CodeSurfer } from "./code-surfer";
+import { CodeSurfer, themes } from "./code-surfer";
 
 const steps = [
   {
@@ -39,8 +39,25 @@ function Story() {
         setValue={value => setProgress(value)}
         max={steps.length - 1}
       />
-      <div style={{ height: 180, width: 320, border: "1px solid black" }}>
+      <div
+        style={{
+          height: 180,
+          width: 320,
+          border: "1px solid black",
+          margin: "5px 0"
+        }}
+      >
         <CodeSurfer progress={progress} steps={steps} />
+      </div>
+      <div
+        style={{
+          height: 180,
+          width: 320,
+          border: "1px solid black",
+          margin: "5px 0"
+        }}
+      >
+        <CodeSurfer progress={progress} steps={steps} theme={themes.nightOwl} />
       </div>
     </div>
   );

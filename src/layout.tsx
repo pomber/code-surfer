@@ -1,7 +1,6 @@
 import React from "react";
 import { useDeck, Notes, useTheme } from "mdx-deck";
 import CodeSurfer from "./standalone/code-surfer";
-import { ThemeContext } from "./standalone/theming";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";
@@ -28,9 +27,7 @@ function CodeSurferLayout({ children }) {
       }}
       className="cs-layout"
     >
-      <ThemeContext.Provider value={theme.codeSurfer}>
-        <CodeSurfer steps={steps} progress={progress} />
-      </ThemeContext.Provider>
+      <CodeSurfer steps={steps} progress={progress} theme={theme.codeSurfer} />
     </div>
   );
 }
