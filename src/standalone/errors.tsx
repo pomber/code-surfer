@@ -1,11 +1,15 @@
 import React from "react";
 
-export function UnknownError({ error }) {
+type UnknownErrorProps = {
+  error: { toString: () => string };
+};
+
+export function UnknownError({ error }: UnknownErrorProps) {
   // TODO link to create issue
   return <ErrorBox header="Oops, there's a problem" body={error.toString()} />;
 }
 
-export function grammarNotFound({ lang }) {
+export function grammarNotFound({ lang }: { lang: string }) {
   return {
     element: (
       <ErrorBox
@@ -32,10 +36,10 @@ export function grammarNotFound({ lang }) {
   };
 }
 
-export function invalidFocusNumber(n) {
+export function invalidFocusNumber(n: string) {
   return {
-    withFocusString: focusString => ({
-      withStepIndex: stepIndex => ({
+    withFocusString: (focusString: string) => ({
+      withStepIndex: (stepIndex: number) => ({
         element: (
           <ErrorBox
             header={<StepErrorHeader stepIndex={stepIndex} />}
@@ -52,10 +56,10 @@ export function invalidFocusNumber(n) {
   };
 }
 
-export function invalidLineOrColumnNumber(start) {
+export function invalidLineOrColumnNumber() {
   return {
-    withFocusString: focusString => ({
-      withStepIndex: stepIndex => ({
+    withFocusString: (focusString: string) => ({
+      withStepIndex: (stepIndex: number) => ({
         element: (
           <ErrorBox
             header={<StepErrorHeader stepIndex={stepIndex} />}
@@ -74,7 +78,12 @@ export function invalidLineOrColumnNumber(start) {
   };
 }
 
-function ErrorBox({ header, body }) {
+type ErrorBoxProps = {
+  header: React.ReactNode;
+  body: React.ReactNode;
+};
+
+function ErrorBox({ header, body }: ErrorBoxProps) {
   return (
     <div
       style={{
@@ -94,7 +103,7 @@ function ErrorBox({ header, body }) {
   );
 }
 
-function StepErrorHeader({ stepIndex }) {
+function StepErrorHeader({ stepIndex }: { stepIndex: number }) {
   return (
     <React.Fragment>
       Oops, there's a problem with the{" "}
@@ -106,7 +115,7 @@ function StepErrorHeader({ stepIndex }) {
   );
 }
 
-function Mark({ children }) {
+function Mark({ children }: { children: React.ReactNode }) {
   return (
     <mark style={{ background: "none", color: "pink", fontWeight: "bolder" }}>
       {children}
@@ -114,7 +123,7 @@ function Mark({ children }) {
   );
 }
 
-function ordinal(i) {
+function ordinal(i: number) {
   var j = i % 10,
     k = i % 100;
   if (j == 1 && k != 11) {

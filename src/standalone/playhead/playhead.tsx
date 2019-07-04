@@ -138,7 +138,7 @@ export function Context() {
   throw Error("shouldnt run Context");
 }
 
-export function run(node, t, context = {}) {
+export function run(node: any, t: number, context = {}) {
   if (node.type === Context) {
     const { children, ...patch } = node.props;
     const newContext = { ...context, ...patch };

@@ -1,11 +1,15 @@
 import React from "react";
 import { readStepFromElement } from "./step-reader";
-import CodeSurfer from "./code-surfer";
-import useSteps from "./use-steps";
-import { useDeck, Notes } from "mdx-deck";
+import CodeSurfer from "./standalone/code-surfer";
+import { useDeck, Notes, useTheme } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
-import { useSubtitleStyle, useTitleStyle, ThemeContext } from "./theming";
+import {
+  useSubtitleStyle,
+  useTitleStyle,
+  ThemeContext
+} from "./standalone/theming";
 import { useNotes } from "./notes";
+import { useStepSpring } from "./use-step-spring";
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
@@ -13,8 +17,11 @@ function ColumnLayout({ children, themes = [], sizes }) {
     () => getColumnsFromChildren(children, sizes),
     [deck.index]
   );
+
   useNotes(notesElements);
-  const stepIndex = useSteps(columns[0].length);
+  const progress = useStepSpring(columns[0].steps.length);
+  const stepIndex = Math.round(progress);
+  const theme = useTheme();
   return (
     <div
       style={{
@@ -33,18 +40,21 @@ function ColumnLayout({ children, themes = [], sizes }) {
       {columns.map((column, i) => (
         <ThemeContext.Provider
           key={i}
-          value={themes[i] ? themes[i] : undefined}
+          value={themes[i] ? themes[i].codeSurfer : theme.codeSurfer}
         >
-          <Column column={column} stepIndex={stepIndex} />
+          <Column column={column} progress={progress} />
         </ThemeContext.Provider>
       ))}
-      <Title text={titles[stepIndex]} />
-      <Subtitle text={subtitles[stepIndex]} />
+
+      <ThemeContext.Provider value={theme.codeSurfer}>
+        <Title text={titles[stepIndex]} />
+        <Subtitle text={subtitles[stepIndex]} />
+      </ThemeContext.Provider>
     </div>
   );
 }
 
-function Column({ column, stepIndex }) {
+function Column({ column, progress }) {
   return (
     <div
       style={{
@@ -54,9 +64,9 @@ function Column({ column, stepIndex }) {
       }}
     >
       {column.isCode ? (
-        <CodeSurfer steps={column.steps} lang={column.steps[0].lang} />
+        <CodeSurfer steps={column.steps} progress={progress} />
       ) : (
-        column.steps[stepIndex].element
+        column.steps[Math.round(progress)].element
       )}
     </div>
   );

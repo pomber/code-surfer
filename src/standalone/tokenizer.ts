@@ -78,7 +78,7 @@ export default function tokenize(code: string, language = "javascript") {
     const contentLines = token.content.split(newlineRe);
 
     const firstContent = contentLines.shift();
-    if (firstContent !== "") {
+    if (firstContent !== undefined && firstContent !== "") {
       currentLine.push({ type: token.type, content: firstContent });
     }
     contentLines.forEach(content => {

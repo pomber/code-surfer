@@ -1,5 +1,5 @@
 /* @jsx createAnimation */
-import { createAnimation, Stagger, Context, run } from "./playhead/playhead";
+import { createAnimation, run } from "./playhead/playhead";
 import easing from "./playhead/easing";
 
 function FadeIn() {
@@ -31,7 +31,7 @@ const SlideToLeft = () => (
   />
 );
 
-function ShrinkHeight({ lineHeight }) {
+function ShrinkHeight({ lineHeight }: { lineHeight?: number }) {
   if (!lineHeight) {
     return <step from={{ height: null }} to={{ height: 0 }} />;
   }
@@ -44,7 +44,7 @@ function ShrinkHeight({ lineHeight }) {
   );
 }
 
-function ExitLine({ lineHeight }) {
+function ExitLine({ lineHeight }: { lineHeight?: number }) {
   return (
     <chain durations={[0.35, 0.3, 0.35]}>
       <SlideToLeft />
@@ -61,7 +61,7 @@ const SlideFromRight = () => (
   />
 );
 
-function GrowHeight({ lineHeight }) {
+function GrowHeight({ lineHeight }: { lineHeight?: number }) {
   if (!lineHeight) {
     return <step from={{ height: 0 }} to={{ height: null }} />;
   }
@@ -74,7 +74,7 @@ function GrowHeight({ lineHeight }) {
   );
 }
 
-function EnterLine({ lineHeight }) {
+function EnterLine({ lineHeight }: { lineHeight?: number }) {
   return (
     <chain durations={[0.35, 0.3, 0.35]}>
       <delay />
@@ -84,11 +84,15 @@ function EnterLine({ lineHeight }) {
   );
 }
 
-export const fadeIn = t => run(<FadeIn />, t);
-export const fadeOut = t => run(<FadeOut />, t);
-export const fadeOutIn = t => run(<FadeOutIn />, t);
+export const fadeIn = (t: number) => run(<FadeIn />, t);
+export const fadeOut = (t: number) => run(<FadeOut />, t);
+export const fadeOutIn = (t: number) => run(<FadeOutIn />, t);
 
-export function switchText(prev, next, t) {
+export function switchText<T>(
+  prev: Maybe<{ value: T }>,
+  next: Maybe<{ value: T }>,
+  t: number
+) {
   // TODO merge with fadeBackground and fadeText
   if (t < 0.5) {
     return prev && prev.value;
@@ -97,15 +101,31 @@ export function switchText(prev, next, t) {
   }
 }
 
-export const exitLine = (prev, next, t) => {
-  const dimensions = (prev || next).dimensions;
+function any<T>(prev: Maybe<T>, next: Maybe<T>): T {
+  return (prev || next) as T;
+}
+
+export const exitLine = (
+  prev: Maybe<{ dimensions?: any }>,
+  next: Maybe<{ dimensions?: any }>,
+  t: number
+) => {
+  const dimensions = any(prev, next).dimensions;
   return run(<ExitLine lineHeight={dimensions && dimensions.lineHeight} />, t);
 };
-export const enterLine = (prev, next, t) => {
-  const dimensions = (prev || next).dimensions;
+export const enterLine = (
+  prev: Maybe<{ dimensions?: any }>,
+  next: Maybe<{ dimensions?: any }>,
+  t: number
+) => {
+  const dimensions = any(prev, next).dimensions;
   return run(<EnterLine lineHeight={dimensions && dimensions.lineHeight} />, t);
 };
-export const focusLine = (prev, next, t) => {
+export const focusLine = (
+  prev: Maybe<{ focus?: any }>,
+  next: Maybe<{ focus?: any }>,
+  t: number
+) => {
   return run(
     <tween
       from={{ opacity: prev && prev.focus ? 1 : offOpacity }}
@@ -114,18 +134,26 @@ export const focusLine = (prev, next, t) => {
     t
   );
 };
-export const focusToken = (prev, next, t) => {
+export const focusToken = (
+  prev: Maybe<{ focus?: any }>,
+  next: Maybe<{ focus?: any }>,
+  t: number
+) => {
   const from = prev && prev.focus === false ? offOpacity : 1;
   const to = next && next.focus === false ? offOpacity : 1;
   return run(<tween from={{ opacity: from }} to={{ opacity: to }} />, t);
 };
 
-export const tween = (from, to) => (prev, next, t) => {
+export const tween = (from?: number, to?: number) => (
+  _prev: any,
+  _next: any,
+  t: number
+) => {
   const result = run(
     <tween
       from={{ value: from || 0 }}
       to={{ value: to || 0 }}
-      ease={easing.easeInOut}
+      ease={easing.easeInOutQuad}
     />,
     t
   );
@@ -133,11 +161,15 @@ export const tween = (from, to) => (prev, next, t) => {
   return result.value;
 };
 
-export const scaleToFocus = (prev, next, t) => {
-  const dimensions = (prev || next).dimensions;
+export const scaleToFocus = (
+  prev: Maybe<{ dimensions?: any }>,
+  next: Maybe<{ dimensions?: any }>,
+  t: number
+) => {
+  const dimensions = any(prev, next).dimensions;
 
   if (!dimensions) {
-    return t => ({
+    return (_: number) => ({
       scale: 1
     });
   }
@@ -159,7 +191,7 @@ export const scaleToFocus = (prev, next, t) => {
   );
 };
 
-function getZoom(step) {
+function getZoom(step: any): number | null {
   if (!step) return null;
 
   const {

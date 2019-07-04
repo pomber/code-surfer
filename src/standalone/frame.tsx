@@ -6,7 +6,7 @@ import {
   useSubtitleStyle,
   useTitleStyle
 } from "./theming";
-import { useAnimationContext } from "./animation-context";
+import { useAnimationContext, Context } from "./animation-context";
 import {
   fadeIn,
   fadeOutIn,
@@ -19,18 +19,20 @@ import {
   tween,
   focusToken
 } from "./animations";
-import { Step } from "code-surfer-types";
+import { Step, Line as LineType, Token } from "code-surfer-types";
+import { Animation, AnimationAndConfig } from "playhead-types";
 
 type ContainerProps = {
   stepPlayhead: number;
-  info: {
-    dimensions: any;
-    steps: Step[];
-  };
+  dimensions?: any;
+  steps: Step[];
 };
 
-function CodeSurferContainer({ stepPlayhead, info }: ContainerProps) {
-  const { dimensions, steps } = info;
+function CodeSurferContainer({
+  stepPlayhead,
+  dimensions,
+  steps
+}: ContainerProps) {
   const ctx = useAnimationContext(steps, stepPlayhead);
 
   return (
@@ -51,7 +53,7 @@ function CodeSurferContainer({ stepPlayhead, info }: ContainerProps) {
   );
 }
 
-const heightChangingAnimations = [
+const heightChangingAnimations: AnimationAndConfig<any, any>[] = [
   {
     animation: exitLine,
     when: (prev, next) => prev && !next,
@@ -63,6 +65,7 @@ const heightChangingAnimations = [
     stagger: 0.2
   }
 ];
+
 /**
  * This part wasn't easy...
  * We need to adjust the scroll as the lines keep changing height
@@ -70,15 +73,19 @@ const heightChangingAnimations = [
  * but taking into acount the height of the lines that are on top of the center
  * for each frame
  */
-function useScrollTop(dimensions, stepCtx) {
+function useScrollTop(dimensions: any, stepCtx: Context<Step>) {
   if (!dimensions) return 0;
 
   const linesCtx = stepCtx.useSelectMany(step => step.lines);
   const [prevStep, nextStep] = stepCtx.spread();
 
   const [realPrevCenter, realNextCenter] = React.useMemo(() => {
-    const allPrevLines = linesCtx.map(ctx => ctx.animate((prev, next) => prev));
-    const allNextLines = linesCtx.map(ctx => ctx.animate((prev, next) => next));
+    const allPrevLines = linesCtx.map(ctx =>
+      ctx.animate((prev, _next) => prev)
+    );
+    const allNextLines = linesCtx.map(ctx =>
+      ctx.animate((_prev, next) => next)
+    );
 
     const prevCenter = prevStep ? prevStep.focusCenter : 0;
     const nextCenter = nextStep ? nextStep.focusCenter : 0;
@@ -119,11 +126,18 @@ function useScrollTop(dimensions, stepCtx) {
   return scrollTop;
 }
 
-function CodeSurferContent({ dimensions, ctx }) {
-  const ref = React.useRef(null);
+function CodeSurferContent({
+  dimensions,
+  ctx
+}: {
+  dimensions: any;
+  ctx: Context<Step>;
+}) {
+  const ref = React.useRef<HTMLPreElement | null>(null);
 
   const scrollTop = useScrollTop(dimensions, ctx);
   React.useLayoutEffect(() => {
+    if (ref.current == null) return;
     ref.current.scrollTop = scrollTop;
   }, [scrollTop]);
 
@@ -169,7 +183,7 @@ function CodeSurferContent({ dimensions, ctx }) {
   );
 }
 
-function Line({ ctx }) {
+function Line({ ctx }: { ctx: Context<LineType> }) {
   const lineStyle = ctx.animations([
     ...heightChangingAnimations,
     {
@@ -177,21 +191,25 @@ function Line({ ctx }) {
     }
   ]);
 
-  const { lineTokens, key, focusPerToken } = ctx.animate((prev, next) => ({
-    lineTokens: (prev || next).tokens,
-    key: (prev || next).key,
-    focusPerToken: (prev && prev.focusPerToken) || (next && next.focusPerToken)
-  }));
+  const { lineTokens, key, focusPerToken } = ctx.animate((prev, next) => {
+    const line = (prev || next) as LineType;
+    return {
+      lineTokens: line.tokens,
+      key: line.key,
+      focusPerToken:
+        (prev && prev.focusPerToken) || (next && next.focusPerToken)
+    };
+  });
 
   const getStyleForToken = useTokenStyles();
 
-  let tokens = [];
+  let tokens: (Token & { animatedStyle: React.CSSProperties })[] = [];
 
   let tokensCtx = ctx.useSelectMany(line => line.tokens);
 
   if (focusPerToken) {
     tokens = tokensCtx.map(tokenCtx => ({
-      ...tokenCtx.animate((prev, next) => prev || next),
+      ...tokenCtx.animate((prev, next) => (prev || next) as Token),
       animatedStyle: tokenCtx.animate(focusToken)
     }));
   } else {
@@ -223,7 +241,7 @@ function Line({ ctx }) {
   );
 }
 
-function Title({ ctx }) {
+function Title({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
   const text = ctx.animate(switchText);
   const bgStyle = ctx.animate(fadeBackground);
   const textStyle = ctx.animate(fadeText);
@@ -242,7 +260,7 @@ function Title({ ctx }) {
     </h4>
   );
 }
-function Subtitle({ ctx }) {
+function Subtitle({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
   const text = ctx.animate(switchText);
   const bgStyle = ctx.animate(fadeBackground);
   const textStyle = ctx.animate(fadeText);
@@ -262,7 +280,7 @@ function Subtitle({ ctx }) {
   );
 }
 
-function fadeBackground(prev, next, t) {
+const fadeBackground: Animation<any, { opacity: number }> = (prev, next, t) => {
   let opacity = 1;
   if (!prev) {
     opacity = t;
@@ -271,9 +289,13 @@ function fadeBackground(prev, next, t) {
     opacity = 1 - t;
   }
   return { opacity };
-}
+};
 
-function fadeText(prev, next, t) {
+const fadeText: Animation<{ value: any } | undefined, { opacity: number }> = (
+  prev,
+  next,
+  t
+) => {
   if (prev && next && prev.value !== next.value) {
     return fadeOutIn(t);
   }
@@ -284,6 +306,6 @@ function fadeText(prev, next, t) {
     return fadeOut(t);
   }
   return { opacity: 1 };
-}
+};
 
 export default CodeSurferContainer;

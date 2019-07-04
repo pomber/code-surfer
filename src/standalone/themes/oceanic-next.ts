@@ -1,4 +1,4 @@
-import { addColors, makeTheme } from "./utils";
+import { makeTheme } from "./utils";
 
 // From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
 
@@ -112,19 +112,19 @@ const prismTheme = {
     {
       types: ["important"],
       style: {
-        fontWeight: "400"
+        fontWeight: 400
       }
     },
     {
       types: ["bold"],
       style: {
-        fontWeight: "bold"
+        fontWeight: "bold" as "bold"
       }
     },
     {
       types: ["italic"],
       style: {
-        fontStyle: "italic"
+        fontStyle: "italic" as "italic"
       }
     },
     {
@@ -137,6 +137,5 @@ const prismTheme = {
 };
 
 const theme = makeTheme(prismTheme);
-const fullTheme = addColors(theme, prismTheme);
 
-export { theme, fullTheme };
+export { theme };

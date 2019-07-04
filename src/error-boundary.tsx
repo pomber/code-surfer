@@ -1,5 +1,5 @@
 import React from "react";
-import { UnknownError } from "./errors";
+import { UnknownError } from "./standalone/errors";
 
 export default class ErrorBoundary extends React.Component<
   {},

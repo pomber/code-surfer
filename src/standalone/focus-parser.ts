@@ -11,7 +11,7 @@ export function parseFocus(focus: string) {
   try {
     const parts = focus.split(/,(?![^\[]*\])/g).map(parsePart);
 
-    return new Map<LineIndex, boolean | ColumnIndex[]>([].concat(...parts));
+    return new Map<LineIndex, boolean | ColumnIndex[]>(parts.flat());
   } catch (error) {
     if (error.withFocusString) {
       throw error.withFocusString(focus);
@@ -28,10 +28,10 @@ function parsePart(part: string) {
   // - a line number with a column selector: "2[1,3:5,9]"
   const columnsMatch = part.match(/(\d+)\[(.+)\]/);
   if (columnsMatch) {
-    const [_, line, columns] = columnsMatch;
+    const [, line, columns] = columnsMatch;
     const columnsList = columns.split(",").map(expandString);
     const lineIndex = Number(line) - 1;
-    const columnIndexes = [].concat(...columnsList).map(c => c - 1);
+    const columnIndexes = columnsList.flat().map(c => c - 1);
     return [[lineIndex, columnIndexes]];
   } else {
     return expandString(part).map(lineNumber => [lineNumber - 1, true]);
@@ -53,7 +53,7 @@ function expandString(part: string) {
   const startNumber = Number(start);
 
   if (startNumber < 1) {
-    throw errors.invalidLineOrColumnNumber(start);
+    throw errors.invalidLineOrColumnNumber();
   }
 
   if (!end) {

@@ -1,17 +1,17 @@
-import { addColors, makeTheme } from "./utils";
+import { makeTheme } from "./utils";
 
 // From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
 
 const prismTheme = {
   plain: {
-    backgroundColor: "#faf8f5",
-    color: "#728fcb"
+    backgroundColor: "#2a2734",
+    color: "#9a86fd"
   },
   styles: [
     {
       types: ["comment", "prolog", "doctype", "cdata", "punctuation"],
       style: {
-        color: "#b6ad9a"
+        color: "#6c6783"
       }
     },
     {
@@ -23,25 +23,25 @@ const prismTheme = {
     {
       types: ["tag", "operator", "number"],
       style: {
-        color: "#063289"
+        color: "#e09142"
       }
     },
     {
       types: ["property", "function"],
       style: {
-        color: "#b29762"
+        color: "#9a86fd"
       }
     },
     {
       types: ["tag-id", "selector", "atrule-id"],
       style: {
-        color: "#2d2006"
+        color: "#eeebff"
       }
     },
     {
       types: ["attr-name"],
       style: {
-        color: "#896724"
+        color: "#c4b9fe"
       }
     },
     {
@@ -57,16 +57,12 @@ const prismTheme = {
         "unit",
         "statement",
         "regex",
-        "at-rule"
+        "at-rule",
+        "placeholder",
+        "variable"
       ],
       style: {
-        color: "#728fcb"
-      }
-    },
-    {
-      types: ["placeholder", "variable"],
-      style: {
-        color: "#93abdc"
+        color: "#ffcc99"
       }
     },
     {
@@ -90,19 +86,18 @@ const prismTheme = {
     {
       types: ["important", "bold"],
       style: {
-        fontWeight: "bold"
+        fontWeight: "bold" as "bold"
       }
     },
     {
       types: ["important"],
       style: {
-        color: "#896724"
+        color: "#c4b9fe"
       }
     }
   ]
 };
 
 const theme = makeTheme(prismTheme);
-const fullTheme = addColors(theme, prismTheme);
 
-export { theme, fullTheme };
+export { theme };

@@ -22,7 +22,7 @@ function myDiff(oldCode: string, newCode: string) {
       added
     };
     if (!added) {
-      oldIndex += count;
+      oldIndex += count || 0;
     }
     return result;
   });
@@ -61,7 +61,7 @@ function slideDiff(
       }));
       insert(lines, addAtIndex, addLines);
     } else if (!change.removed) {
-      for (let j = 1; j <= change.count; j++) {
+      for (let j = 1; j <= (change.count || 0); j++) {
         prevLines[change.oldIndex + j].slides.push(slideIndex);
       }
     }

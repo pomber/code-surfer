@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && tsdx build -i src/standalone/index.tsx --name standalone --format esm",
-    "start:standalone": "tsdx watch -i src/standalone/index.tsx --name standalone --format esm",
+    "build": "tsdx build && tsdx build -i src/standalone/code-surfer.tsx --name standalone --format esm",
+    "start:standalone": "tsdx watch -i src/standalone/code-surfer.tsx --name standalone --format esm",
     "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
     "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
     "test:all": "cross-env CI=1 tsdx test --env=jsdom",
