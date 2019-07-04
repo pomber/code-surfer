@@ -1,6 +1,30 @@
 import React from "react";
 import devImg from "./female-technologist_1f469-200d-1f4bb.png";
 import useDimensions from "./use-dimensions";
+import { CodeSurfer, themes } from "./code-surfer";
+
+const steps = [
+  {
+    code: `function foo() {
+  const x = 2;
+  return 1;
+}`,
+    lang: "js"
+  },
+  {
+    code: `function foo() {
+  return 2;
+}`,
+    lang: "js"
+  },
+  {
+    code: `function foo() {
+  return 2;
+}`,
+    focus: "1[4:6]",
+    lang: "js"
+  }
+];
 
 function App() {
   const dimensions = useDimensions();
@@ -65,10 +89,7 @@ function Screen({ dimensions }) {
         border: `${dimensions.screen.width / 200}px solid #111`
       }}
     >
-      <h1>Code Surfer</h1>
-      <h3>Rad Code Slides</h3>
-      <span>Link to GitHub</span>
-      <span>Link to @pomber</span>
+      <CodeSurfer progress={0} steps={steps} theme={themes.nightOwl} />
     </div>
   );
 }
