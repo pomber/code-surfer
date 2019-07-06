@@ -7,6 +7,14 @@ React component for scrolling, zooming and highlighting code.
 > If you like this project consider [backing my open source work on Patreon!](https://patreon.com/pomber)  
 > And follow [@pomber](https://twitter.com/pomber) on twitter for updates.
 
+---
+
+**Version 2 of Code Surfer is coming soon!**  
+Check the demos [here](https://twitter.com/pomber/status/1140640434613555201) and [here](https://twitter.com/pomber/status/1144222078696136704). And the [v2 PR](https://github.com/pomber/code-surfer/pull/58).  
+You can try it now with `npm init code-surfer-deck`.
+
+---
+
 ## How to use with [mdx-deck](https://github.com/jxnblk/mdx-deck)
 
 <div align="center">
