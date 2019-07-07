@@ -26,7 +26,7 @@ export default function useDimensions() {
 
   // origin
   const ox = vw / 2;
-  const oy = hrh + srh;
+  const oy = (srh * 6) / 5;
 
   // developer
   const dz = 100;
@@ -36,7 +36,7 @@ export default function useDimensions() {
   const dw = ds * drw;
   const dh = dw;
   const dx = dw * 2.5;
-  const dy = 0;
+  const dy = sh / 20;
 
   // podium
   const pz = 80;
@@ -45,7 +45,7 @@ export default function useDimensions() {
   const pw = ps * prw;
   const ph = (pw * 3) / 2;
   const px = (dx * ps) / ds;
-  const py = (drh - 1) * ps;
+  const py = dy + (drh - 1) * ps;
 
   // banners
   const bz = 260;
@@ -58,7 +58,7 @@ export default function useDimensions() {
   const by = (-bh * 4) / 5;
 
   // floor
-  const fw = vw;
+  const fw = vw * 2;
   const fh = sz;
   const fx = -fw / 2;
   const fy = py + ph - fh / 2;

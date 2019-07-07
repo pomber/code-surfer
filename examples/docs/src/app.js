@@ -5,11 +5,33 @@ import { CodeSurfer, themes } from "./code-surfer";
 
 const steps = [
   {
-    code: `function foo() {
-  const x = 2;
-  return 1;
-}`,
-    lang: "js"
+    code: "doo",
+    subtitle: {
+      value: "With Code Surfer you can make Rad Code Slides, like this one"
+    },
+    lang: "py"
+  },
+  {
+    code: `def partition(arr, low, high):
+    i = low - 1 
+    pivot = arr[high]
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i = i + 1
+            (arr[i], arr[j]) = (arr[j], arr[i])
+
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])
+
+    return i + 1
+
+def quickSort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)`,
+    lang: "py"
   },
   {
     code: `function foo() {
@@ -86,7 +108,8 @@ function Screen({ dimensions }) {
       style={{
         ...absoluteStyle(dimensions.screen, dimensions.origin),
         background: "#666",
-        border: `${dimensions.screen.width / 200}px solid #111`
+        border: `${dimensions.screen.width / 200}px solid #111`,
+        fontSize: "2em"
       }}
     >
       <CodeSurfer progress={0} steps={steps} theme={themes.nightOwl} />
@@ -131,7 +154,7 @@ function Floor({ dimensions }) {
       style={{
         ...absoluteStyle(floor, dimensions.origin),
         transform: `${translate3d(floor)} rotateX(${floor.xangle}deg)`,
-        background: "#993d"
+        background: "#cd8500"
         // zIndex: -1
       }}
     />
@@ -162,7 +185,7 @@ function Banner({ x, angle, dimensions }) {
     <div
       style={{
         ...absoluteStyle(banner, origin),
-        background: "#966",
+        background: "#aaa",
         transform: `translate3d(${x}px, ${banner.y}px, ${banner.z}px) rotateY(${angle}deg)`,
         ...vstack,
         justifyContent: "space-around",
