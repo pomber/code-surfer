@@ -7,10 +7,11 @@
     "code-surfer": "link:../.."
   },
   "scripts": {
-    "start": "../../node_modules/.bin/mdx-deck deck.mdx",
-    "build": "../../node_modules/.bin/mdx-deck build deck.mdx"
+    "start": "mdx-deck deck.mdx",
+    "build": "mdx-deck build deck.mdx"
   },
   "devDependencies": {
+    "mdx-deck": "3.0.7",
     "raw-loader": "^3.0.0"
   }
 }
