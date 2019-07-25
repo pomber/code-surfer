@@ -32,6 +32,7 @@
     "react": "^16.8.0"
   },
   "dependencies": {
+    "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",
     "prismjs": "^1.16.0",
     "rebound": "^0.1.0",

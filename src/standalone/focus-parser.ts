@@ -1,3 +1,4 @@
+import flat from "array.prototype.flat";
 import * as errors from "./errors";
 
 type LineIndex = number;
@@ -11,7 +12,7 @@ export function parseFocus(focus: string) {
   try {
     const parts = focus.split(/,(?![^\[]*\])/g).map(parsePart);
 
-    return new Map<LineIndex, boolean | ColumnIndex[]>(parts.flat());
+    return new Map<LineIndex, boolean | ColumnIndex[]>(flat(parts));
   } catch (error) {
     if (error.withFocusString) {
       throw error.withFocusString(focus);
@@ -31,7 +32,7 @@ function parsePart(part: string) {
     const [, line, columns] = columnsMatch;
     const columnsList = columns.split(",").map(expandString);
     const lineIndex = Number(line) - 1;
-    const columnIndexes = columnsList.flat().map(c => c - 1);
+    const columnIndexes = flat(columnsList).map(c => c - 1);
     return [[lineIndex, columnIndexes]];
   } else {
     return expandString(part).map(lineNumber => [lineNumber - 1, true]);
