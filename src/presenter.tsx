@@ -1,10 +1,11 @@
 import React from "react";
 import { globalHistory } from "@reach/router";
-import { Zoom, Clock, Slide, useTheme } from "mdx-deck";
+import { Zoom, Clock, Slide } from "mdx-deck";
 import useSpring from "./use-spring";
 import { getTextFromNotes } from "./notes";
 import { Global, css } from "@emotion/core";
 import { Swipeable } from "react-swipeable";
+import { useThemeUI } from 'theme-ui';
 
 const Teleprompter = ({ index, children, ...rest }) => {
   const ref = React.useRef(null);
@@ -65,7 +66,8 @@ function MobilePresenter({
   const windowHeight = window.innerHeight;
   const separatorHeight = 6;
   const notesHeight = windowHeight - deckHeight - separatorHeight;
-  const { colors } = useTheme();
+  const { colors } = useThemeUI();
+
   const progress = (100 * (index + 1)) / slides.length;
   return (
     <div

@@ -1,10 +1,11 @@
 import React from "react";
-import { useDeck, Notes, useTheme } from "mdx-deck";
+import { useDeck, Notes } from "mdx-deck";
 import CodeSurfer from "./standalone/code-surfer";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
+import { useThemeUI } from 'theme-ui';
 
 function CodeSurferLayout({ children }) {
   const deck = useDeck();
@@ -12,7 +13,7 @@ function CodeSurferLayout({ children }) {
 
   useNotes(steps.map(s => s.notesElement));
   const progress = useStepSpring(steps.length);
-  const theme = useTheme();
+  const theme = useThemeUI();
 
   return (
     <div

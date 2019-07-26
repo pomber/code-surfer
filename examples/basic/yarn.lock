@@ -2552,9 +2552,14 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-"code-surfer@link:../..":
-  version "0.0.0"
-  uid ""
+code-surfer@../../code-surfer-v2.0.0-alpha.9.tgz:
+  version "2.0.0-alpha.9"
+  resolved "../../code-surfer-v2.0.0-alpha.9.tgz#bee292cd6d45b7ae78e0da2261684dbd3d8cf037"
+  dependencies:
+    diff "^4.0.1"
+    prismjs "^1.16.0"
+    rebound "^0.1.0"
+    shell-quote "^1.6.1"
 
 collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   version "1.0.5"

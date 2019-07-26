@@ -1,7 +1,7 @@
 import React from "react";
 import { readStepFromElement } from "./step-reader";
 import CodeSurfer from "./standalone/code-surfer";
-import { useDeck, Notes, useTheme } from "mdx-deck";
+import { useDeck, Notes } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
 import {
   useSubtitleStyle,
@@ -10,6 +10,7 @@ import {
 } from "./standalone/theming";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
+import { useThemeUI } from 'theme-ui';
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
@@ -21,7 +22,8 @@ function ColumnLayout({ children, themes = [], sizes }) {
   useNotes(notesElements);
   const progress = useStepSpring(columns[0].steps.length);
   const stepIndex = Math.round(progress);
-  const theme = useTheme();
+  const theme = useThemeUI();
+
   return (
     <div
       style={{
