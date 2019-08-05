@@ -25,7 +25,8 @@
     "test": "run-p format:check test:all",
     "test:watch": "tsdx test --env=jsdom",
     "prepare": "yarn run build",
-    "predeploy": "yarn build && node examples/build"
+    "predeploy": "yarn build && node examples/build",
+    "demo": "mdx-deck examples/basic/deck.mdx"
   },
   "peerDependencies": {
     "mdx-deck": "3.0.7",

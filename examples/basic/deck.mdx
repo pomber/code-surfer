@@ -3,8 +3,7 @@ import {
   CodeSurferColumnLayout,
   Code,
   Step,
-} from "code-surfer"
-export { nightOwl as theme } from "code-surfer"
+} from "../.."
 import { Notes, Horizontal } from "mdx-deck"
 
 # Foo 1
@@ -14,65 +13,6 @@ import { Notes, Horizontal } from "mdx-deck"
 ---
 
 Foo
-
----
-
-<CodeSurferLayout>
-  <Code
-    lang="py"
-    focus="1:37"
-    code={require("!!raw-loader!./foo.py").default}
-    title="Some Python"
-    subtitle="from pythonforbeginners.com"
-  />
-  <Notes inline>Notes for step 111.</Notes>
-  <Code
-    focus="5:20"
-    code={require("!!raw-loader!./foo.py").default}
-    subtitle="Wait for input"
-  />
-  <Code
-    focus="8[16:84]"
-    code={require("!!raw-loader!./foo.py").default}
-    subtitle="Wait for input"
-  />
-  <Notes>Notes for step 322</Notes>
-</CodeSurferLayout>
-
----
-
-<CodeSurferColumnLayout sizes={[1, 1]}>
-
-<Step subtitle="S1" >
-
-<Code code={require("!!raw-loader!./greeting.class.0.js").default} lang="jsx" title="Before Hooks" />
-<Code code={require("!!raw-loader!./greeting.hooks.0.js").default} lang="jsx" title="After Hooks" />
-
-  <Notes>Notes for step 1. </Notes>
-</Step>
-
-<Step subtitle="S2" title="1">
-
-```diff 1
-
-```
-
-<Notes>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  Scelerisque purus semper eget duis at tellus at urna condimentum.
-  Egestas erat imperdiet sed euismod nisi porta lorem mollis.
-</Notes>
-
-```diff 1
-
-```
-
-<Notes>Step 2</Notes>
-
-</Step>
-
-</CodeSurferColumnLayout>
 
 ---
 

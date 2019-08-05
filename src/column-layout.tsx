@@ -10,7 +10,7 @@ import {
 } from "./standalone/theming";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
-import { useThemeUI } from 'theme-ui';
+import { useThemeUI } from "theme-ui";
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
@@ -98,7 +98,7 @@ function getColumnsFromChildren(children, sizes = []) {
   const stepElements = React.Children.toArray(children);
   stepElements.forEach((stepElement, stepIndex) => {
     React.Children.toArray(stepElement.props.children)
-      .filter(element => element.type !== Notes)
+      .filter(element => element.props && element.props.originalType !== Notes)
       .forEach((codeElement, columnIndex) => {
         columns[columnIndex] = columns[columnIndex] || {
           steps: [],
@@ -120,7 +120,9 @@ function getColumnsFromChildren(children, sizes = []) {
   const subtitles = stepElements.map(stepElement => stepElement.props.subtitle);
   const notesElements = stepElements.map(stepElement => {
     const stepChildren = React.Children.toArray(stepElement.props.children);
-    const notesElement = stepChildren.find(element => element.type === Notes);
+    const notesElement = stepChildren.find(
+      element => element.props && element.props.originalType === Notes
+    );
     return notesElement;
   });
 

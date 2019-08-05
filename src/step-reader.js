@@ -3,7 +3,7 @@ import Code from "./code";
 import React from "react";
 
 export function readStepFromElement(element) {
-  if (element.type === Code) {
+  if (element.props && element.props.originalType === Code) {
     // wrap everything except [code, lang, focus] in {value}
     const stepEntries = Object.entries(element.props).map(([key, value]) => ({
       [key]: ["code", "focus", "lang"].includes(key) ? value : { value }

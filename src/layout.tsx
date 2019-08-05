@@ -5,7 +5,7 @@ import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
-import { useThemeUI } from 'theme-ui';
+import { useThemeUI } from "theme-ui";
 
 function CodeSurferLayout({ children }) {
   const deck = useDeck();
@@ -40,7 +40,11 @@ const getStepsFromChildren = children => () => {
       const step = readStepFromElement(child);
       if (!step) return;
       const nextChild = kids[i + 1];
-      if (nextChild && nextChild.type === Notes) {
+      if (
+        nextChild &&
+        nextChild.props &&
+        nextChild.props.originalType === Notes
+      ) {
         step.notesElement = nextChild;
       }
       return step;
