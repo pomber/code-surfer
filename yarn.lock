@@ -1415,10 +1415,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@mdx-deck/themes@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@mdx-deck/themes/-/themes-3.0.6.tgz#07b06d0d054b9e24d3d33cece4705cc3a7bef544"
-  integrity sha512-xZNkDbeSqECMwKXh0RehqfMwfoQw4M96xLHaL5Dzkxki1DeXPP3I1vQExa9pFjwr6nR2nOzeUE5WlpjCuK6myw==
+"@mdx-deck/themes@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@mdx-deck/themes/-/themes-3.0.8.tgz#970ef4058f3f504825e27b5d65b04d93b5edd744"
+  integrity sha512-dLxgSGjcdg5y6SiX6M5JQSUEPWNdqDOIJHmYi2OI7THp9W1dZadw4Yg2GLNsAU7B5lWdUkBe7HSYCkdfuumxyA==
   dependencies:
     lodash.merge "^4.6.1"
     react-syntax-highlighter "^11.0.2"
@@ -5891,13 +5891,13 @@ gatsby-telemetry@^1.1.6:
     stack-utils "1.0.2"
     uuid "3.3.2"
 
-gatsby-theme-mdx-deck@^3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/gatsby-theme-mdx-deck/-/gatsby-theme-mdx-deck-3.0.7.tgz#f1876f01d9e6336a4c8d801a1d8df5756fef7ffb"
-  integrity sha512-MjzdlYIIfdKO9GsyRdAp4wbHliD65FluHhHSh9soYQUoklXu92GBKx5xpXCSIXAv5q0ghyo8ObhlUbtfpNmHug==
+gatsby-theme-mdx-deck@^3.0.8:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/gatsby-theme-mdx-deck/-/gatsby-theme-mdx-deck-3.0.9.tgz#fcf661a9f209535d1dbca324a91b8943c4e5e400"
+  integrity sha512-h/U3RPqgqThGHd8tsd7l5KNyS1swsMl+r8h16izs4uFhEoiRm9+eFg7RkxsjquB3OpRE49KVR+IiAMk06zbtzg==
   dependencies:
     "@emotion/core" "^10.0.14"
-    "@mdx-deck/themes" "^3.0.6"
+    "@mdx-deck/themes" "^3.0.8"
     "@mdx-js/mdx" "^1.0.21"
     "@mdx-js/react" "^1.0.21"
     "@reach/router" "^1.2.1"
@@ -8701,18 +8701,18 @@ mdurl@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
 
-mdx-deck@3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.7.tgz#81e0c9efa597d3dbb6cedc0c9456fca9d2e60ac6"
-  integrity sha512-+cDJ7vaTUPzmQXUlN0J2N532qxkdL9Y+wa2IiDhc4ZHa3MSMPWT2jbJjwcZ5MuSTBnaKGjy5W0TgTln9JgibRA==
+mdx-deck@3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.8.tgz#b3e107b9877eb6e2740266fbbb72274b2643119c"
+  integrity sha512-LMnxAtrB4mFlnC3Ow+FRNkH98KTRzEJb1+sLyazEOHW6a86wKpHuTPIy0pJRVK4I1jJ00VyhGgqLJslaZoS/Iw==
   dependencies:
-    "@mdx-deck/themes" "^3.0.6"
+    "@mdx-deck/themes" "^3.0.8"
     chalk "^2.4.2"
     execa "^2.0.3"
     fs-extra "^8.1.0"
     gatsby "^2.13.24"
     gatsby-plugin-compile-es6-packages "^2.0.0"
-    gatsby-theme-mdx-deck "^3.0.7"
+    gatsby-theme-mdx-deck "^3.0.8"
     initit "^1.0.0-2"
     meow "^5.0.0"
     react "^16.8.6"
