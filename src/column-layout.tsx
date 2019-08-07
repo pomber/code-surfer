@@ -3,14 +3,9 @@ import { readStepFromElement } from "./step-reader";
 import CodeSurfer from "./standalone/code-surfer";
 import { useDeck, Notes } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
-import {
-  useSubtitleStyle,
-  useTitleStyle,
-  ThemeContext
-} from "./standalone/theming";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
-import { useThemeUI } from "theme-ui";
+import { StylesProvider, Styled } from "./standalone/styles";
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();
@@ -22,7 +17,6 @@ function ColumnLayout({ children, themes = [], sizes }) {
   useNotes(notesElements);
   const progress = useStepSpring(columns[0].steps.length);
   const stepIndex = Math.round(progress);
-  const theme = useThemeUI();
 
   return (
     <div
@@ -40,18 +34,13 @@ function ColumnLayout({ children, themes = [], sizes }) {
       className="cs-col-layout"
     >
       {columns.map((column, i) => (
-        <Column
-          key={i}
-          column={column}
-          progress={progress}
-          theme={themes[i] ? themes[i].codeSurfer : theme.codeSurfer}
-        />
+        <Column key={i} column={column} progress={progress} theme={themes[i]} />
       ))}
 
-      <ThemeContext.Provider value={theme.codeSurfer}>
+      <StylesProvider>
         <Title text={titles[stepIndex]} />
         <Subtitle text={subtitles[stepIndex]} />
-      </ThemeContext.Provider>
+      </StylesProvider>
     </div>
   );
 }
@@ -76,20 +65,17 @@ function Column({ column, progress, theme }) {
 function Title({ text }) {
   if (!text) return null;
   return (
-    <h4 className="cs-title" style={useTitleStyle()}>
+    <Styled.Title className="cs-title">
       <span>{text}</span>
-    </h4>
+    </Styled.Title>
   );
 }
 function Subtitle({ text }) {
   if (!text) return null;
   return (
-    <p
-      className="cs-subtitle"
-      style={{ ...useSubtitleStyle(), margin: "0.3em 0" }}
-    >
+    <Styled.Subtitle className="cs-subtitle" style={{ margin: "0.3em 0" }}>
       <span>{text}</span>
-    </p>
+    </Styled.Subtitle>
   );
 }
 

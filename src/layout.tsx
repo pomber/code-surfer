@@ -5,7 +5,6 @@ import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
-import { useThemeUI } from "theme-ui";
 
 function CodeSurferLayout({ children }) {
   const deck = useDeck();
@@ -13,7 +12,6 @@ function CodeSurferLayout({ children }) {
 
   useNotes(steps.map(s => s.notesElement));
   const progress = useStepSpring(steps.length);
-  const theme = useThemeUI();
 
   return (
     <div
@@ -28,7 +26,7 @@ function CodeSurferLayout({ children }) {
       }}
       className="cs-layout"
     >
-      <CodeSurfer steps={steps} progress={progress} theme={theme.codeSurfer} />
+      <CodeSurfer steps={steps} progress={progress} />
     </div>
   );
 }

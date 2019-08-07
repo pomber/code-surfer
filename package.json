@@ -33,6 +33,7 @@
     "react": "^16.8.0"
   },
   "dependencies": {
+    "@types/theme-ui": "^0.2.0",
     "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",
     "prismjs": "^1.16.0",

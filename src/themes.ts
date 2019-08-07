@@ -12,26 +12,27 @@ import {
 } from "./standalone/themes";
 
 function mdThemes(theme) {
-  const stringStyle = theme.styles.find(s => s.types.includes("string"));
+  // const stringStyle = theme.styles.find(s => s.types.includes("string"));
 
-  const color = theme.pre.color;
-  const bg = theme.pre.background;
+  // const color = theme.pre.color;
+  // const bg = theme.pre.background;
 
-  return [
-    { codeSurfer: theme },
-    {
-      colors: {
-        text: color,
-        background: bg,
-        link: stringStyle && stringStyle.style.color,
-        pre: color,
-        code: color,
-        preBackground: bg
-      },
-      Presenter,
-      codeSurfer: theme
-    }
-  ];
+  // return [
+  //   { codeSurfer: theme },
+  //   {
+  //     colors: {
+  //       text: color,
+  //       background: bg,
+  //       link: stringStyle && stringStyle.style.color,
+  //       pre: color,
+  //       code: color,
+  //       preBackground: bg
+  //     },
+  //     Presenter,
+  //     codeSurfer: theme
+  //   }
+  // ];
+  return [theme, theme];
 }
 
 const [draculaPartial, dracula] = mdThemes(draculaTheme);
