@@ -14,7 +14,10 @@ type CodeSurferProps = {
 };
 
 function CodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
-  const steps = parseSteps(inputSteps, inputSteps[0].lang || "javascript");
+  const steps = React.useMemo(
+    () => parseSteps(inputSteps, inputSteps[0].lang || "javascript"),
+    [inputSteps]
+  );
   const ref = React.useRef<HTMLDivElement>(null);
   const { dimensions, steps: stepsWithDimensions } = useDimensions(ref, steps);
   if (!dimensions) {
