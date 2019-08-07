@@ -1,6 +1,5 @@
 import { parseMetastring } from "./codeblock-metastring-parser";
 import Code from "./code";
-import React from "react";
 
 export function readStepFromElement(element) {
   if (element.props && element.props.originalType === Code) {
@@ -14,10 +13,10 @@ export function readStepFromElement(element) {
     return null;
   }
   const { props } = element.props.children;
-  const classNames = props.className;
+  const className = props.className;
   return {
     code: props.children,
-    lang: classNames && classNames[0].substring("language-".length),
+    lang: className && className.substring("language-".length),
     ...parseMetastring(props.metastring)
   };
 }
