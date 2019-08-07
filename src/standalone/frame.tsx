@@ -1,11 +1,6 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui";
 import React from "react";
-import {
-  useContainerStyle,
-  usePreStyle,
-  useTokenStyles,
-  useSubtitleStyle,
-  useTitleStyle
-} from "./theming";
 import { useAnimationContext, Context } from "./animation-context";
 import {
   fadeIn,
@@ -21,6 +16,7 @@ import {
 } from "./animations";
 import { Step, Line as LineType, Token } from "code-surfer-types";
 import { Animation, AnimationAndConfig } from "playhead-types";
+import { Styled } from "./styles";
 
 type ContainerProps = {
   stepPlayhead: number;
@@ -39,7 +35,6 @@ function CodeSurferContainer({
     <div
       className="cs-container"
       style={{
-        ...useContainerStyle(),
         width: "100%",
         height: dimensions ? dimensions.containerHeight : "100%",
         maxHeight: "100%",
@@ -149,20 +144,18 @@ function CodeSurferContent({
   const linesCtx = ctx.useSelectMany(step => step.lines);
 
   return (
-    <pre
+    <Styled.Pre
       className="cs-content"
       ref={ref}
       style={{
-        ...usePreStyle(),
         margin: 0,
         height: "100%",
         overflow: "hidden"
       }}
     >
-      <code
+      <Styled.Code
         className="cs-scaled-content"
         style={{
-          ...usePreStyle(),
           display: "block",
           height: dimensions ? dimensions.contentHeight : "100%",
           width: dimensions && dimensions.contentWidth,
@@ -178,8 +171,8 @@ function CodeSurferContent({
           <Line ctx={ctx} key={key} />
         ))}
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-      </code>
-    </pre>
+      </Styled.Code>
+    </Styled.Pre>
   );
 }
 
@@ -201,8 +194,6 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
     };
   });
 
-  const getStyleForToken = useTokenStyles();
-
   let tokens: (Token & { animatedStyle: React.CSSProperties })[] = [];
 
   let tokensCtx = ctx.useSelectMany(line => line.tokens);
@@ -221,7 +212,6 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
       style={{
         overflow: "hidden",
         ...lineStyle
-        // background: "green"
       }}
     >
       <div
@@ -229,12 +219,13 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
         className={`cs-line cs-line-${key}`}
       >
         {tokens.map((token, i) => (
-          <span
+          <Styled.Token
             key={i}
-            style={{ ...getStyleForToken(token), ...token.animatedStyle }}
+            style={token.animatedStyle}
+            tokenType={token.type}
           >
             {token.content}
-          </span>
+          </Styled.Token>
         ))}
       </div>
     </div>
@@ -249,15 +240,9 @@ function Title({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
   if (!text) return null;
 
   return (
-    <h4
-      className="cs-title"
-      style={{
-        ...useTitleStyle(),
-        ...bgStyle
-      }}
-    >
+    <Styled.Title className="cs-title" style={bgStyle}>
       <span style={textStyle}>{text}</span>
-    </h4>
+    </Styled.Title>
   );
 }
 function Subtitle({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
@@ -268,15 +253,9 @@ function Subtitle({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
   if (!text) return null;
 
   return (
-    <p
-      className="cs-subtitle"
-      style={{
-        ...useSubtitleStyle(),
-        ...bgStyle
-      }}
-    >
+    <Styled.Subtitle className="cs-subtitle" style={bgStyle}>
       <span style={textStyle}>{text}</span>
-    </p>
+    </Styled.Subtitle>
   );
 }
 

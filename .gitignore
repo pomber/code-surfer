@@ -8,3 +8,4 @@ node_modules
 dist
 build
 notes.md
+*.tgz
