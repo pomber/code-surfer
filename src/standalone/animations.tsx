@@ -22,13 +22,30 @@ const dx = 250;
 const offOpacity = 0.3;
 const outOpacity = 0;
 const outHieght = 0;
+const lineDurations = [0.25, 0.5, 0.25];
 
 const SlideToLeft = () => (
-  <tween
-    from={{ x: 0, opacity: 1 }}
-    to={{ x: -dx, opacity: outOpacity }}
-    ease={easing.easeInQuad}
-  />
+  <chain durations={lineDurations}>
+    <tween
+      from={{ x: 0, opacity: 1 }}
+      to={{ x: -dx, opacity: outOpacity }}
+      ease={easing.easeInQuad}
+    />
+    <delay />
+    <delay />
+  </chain>
+);
+
+const SlideFromRight = () => (
+  <chain durations={lineDurations}>
+    <delay />
+    <delay />
+    <tween
+      from={{ x: dx, opacity: outOpacity }}
+      to={{ x: 0, opacity: 1 }}
+      ease={easing.easeOutQuad}
+    />
+  </chain>
 );
 
 function ShrinkHeight({ lineHeight }: { lineHeight?: number }) {
@@ -46,20 +63,12 @@ function ShrinkHeight({ lineHeight }: { lineHeight?: number }) {
 
 function ExitLine({ lineHeight }: { lineHeight?: number }) {
   return (
-    <chain durations={[0.35, 0.3, 0.35]}>
-      <SlideToLeft />
+    <chain durations={lineDurations}>
+      <delay />
       <ShrinkHeight lineHeight={lineHeight} />
     </chain>
   );
 }
-
-const SlideFromRight = () => (
-  <tween
-    from={{ x: dx, opacity: outOpacity }}
-    to={{ x: 0, opacity: 1 }}
-    ease={easing.easeOutQuad}
-  />
-);
 
 function GrowHeight({ lineHeight }: { lineHeight?: number }) {
   if (!lineHeight) {
@@ -76,10 +85,10 @@ function GrowHeight({ lineHeight }: { lineHeight?: number }) {
 
 function EnterLine({ lineHeight }: { lineHeight?: number }) {
   return (
-    <chain durations={[0.35, 0.3, 0.35]}>
+    <chain durations={lineDurations}>
       <delay />
       <GrowHeight lineHeight={lineHeight} />
-      <SlideFromRight />
+      <delay />
     </chain>
   );
 }
@@ -120,6 +129,20 @@ export const enterLine = (
 ) => {
   const dimensions = any(prev, next).dimensions;
   return run(<EnterLine lineHeight={dimensions && dimensions.lineHeight} />, t);
+};
+export const slideToLeft = (
+  prev: Maybe<{ dimensions?: any }>,
+  next: Maybe<{ dimensions?: any }>,
+  t: number
+) => {
+  return run(<SlideToLeft />, t);
+};
+export const slideFromRight = (
+  prev: Maybe<{ dimensions?: any }>,
+  next: Maybe<{ dimensions?: any }>,
+  t: number
+) => {
+  return run(<SlideFromRight />, t);
 };
 export const focusLine = (
   prev: Maybe<{ focus?: any }>,
@@ -187,6 +210,44 @@ export const scaleToFocus = (
       }}
       ease={easing.easeInOutQuad}
     />,
+    t
+  );
+};
+
+export const scrollToFocus = (
+  prevStep: Maybe<{ dimensions?: any; focusCenter: number }>,
+  nextStep: Maybe<{ dimensions?: any; focusCenter: number }>,
+  t: number
+) => {
+  const dimensions = any(prevStep, nextStep).dimensions;
+
+  if (!dimensions) {
+    return (_: number) => ({
+      scrollTop: 0
+    });
+  }
+
+  const prevCenter = prevStep
+    ? prevStep.focusCenter * dimensions.lineHeight
+    : 0;
+  const nextCenter = nextStep
+    ? nextStep.focusCenter * dimensions.lineHeight
+    : 0;
+
+  return run(
+    <chain durations={lineDurations}>
+      <delay />
+      <tween
+        from={{
+          scrollTop: prevCenter
+        }}
+        to={{
+          scrollTop: nextCenter
+        }}
+        ease={easing.easeInOutQuad}
+      />
+      <delay />
+    </chain>,
     t
   );
 };

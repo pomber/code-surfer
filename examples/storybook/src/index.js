@@ -6,48 +6,15 @@ import { CodeSurfer, themes } from "./code-surfer";
 
 const steps = [
   {
-    code: `function foo() {
-  const x = 2;
-  return 1;
-}`,
-    focus: "1[2:3]",
+    code: `var x1 = 1
+debugger`,
+    focus: "1",
     lang: "js"
   },
   {
-    code: `function foo() {
-  return 2;
-}`,
-    lang: "js"
-  },
-  {
-    code: `function foo() {
-  return 2;
-}`,
-    focus: "1[4:6]",
-    lang: "js"
-  },
-  {
-    code: `styles: {
-  CodeSurfer: {
-    tokens,
-    title: {
-      backgroundColor: prismTheme.plain.backgroundColor
-    },
-    subtitle: {
-      color: "#d6deeb",
-      backgroundColor: "rgba(10,10,10,0.9)"
-    },
-    pre: {
-      color: prismTheme.plain.color,
-      backgroundColor: prismTheme.plain.backgroundColor
-    },
-    code: {
-      color: prismTheme.plain.color,
-      backgroundColor: prismTheme.plain.backgroundColor
-    },
-    ...override
-  }
-}`,
+    code: `var x0 = 3
+var x1 = 1
+var x0 = 3`,
     lang: "js"
   }
 ];
@@ -73,7 +40,7 @@ function Story() {
       >
         <CodeSurfer progress={progress} steps={steps} />
       </div>
-      <div
+      {/* <div
         style={{
           height: 180,
           width: 320,
@@ -82,7 +49,7 @@ function Story() {
         }}
       >
         <CodeSurfer progress={progress} steps={steps} theme={themes.nightOwl} />
-      </div>
+      </div> */}
     </div>
   );
 }

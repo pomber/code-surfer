@@ -12,7 +12,10 @@ import {
   switchText,
   focusLine,
   tween,
-  focusToken
+  focusToken,
+  scrollToFocus,
+  slideToLeft,
+  slideFromRight
 } from "./animations";
 import { Step, Line as LineType, Token } from "code-surfer-types";
 import { Animation, AnimationAndConfig } from "playhead-types";
@@ -50,76 +53,24 @@ function CodeSurferContainer({
 
 const heightChangingAnimations: AnimationAndConfig<any, any>[] = [
   {
-    animation: exitLine,
+    animation: slideToLeft,
     when: (prev, next) => prev && !next,
-    stagger: 0.2
+    stagger: 0.15
+  },
+  {
+    animation: slideFromRight,
+    when: (prev, next) => next && !prev,
+    stagger: 0.15
+  },
+  {
+    animation: exitLine,
+    when: (prev, next) => prev && !next
   },
   {
     animation: enterLine,
-    when: (prev, next) => next && !prev,
-    stagger: 0.2
+    when: (prev, next) => next && !prev
   }
 ];
-
-/**
- * This part wasn't easy...
- * We need to adjust the scroll as the lines keep changing height
- * So we animate between the prev focus center and the next focus center
- * but taking into acount the height of the lines that are on top of the center
- * for each frame
- */
-function useScrollTop(dimensions: any, stepCtx: Context<Step>) {
-  if (!dimensions) return 0;
-
-  const linesCtx = stepCtx.useSelectMany(step => step.lines);
-  const [prevStep, nextStep] = stepCtx.spread();
-
-  const [realPrevCenter, realNextCenter] = React.useMemo(() => {
-    const allPrevLines = linesCtx.map(ctx =>
-      ctx.animate((prev, _next) => prev)
-    );
-    const allNextLines = linesCtx.map(ctx =>
-      ctx.animate((_prev, next) => next)
-    );
-
-    const prevCenter = prevStep ? prevStep.focusCenter : 0;
-    const nextCenter = nextStep ? nextStep.focusCenter : 0;
-
-    const prevCenterLine = prevStep && prevStep.lines[Math.floor(prevCenter)];
-    const nextCenterLine = nextStep && nextStep.lines[Math.floor(nextCenter)];
-
-    const realPrevCenter = prevStep
-      ? allPrevLines.indexOf(prevCenterLine) + (prevCenter % 1)
-      : 0;
-    const realNextCenter = nextStep
-      ? allNextLines.indexOf(nextCenterLine) + (nextCenter % 1)
-      : 0;
-
-    return [realPrevCenter, realNextCenter];
-  }, [prevStep, nextStep]);
-
-  const currentCenter = stepCtx.animate(tween(realPrevCenter, realNextCenter));
-
-  let scrollTop = 0;
-
-  const lineStyles = linesCtx.map(ctx =>
-    ctx.animations(heightChangingAnimations)
-  );
-
-  let i = 0;
-  while (i <= currentCenter - 1) {
-    const h = lineStyles[i].height;
-    scrollTop += h == null ? dimensions.lineHeight : h;
-    i += 1;
-  }
-  if (i != currentCenter) {
-    const h = lineStyles[i].height;
-    const height = h == null ? dimensions.lineHeight : h;
-    scrollTop += height * (currentCenter - i);
-  }
-
-  return scrollTop;
-}
 
 function CodeSurferContent({
   dimensions,
@@ -130,7 +81,7 @@ function CodeSurferContent({
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
-  const scrollTop = useScrollTop(dimensions, ctx);
+  const { scrollTop } = ctx.animate(scrollToFocus);
   React.useLayoutEffect(() => {
     if (ref.current == null) return;
     ref.current.scrollTop = scrollTop;
@@ -211,6 +162,8 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
     <div
       style={{
         overflow: "hidden",
+        // border: "1px solid red",
+        // boxSizing: "border-box",
         ...lineStyle
       }}
     >
