@@ -40,15 +40,6 @@ declare module "code-surfer-types" {
   type Partial<T> = {
     [P in keyof T]?: T[P];
   };
-
-  type CodeSurferTheme = {
-    styles: StyleItem[];
-    container?: React.CSSProperties;
-    title?: React.CSSProperties;
-    subtitle?: React.CSSProperties;
-    pre?: React.CSSProperties;
-    code?: React.CSSProperties;
-  };
 }
 
 declare module "playhead-types" {

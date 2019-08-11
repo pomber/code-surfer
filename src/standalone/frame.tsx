@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "theme-ui";
 import React from "react";
 import { useAnimationContext, Context } from "./animation-context";
 import {
@@ -11,7 +9,6 @@ import {
   scaleToFocus,
   switchText,
   focusLine,
-  tween,
   focusToken,
   scrollToFocus,
   slideToLeft,
@@ -19,7 +16,7 @@ import {
 } from "./animations";
 import { Step, Line as LineType, Token } from "code-surfer-types";
 import { Animation, AnimationAndConfig } from "playhead-types";
-import { Styled } from "./styles";
+import { Styled, getClassFromTokenType } from "./styles";
 
 type ContainerProps = {
   stepPlayhead: number;
@@ -172,13 +169,13 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
         className={`cs-line cs-line-${key}`}
       >
         {tokens.map((token, i) => (
-          <Styled.Token
+          <span
             key={i}
             style={token.animatedStyle}
-            tokenType={token.type}
+            className={getClassFromTokenType(token.type)}
           >
             {token.content}
-          </Styled.Token>
+          </span>
         ))}
       </div>
     </div>

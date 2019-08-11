@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { ThemeProvider, jsx, useThemeUI, SxStyleProp } from "theme-ui";
+import { ThemeProvider, jsx, useThemeUI, SxStyleProp, Theme } from "theme-ui";
 import baseTheme from "./themes/base";
 import React from "react";
 
@@ -11,8 +11,17 @@ type CodeSurferStyles = {
   tokens: Record<string, SxStyleProp>;
 };
 
-function StylesProvider({ theme = {}, children }) {
+type CodeSurferTheme = Theme & { styles?: { CodeSurfer?: CodeSurferStyles } };
+
+function StylesProvider({
+  theme = {},
+  children
+}: {
+  theme: CodeSurferTheme;
+  children: React.ReactNode;
+}) {
   const { theme: outer } = useThemeUI();
+
   const base = {
     ...baseTheme,
     ...outer,
@@ -34,20 +43,26 @@ function useStyles(): CodeSurferStyles {
   return (theme as any).styles.CodeSurfer;
 }
 
-function useTokenStyle(tokenType: string): SxStyleProp {
-  const theme = useStyles();
+function getClassFromTokenType(type) {
+  return "token-" + type;
+}
 
-  const tokenStyles = React.useMemo(() => {
-    const tokenStyles: Record<string, SxStyleProp> = {};
-    Object.keys(theme.tokens).forEach(key =>
-      key.split(/\s/).forEach(type => {
-        tokenStyles[type] = theme.tokens[key];
-      })
-    );
-    return tokenStyles;
-  }, [theme]);
-
-  return tokenStyles[tokenType];
+function usePreStyle() {
+  const styles = useStyles();
+  const preSx = React.useMemo(() => {
+    const sx = {
+      ...styles.pre
+    };
+    Object.keys(styles.tokens).forEach(key => {
+      const classList = key
+        .split(/\s/)
+        .map(type => "." + getClassFromTokenType(type))
+        .join(", ");
+      sx[classList] = styles.tokens[key];
+    });
+    return sx;
+  }, [styles]);
+  return preSx;
 }
 
 const baseTitle = {
@@ -76,15 +91,12 @@ const Styled = {
     (
       props: React.PropsWithChildren<any>,
       ref: React.MutableRefObject<HTMLPreElement>
-    ) => <pre {...props} sx={useStyles().pre} ref={ref} />
+    ) => <pre {...props} sx={usePreStyle()} ref={ref} />
   ),
   Title: props => <h4 {...props} sx={{ ...baseTitle, ...useStyles().title }} />,
   Subtitle: props => (
     <p {...props} sx={{ ...baseSubtitle, ...useStyles().subtitle }} />
-  ),
-  Token: ({ tokenType, ...props }) => (
-    <span {...props} sx={useTokenStyle(tokenType)} />
   )
 };
 
-export { StylesProvider, Styled };
+export { StylesProvider, Styled, getClassFromTokenType, CodeSurferTheme };
