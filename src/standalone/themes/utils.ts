@@ -1,4 +1,5 @@
-import { StyleItem, CodeSurferTheme } from "code-surfer-types";
+import { StyleItem } from "code-surfer-types";
+import { CodeSurferTheme, CodeSurferStyles } from "../styles";
 
 type PrismTheme = {
   plain: { color: string; backgroundColor: string };
@@ -7,7 +8,7 @@ type PrismTheme = {
 
 export function makeTheme(
   prismTheme: PrismTheme,
-  override: Partial<CodeSurferTheme> = {}
+  override: Partial<CodeSurferStyles> = {}
 ): any {
   const tokens = {};
   prismTheme.styles.forEach(s => {

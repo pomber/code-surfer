@@ -17,7 +17,7 @@ function StylesProvider({
   theme = {},
   children
 }: {
-  theme: CodeSurferTheme;
+  theme?: CodeSurferTheme;
   children: React.ReactNode;
 }) {
   const { theme: outer } = useThemeUI();
@@ -99,4 +99,10 @@ const Styled = {
   )
 };
 
-export { StylesProvider, Styled, getClassFromTokenType, CodeSurferTheme };
+export {
+  StylesProvider,
+  Styled,
+  getClassFromTokenType,
+  CodeSurferTheme,
+  CodeSurferStyles
+};
