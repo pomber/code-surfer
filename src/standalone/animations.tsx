@@ -22,7 +22,7 @@ const dx = 250;
 const offOpacity = 0.3;
 const outOpacity = 0;
 const outHieght = 0;
-const lineDurations = [0.25, 0.5, 0.25];
+const lineDurations = [0.2, 0.6, 0.2];
 
 const SlideToLeft = () => (
   <chain durations={lineDurations}>
