@@ -1,6 +1,6 @@
 import React from "react";
 import { useDeck, Notes } from "mdx-deck";
-import CodeSurfer from "./standalone/code-surfer";
+import { CodeSurfer } from "@code-surfer/standalone";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";

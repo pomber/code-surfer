@@ -3,7 +3,8 @@ import { InputStep, Step } from "code-surfer-types";
 import { parseSteps } from "./parse-steps";
 import Frame from "./frame";
 import useDimensions from "./dimensions";
-import { StylesProvider, CodeSurferTheme } from "./styles";
+import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
+import { UnknownError } from "./errors";
 
 import "./default-syntaxes";
 
@@ -97,5 +98,10 @@ function CodeSurferWrapper({ theme, steps, ...props }: CodeSurferProps) {
   );
 }
 
-export default CodeSurferWrapper;
 export * from "./themes";
+export {
+  CodeSurferWrapper as CodeSurfer,
+  Styled,
+  StylesProvider,
+  UnknownError
+};

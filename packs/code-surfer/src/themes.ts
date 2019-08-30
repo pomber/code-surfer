@@ -9,7 +9,7 @@ import {
   shadesOfPurple as shadesOfPurpleTheme,
   ultramin as ultraminTheme,
   vsDark as vsDarkTheme
-} from "./standalone/themes";
+} from "@code-surfer/standalone";
 
 function mdThemes(theme) {
   // const stringStyle = theme.styles.find(s => s.types.includes("string"));

@@ -1,11 +1,10 @@
 import React from "react";
 import { readStepFromElement } from "./step-reader";
-import CodeSurfer from "./standalone/code-surfer";
+import { CodeSurfer, StylesProvider, Styled } from "@code-surfer/standalone";
 import { useDeck, Notes } from "mdx-deck";
 import ErrorBoundary from "./error-boundary";
 import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
-import { StylesProvider, Styled } from "./standalone/styles";
 
 function ColumnLayout({ children, themes = [], sizes }) {
   const deck = useDeck();

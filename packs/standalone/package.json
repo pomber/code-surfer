@@ -1,12 +1,12 @@
 {
-  "name": "code-surfer",
-  "description": "Rad code slides",
+  "name": "@code-surfer/standalone",
+  "description": "Code Surfer React component",
   "version": "3.0.0",
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",
   "main": "dist/index.js",
-  "module": "dist/code-surfer.esm.js",
+  "module": "dist/standalone.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
@@ -22,11 +22,9 @@
     "test:watch": "tsdx test --env=jsdom"
   },
   "peerDependencies": {
-    "mdx-deck": "3.0.8",
     "react": "^16.8.0"
   },
   "dependencies": {
-    "@code-surfer/standalone": "*",
     "@types/theme-ui": "^0.2.0",
     "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",
