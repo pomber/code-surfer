@@ -1,9 +1,9 @@
 {
-  "name": "website",
+  "name": "docs",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "code-surfer": "link:../..",
+    "@code-surfer/standalone": "*",
     "react-scripts": "3.0.1"
   },
   "scripts": {

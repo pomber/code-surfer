@@ -1,7 +1,7 @@
 import React from "react";
 import devImg from "./female-technologist_1f469-200d-1f4bb.png";
 import useDimensions from "./use-dimensions";
-import { CodeSurfer, themes } from "./code-surfer";
+import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
 
 const steps = [
   {
@@ -112,7 +112,7 @@ function Screen({ dimensions }) {
         fontSize: "2em"
       }}
     >
-      <CodeSurfer progress={0} steps={steps} theme={themes.nightOwl} />
+      <CodeSurfer progress={0} steps={steps} theme={nightOwl} />
     </div>
   );
 }

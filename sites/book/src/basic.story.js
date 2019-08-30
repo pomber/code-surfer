@@ -2,7 +2,7 @@
 
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { CodeSurfer } from "./code-surfer";
+import { CodeSurfer } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
 storiesOf("Code Surfer", module).add("Basic", () => <Story />);

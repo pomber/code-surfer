@@ -2,7 +2,7 @@
 
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { CodeSurfer, themes } from "./code-surfer";
+import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
 storiesOf("Code Surfer", module).add("Themed", () => <Story />);
@@ -26,7 +26,7 @@ function Story() {
   return (
     <StoryWithSlider max={steps.length - 1}>
       {progress => (
-        <CodeSurfer progress={progress} steps={steps} theme={themes.nightOwl} />
+        <CodeSurfer progress={progress} steps={steps} theme={nightOwl} />
       )}
     </StoryWithSlider>
   );

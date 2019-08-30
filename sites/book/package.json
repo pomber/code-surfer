@@ -1,5 +1,5 @@
 {
-  "name": "storybook",
+  "name": "book",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "build": "build-storybook -c ./src -o ./dist"
   },
   "dependencies": {
-    "code-surfer": "link:../..",
+    "@code-surfer/standalone": "*",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
