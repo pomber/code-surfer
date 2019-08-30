@@ -10,12 +10,21 @@
   ],
   "devDependencies": {
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^1.11.1",
+    "execa": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "fs-extra": "^8.1.0"
   },
   "scripts": {
     "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
     "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
-    "prepare": "yarn workspace code-surfer build",
-    "predeploy": "yarn workspace code-surfer build && node examples/build"
+    "build:standalone": "yarn workspace @code-surfer/standalone build",
+    "build:codesurfer": "yarn workspace code-surfer build",
+    "build:sites": "node sites/build",
+    "prepare": "run-s build:standalone build:codesurfer",
+    "predeploy": "run-s prepare build:sites",
+    "test:standalone": "yarn workspace @code-surfer/standalone test",
+    "test:codesurfer": "yarn workspace code-surfer test",
+    "test": "run-p format:check test:standalone test:codesurfer"
   }
 }

@@ -8,6 +8,7 @@
     "react-dom": "^16.9.0"
   },
   "scripts": {
-    "start": "mdx-deck deck.mdx"
+    "start": "mdx-deck deck.mdx",
+    "build": "mdx-deck build deck.mdx"
   }
 }

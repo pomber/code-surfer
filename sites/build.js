@@ -32,8 +32,10 @@ async function main() {
 
     if (fs.existsSync(join(cwd, "dist"))) {
       await fs.copy(join(cwd, "dist"), join(__dirname, "dist", siteDirName));
-    } else {
+    } else if (fs.existsSync(join(cwd, "build"))) {
       await fs.copy(join(cwd, "build"), join(__dirname, "dist", siteDirName));
+    } else {
+      await fs.copy(join(cwd, "public"), join(__dirname, "dist", siteDirName));
     }
   });
 

@@ -1,4 +1,4 @@
-import { Tuple, ArrayTuple } from "../src/standalone/tuple";
+import { Tuple, ArrayTuple } from "../src/tuple";
 
 describe("Tuple", () => {
   it("spread works", () => {
@@ -7,17 +7,20 @@ describe("Tuple", () => {
 
   it("select works", () => {
     const tuple = new Tuple({ a: 1 }, { a: 2 });
-    expect(tuple.select((x: {a: number}) => x.a).spread()).toEqual([1, 2]);
+    expect(tuple.select((x: { a: number }) => x.a).spread()).toEqual([1, 2]);
   });
 
   it("select works with null", () => {
     const tuple = new Tuple({ a: 1 }, { a: null });
-    expect(tuple.select((x: {a: number}) => x.a).spread()).toEqual([1, null]);
+    expect(tuple.select((x: { a: number }) => x.a).spread()).toEqual([1, null]);
   });
 
   it("select works with undefined", () => {
     const tuple = new Tuple({ a: 1 }, {});
-    expect(tuple.select((x: {a: number}) => x.a).spread()).toEqual([1, undefined]);
+    expect(tuple.select((x: { a: number }) => x.a).spread()).toEqual([
+      1,
+      undefined
+    ]);
   });
 
   it("gets by key when items are lists", () => {

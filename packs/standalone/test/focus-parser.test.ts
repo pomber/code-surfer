@@ -1,4 +1,4 @@
-import { parseFocus } from "../src/standalone/focus-parser";
+import { parseFocus } from "../src/focus-parser";
 
 describe("Parsing Focus String", () => {
   it("it throws when string is empty", () => {

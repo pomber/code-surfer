@@ -9,3 +9,4 @@ dist
 build
 notes.md
 *.tgz
+sites/demo/public
