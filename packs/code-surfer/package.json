@@ -1,7 +1,7 @@
 {
   "name": "code-surfer",
   "description": "Rad code slides",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",
@@ -19,13 +19,8 @@
     "start": "tsdx watch",
     "build": "tsdx build && tsdx build -i src/standalone/code-surfer.tsx --name standalone --format esm",
     "start:standalone": "tsdx watch -i src/standalone/code-surfer.tsx --name standalone --format esm",
-    "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
-    "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
-    "test:all": "cross-env CI=1 tsdx test --env=jsdom",
-    "test": "run-p format:check test:all",
+    "test": "cross-env CI=1 tsdx test --env=jsdom",
     "test:watch": "tsdx test --env=jsdom",
-    "prepare": "yarn run build",
-    "predeploy": "yarn build && node examples/build",
     "demo": "mdx-deck examples/basic/deck.mdx"
   },
   "peerDependencies": {

@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "workspaces": [
+    "packs/step-parser",
+    "packs/standalone",
+    "packs/code-surfer",
+    "sites/demo",
+    "sites/book",
+    "sites/docs"
+  ],
+  "devDependencies": {
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
+  },
+  "scripts": {
+    "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
+    "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
+    "prepare": "yarn workspace code-surfer build",
+    "predeploy": "yarn workspace code-surfer build && node examples/build"
+  }
+}
