@@ -1,0 +1,281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parsing steps adds default focus 1`] = `
+Object {
+  "steps": Array [
+    Object {
+      "focus": Object {
+        "0": true,
+        "1": true,
+        "2": true,
+      },
+      "lines": Array [
+        0,
+        1,
+        2,
+      ],
+    },
+    Object {
+      "focus": Object {
+        "2": true,
+      },
+      "lines": Array [
+        0,
+        2,
+        3,
+      ],
+    },
+  ],
+  "tokens": Array [
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "1",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "2",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "3",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "4",
+      ")",
+    ],
+  ],
+  "types": Array [
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+  ],
+}
+`;
+
+exports[`Parsing steps works 1`] = `
+Object {
+  "steps": Array [
+    Object {
+      "focus": Object {
+        "0": true,
+        "1": true,
+      },
+      "lines": Array [
+        0,
+        1,
+        2,
+      ],
+    },
+    Object {
+      "focus": Object {
+        "0": Array [
+          2,
+          3,
+          4,
+        ],
+        "1": true,
+      },
+      "lines": Array [
+        0,
+        2,
+      ],
+    },
+  ],
+  "tokens": Array [
+    Array [
+      "c",
+      "o",
+      "n",
+      "s",
+      "o",
+      "l",
+      "e",
+      ".",
+      "l",
+      "o",
+      "g",
+      "(",
+      "1",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "2",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "3",
+      ")",
+    ],
+  ],
+  "types": Array [
+    Array [
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "punctuation",
+      "function",
+      "function",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+  ],
+}
+`;
+
+exports[`Parsing steps works with empty diff 1`] = `
+Object {
+  "steps": Array [
+    Object {
+      "focus": Object {
+        "0": true,
+        "1": true,
+        "2": true,
+      },
+      "lines": Array [
+        0,
+        1,
+        2,
+      ],
+    },
+    Object {
+      "focus": Object {
+        "0": true,
+        "1": true,
+        "2": true,
+      },
+      "lines": Array [
+        0,
+        1,
+        2,
+      ],
+    },
+  ],
+  "tokens": Array [
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "1",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "2",
+      ")",
+    ],
+    Array [
+      "console",
+      ".",
+      "log",
+      "(",
+      "3",
+      ")",
+    ],
+  ],
+  "types": Array [
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+    Array [
+      "plain",
+      "punctuation",
+      "function",
+      "punctuation",
+      "number",
+      "punctuation",
+    ],
+  ],
+}
+`;
