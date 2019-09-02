@@ -20,12 +20,20 @@
     "test": "run-p format:check test:all",
     "test:all": "lerna run test",
     "build:website": "lerna exec yarn build --scope website",
-    "publish:website": "run-s build build:website"
+    "publish:website": "run-s build build:website",
+    "postinstall": "opencollective-postinstall || true"
   },
   "devDependencies": {
     "lerna": "^3.2.1",
     "npm-run-all": "^4.1.3",
     "prettier": "^1.14.2",
     "prettier-check": "^2.0.0"
+  },
+  "dependencies": {
+    "opencollective-postinstall": "^2.0.2"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/code-surfer"
   }
 }
