@@ -78,7 +78,7 @@ function isNaturalNumber(n: any) {
 export function getFocusSize(focus: Record<LineIndex, true | ColumnIndex[]>) {
   const lineIndexList = Object.keys(focus).map(k => +k);
   const focusStart = Math.min.apply(Math, lineIndexList);
-  const focusEnd = Math.min.apply(Math, lineIndexList);
+  const focusEnd = Math.max.apply(Math, lineIndexList);
   return {
     focusCenter: (focusStart + focusEnd + 1) / 2,
     focusCount: focusEnd - focusStart + 1

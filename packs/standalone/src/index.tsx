@@ -1,7 +1,7 @@
 import React from "react";
-import { InputStep, Step } from "code-surfer-types";
-// import { parseSteps } from "@code-surfer/step-parser";
-import { parseSteps } from "./parse-steps";
+import { InputStep, Step, Token } from "code-surfer-types";
+import { parseSteps } from "@code-surfer/step-parser";
+import { parseSteps as oldParse } from "./parse-steps";
 import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
 import { UnknownError } from "./errors";
 import { CodeSurfer } from "./code-surfer";
@@ -15,7 +15,11 @@ type CodeSurferProps = {
 
 function InnerCodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
   const steps = React.useMemo(() => {
-    return transformSteps(inputSteps);
+    const steps = transformSteps(inputSteps);
+    // const oldSteps = oldParse(inputSteps, inputSteps[0].lang);
+    // console.log(steps);
+    // console.log(oldSteps);
+    return steps;
   }, [inputSteps]);
   return <CodeSurfer progress={progress} steps={steps} />;
 }
@@ -38,8 +42,38 @@ function CodeSurferWrapper({ theme, steps, ...props }: CodeSurferProps) {
 }
 
 function transformSteps(inputSteps: InputStep[]): Step[] {
-  const parsedSteps = parseSteps(inputSteps, inputSteps[0].lang);
-  return parsedSteps;
+  const parsedSteps = parseSteps(inputSteps);
+
+  const steps = parsedSteps.steps.map((pstep, stepi) => {
+    const lines = pstep.lines.map((lineKey, lineIndex) => {
+      const focus = pstep.focus[lineIndex];
+      const tokens = parsedSteps.tokens[lineKey].map(
+        (content, tokeni) =>
+          ({
+            type: parsedSteps.types[lineKey][tokeni],
+            content,
+            key: tokeni,
+            focus: Array.isArray(focus) && focus[lineIndex][tokeni]
+          } as Token)
+      );
+      return {
+        key: lineKey,
+        focus: !!focus,
+        focusPerToken: Array.isArray(focus),
+        tokens
+      };
+    });
+    return {
+      title: inputSteps[stepi].title,
+      subtitle: inputSteps[stepi].subtitle,
+      focusCenter: pstep.focusCenter,
+      focusCount: pstep.focusCount,
+      longestLineIndex: pstep.longestLineIndex,
+      lines
+    };
+  });
+
+  return steps;
 }
 
 export * from "./themes";
