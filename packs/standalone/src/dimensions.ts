@@ -108,12 +108,7 @@ function outerHeight(element: HTMLElement) {
 }
 
 function getLongestLine(step: Step) {
-  if (!step || step.lines.length === 0) {
-    return null;
-  }
-  return step.lines.reduce((a, b) =>
-    a.content.length > b.content.length ? a : b
-  );
+  return step.lines[step.longestLineIndex];
 }
 
 export default useDimensions;

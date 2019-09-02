@@ -19,7 +19,6 @@ declare module "code-surfer-types" {
   export interface Line {
     tokens: Token[];
     key: Number;
-    content: string;
     focus?: boolean;
     focusPerToken?: boolean;
   }
@@ -30,6 +29,7 @@ declare module "code-surfer-types" {
     subtitle?: { value: string };
     focusCenter: number;
     dimensions?: any;
+    longestLineIndex: number;
   }
 
   type StyleItem = {

@@ -1,6 +1,6 @@
 import { linesDiff } from "./differ";
 import { tokenize } from "./tokenizer";
-import { parseFocus } from "./focus-parser";
+import { parseFocus, getFocusSize } from "./focus-parser";
 import { toEntries } from "./object-entries";
 import { applyPatch } from "diff";
 
@@ -29,6 +29,9 @@ export function parseSteps(
   const allSteps: {
     lines: number[];
     focus: Record<number, true | number[]>;
+    focusCenter: number;
+    focusCount: number;
+    longestLineIndex: number;
   }[] = [];
 
   steps.forEach((step, i) => {
@@ -47,7 +50,14 @@ export function parseSteps(
     const focus = focusString
       ? parseFocus(focusString)
       : getDefaultFocus(prevLineKeys, lineKeys);
-    allSteps.push({ lines: lineKeys, focus });
+    const { focusCenter, focusCount } = getFocusSize(focus);
+    allSteps.push({
+      lines: lineKeys,
+      focus,
+      focusCenter,
+      focusCount,
+      longestLineIndex: getLongestLineIndex(code)
+    });
   });
 
   // split tokens into columns when needed
@@ -121,4 +131,18 @@ function getDefaultFocus(prevLineKeys: number[], lineKeys: number[]) {
   }
 
   return focus;
+}
+
+function getLongestLineIndex(code: string) {
+  const newlineRe = /\r\n|\r|\n/;
+  const lines = code.split(newlineRe);
+
+  let longest = 0;
+  lines.forEach((line, i) => {
+    if (lines[longest].length < line.length) {
+      longest = i;
+    }
+  });
+
+  return longest;
 }

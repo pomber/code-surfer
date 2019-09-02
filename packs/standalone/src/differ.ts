@@ -87,7 +87,6 @@ export function getSlides(codes: string[], language: string) {
   return codes.map((_, slideIndex) => {
     return lines
       .map((line, lineIndex) => ({
-        content: line.content,
         tokens: line.tokens,
         isNew: !line.slides.includes(slideIndex + 1),
         show: line.slides.includes(slideIndex),

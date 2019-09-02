@@ -5,7 +5,6 @@ import { InputStep, Step } from "code-surfer-types";
 type Token = { type: string; content: string; key?: number; focus?: boolean };
 
 type Line = {
-  content: string;
   tokens: Token[];
   isNew: boolean;
   show: boolean;
@@ -49,7 +48,7 @@ export function parseSteps(rawSteps: InputStep[], lang: string): Step[] {
 }
 
 function parseStep(step: InputStep, lines: Line[]) {
-  const { focus, ...rest } = step;
+  const { focus, code, ...rest } = step;
   let focusMap = focus ? parseFocus(focus) : getDefaultFocus(lines);
 
   const focusIndexes: number[] = Array.from(focusMap.keys());
@@ -58,6 +57,7 @@ function parseStep(step: InputStep, lines: Line[]) {
 
   return {
     lines,
+    longestLineIndex: getLongestLineIndex(code),
     focusMap,
     focusStart,
     focusEnd,
@@ -93,4 +93,18 @@ function setTokenFocus(tokens: Token[], focusColumns: number[]) {
     ...token,
     focus: focusColumns.includes(i)
   }));
+}
+
+function getLongestLineIndex(code: string) {
+  const newlineRe = /\r\n|\r|\n/;
+  const lines = code.split(newlineRe);
+
+  let longest = 0;
+  lines.forEach((line, i) => {
+    if (lines[longest].length < line.length) {
+      longest = i;
+    }
+  });
+
+  return longest;
 }

@@ -39,7 +39,8 @@ console.log(3)
         code: `
 console.log(1)
 console.log(3)
-console.log(4)
+
+console.log(4);
       `.trim()
       }
     ];
@@ -47,7 +48,7 @@ console.log(4)
     expect(result).toMatchSnapshot();
   });
 
-  it.only("works with empty diff", () => {
+  it("works with empty diff", () => {
     const steps = [
       {
         code: `

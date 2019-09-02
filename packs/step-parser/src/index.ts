@@ -1,3 +1,3 @@
-import { parseSteps } from "step-parser";
+import { parseSteps } from "./step-parser";
 
 export { parseSteps };

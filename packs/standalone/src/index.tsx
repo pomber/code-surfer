@@ -1,5 +1,6 @@
 import React from "react";
 import { InputStep, Step } from "code-surfer-types";
+// import { parseSteps } from "@code-surfer/step-parser";
 import { parseSteps } from "./parse-steps";
 import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
 import { UnknownError } from "./errors";
@@ -14,7 +15,7 @@ type CodeSurferProps = {
 
 function InnerCodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
   const steps = React.useMemo(() => {
-    return parseSteps(inputSteps, inputSteps[0].lang || "javascript");
+    return transformSteps(inputSteps);
   }, [inputSteps]);
   return <CodeSurfer progress={progress} steps={steps} />;
 }
@@ -34,6 +35,11 @@ function CodeSurferWrapper({ theme, steps, ...props }: CodeSurferProps) {
       <InnerCodeSurfer steps={steps} {...props} />
     </StylesProvider>
   );
+}
+
+function transformSteps(inputSteps: InputStep[]): Step[] {
+  const parsedSteps = parseSteps(inputSteps, inputSteps[0].lang);
+  return parsedSteps;
 }
 
 export * from "./themes";

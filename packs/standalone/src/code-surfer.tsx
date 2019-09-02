@@ -59,9 +59,7 @@ function getFakeSteps(parsedSteps: Step[]) {
       }))
     };
 
-    fakeStep.lines[0] = step.lines.reduce((a, b) =>
-      a.content.length > b.content.length ? a : b
-    );
+    fakeStep.lines[0] = step.lines[step.longestLineIndex];
     return fakeStep;
   });
   fakeSteps[0] = parsedSteps[0];

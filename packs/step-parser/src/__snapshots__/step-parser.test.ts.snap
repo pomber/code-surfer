@@ -9,21 +9,29 @@ Object {
         "1": true,
         "2": true,
       },
+      "focusCenter": 0.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         1,
         2,
       ],
+      "longestLineIndex": 0,
     },
     Object {
       "focus": Object {
         "2": true,
+        "3": true,
       },
+      "focusCenter": 2.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         2,
         3,
+        4,
       ],
+      "longestLineIndex": 3,
     },
   ],
   "tokens": Array [
@@ -51,6 +59,7 @@ Object {
       "3",
       ")",
     ],
+    Array [],
     Array [
       "console",
       ".",
@@ -58,6 +67,7 @@ Object {
       "(",
       "4",
       ")",
+      ";",
     ],
   ],
   "types": Array [
@@ -85,12 +95,14 @@ Object {
       "number",
       "punctuation",
     ],
+    Array [],
     Array [
       "plain",
       "punctuation",
       "function",
       "punctuation",
       "number",
+      "punctuation",
       "punctuation",
     ],
   ],
@@ -105,11 +117,14 @@ Object {
         "0": true,
         "1": true,
       },
+      "focusCenter": 0.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         1,
         2,
       ],
+      "longestLineIndex": 0,
     },
     Object {
       "focus": Object {
@@ -120,10 +135,13 @@ Object {
         ],
         "1": true,
       },
+      "focusCenter": 0.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         2,
       ],
+      "longestLineIndex": 0,
     },
   ],
   "tokens": Array [
@@ -206,11 +224,14 @@ Object {
         "1": true,
         "2": true,
       },
+      "focusCenter": 0.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         1,
         2,
       ],
+      "longestLineIndex": 0,
     },
     Object {
       "focus": Object {
@@ -218,11 +239,14 @@ Object {
         "1": true,
         "2": true,
       },
+      "focusCenter": 0.5,
+      "focusCount": 1,
       "lines": Array [
         0,
         1,
         2,
       ],
+      "longestLineIndex": 0,
     },
   ],
   "tokens": Array [

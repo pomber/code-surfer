@@ -75,6 +75,16 @@ function isNaturalNumber(n: any) {
   return !isNaN(n1) && n2 === n1 && n1.toString() === n;
 }
 
+export function getFocusSize(focus: Record<LineIndex, true | ColumnIndex[]>) {
+  const lineIndexList = Object.keys(focus).map(k => +k);
+  const focusStart = Math.min.apply(Math, lineIndexList);
+  const focusEnd = Math.min.apply(Math, lineIndexList);
+  return {
+    focusCenter: (focusStart + focusEnd + 1) / 2,
+    focusCount: focusEnd - focusStart + 1
+  };
+}
+
 export class LineOrColumnNumberError extends Error {
   constructor() {
     super(`Invalid line or column number in focus string`);
