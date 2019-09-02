@@ -25,6 +25,7 @@
     "react": "^16.8.0"
   },
   "dependencies": {
+    "@code-surfer/step-parser": "3.0.0",
     "@types/theme-ui": "^0.2.0",
     "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",

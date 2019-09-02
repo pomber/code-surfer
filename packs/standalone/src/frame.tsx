@@ -124,7 +124,8 @@ function CodeSurferContent({
   );
 }
 
-function Line({ ctx }: { ctx: Context<LineType> }) {
+type LineProps = { ctx: Context<LineType> };
+const Line = React.memo(function Line({ ctx }: LineProps) {
   const lineStyle = ctx.animations([
     ...heightChangingAnimations,
     {
@@ -152,6 +153,7 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
       animatedStyle: tokenCtx.animate(focusToken)
     }));
   } else {
+    // TODO memoize token elements (yes, React elements)
     tokens = lineTokens.map(token => ({ ...token, animatedStyle: {} }));
   }
 
@@ -180,6 +182,20 @@ function Line({ ctx }: { ctx: Context<LineType> }) {
       </div>
     </div>
   );
+}, isLineStatic);
+
+function isLineStatic(prev: LineProps, next: LineProps) {
+  if (!prev || !next || Math.floor(prev.ctx.t) !== Math.floor(prev.ctx.t)) {
+    // if we are changing steps
+    return false;
+  }
+  const [prevLine, nextLine] = next.ctx.spread();
+  if (!prevLine || !nextLine) {
+    // we are moving the line
+    return false;
+  }
+
+  return prevLine.focus === nextLine.focus;
 }
 
 function Title({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
