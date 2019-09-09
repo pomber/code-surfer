@@ -61,12 +61,11 @@ export function halfFadeOut(offOpacity = 0) {
 }
 
 export function scrollToFocus(
-  t: number,
   stepPair: Tuple<{ focusCenter: number }>,
   dimensions?: { lineHeight: number }
-) {
+): Animation<number> {
   if (!dimensions) {
-    return 0;
+    return () => 0;
   }
 
   const [prevStep, nextStep] = stepPair.spread();
@@ -78,7 +77,7 @@ export function scrollToFocus(
     ? nextStep.focusCenter * dimensions.lineHeight
     : 0;
 
-  return chain(
+  const animation = chain(
     [
       [0.2, undefined],
       [
@@ -90,11 +89,12 @@ export function scrollToFocus(
       [1, undefined]
     ],
     { scroll: prevCenter }
-  )(t).scroll;
+  );
+
+  return t => animation(t).scroll;
 }
 
 export function scaleToFocus(
-  t: number,
   stepPair: Tuple<{
     focusCount: number;
     dimensions?: { paddingBottom: number; paddingTop: number };
@@ -105,9 +105,9 @@ export function scaleToFocus(
     containerHeight: number;
     contentWidth: number;
   }
-) {
+): Animation<number> {
   if (!dimensions) {
-    return 1;
+    return () => 1;
   }
 
   const [prev, next] = stepPair.spread();
@@ -115,12 +115,8 @@ export function scaleToFocus(
   const prevZoom = getZoom(prev, dimensions);
   const nextZoom = getZoom(next, dimensions);
 
-  return tween(
-    prevZoom || nextZoom,
-    nextZoom || prevZoom,
-    t,
-    easing.easeInOutQuad
-  );
+  return t =>
+    tween(prevZoom || nextZoom, nextZoom || prevZoom, t, easing.easeInOutQuad);
 }
 
 //

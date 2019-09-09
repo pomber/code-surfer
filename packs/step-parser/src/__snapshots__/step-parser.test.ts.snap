@@ -63,7 +63,9 @@ Object {
       "3",
       ")",
     ],
-    Array [],
+    Array [
+      "​",
+    ],
     Array [
       "console",
       ".",
@@ -99,7 +101,9 @@ Object {
       "number",
       "punctuation",
     ],
-    Array [],
+    Array [
+      "plain",
+    ],
     Array [
       "plain",
       "punctuation",

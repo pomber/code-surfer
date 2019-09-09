@@ -1,5 +1,18 @@
 import { diffLines } from "diff";
 
+String.prototype.trimEnd =
+  String.prototype.trimEnd ||
+  function(this: string) {
+    if (String.prototype.trimRight) {
+      return this.trimRight();
+    } else {
+      const trimmed = this.trim();
+      const indexOfWord = this.indexOf(trimmed);
+
+      return this.slice(indexOfWord, this.length);
+    }
+  };
+
 function getChanges(oldCode: string, newCode: string) {
   const changes = diffLines(normalize(oldCode), normalize(newCode));
   let index = 0;
@@ -30,7 +43,7 @@ function getChanges(oldCode: string, newCode: string) {
 }
 
 function normalize(text: string) {
-  return text.trimEnd().concat("\n");
+  return text && text.trimEnd().concat("\n");
 }
 
 export function generateIds(

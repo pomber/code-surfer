@@ -78,8 +78,18 @@ function CodeSurferContent({
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
-  const scale = scaleToFocus(t, stepPair, dimensions);
-  const scrollTop = scrollToFocus(t, stepPair, dimensions);
+  const scaleAnimation = React.useMemo(
+    () => scaleToFocus(stepPair, dimensions),
+    [stepPair, dimensions]
+  );
+
+  const scrollAnimation = React.useMemo(
+    () => scrollToFocus(stepPair, dimensions),
+    [stepPair, dimensions]
+  );
+
+  const scale = scaleAnimation(t);
+  const scrollTop = scrollAnimation(t);
   const verticalOrigin = dimensions
     ? dimensions.containerHeight / 2 + scrollTop
     : 0;

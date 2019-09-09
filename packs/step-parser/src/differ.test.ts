@@ -83,4 +83,17 @@ describe("differ", () => {
     ];
     expect(linesDiff(codes)).toMatchSnapshot();
   });
+
+  it("works ?", () => {
+    const codes = [
+      `var x1 = 1
+
+console.log(x1)
+debugger
+
+`,
+      ""
+    ];
+    expect(linesDiff(codes)).toMatchSnapshot();
+  });
 });

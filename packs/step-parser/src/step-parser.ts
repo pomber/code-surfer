@@ -84,6 +84,14 @@ export function parseSteps(
     });
   });
 
+  // add empty char to empty lines
+  allTokens.forEach((line, lineKey) => {
+    if (line.length === 0) {
+      line.push(`\u200B`);
+      allTypes[lineKey].push("plain");
+    }
+  });
+
   return {
     tokens: allTokens,
     types: allTypes,
