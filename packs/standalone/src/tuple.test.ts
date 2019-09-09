@@ -1,4 +1,4 @@
-import { Tuple, ArrayTuple } from "../src/tuple";
+import { Tuple, ArrayTuple } from "./tuple";
 
 describe("Tuple", () => {
   it("spread works", () => {

@@ -12,8 +12,8 @@ export function StoryWithSlider({ max, children }) {
       />
       <div
         style={{
-          height: 180,
-          width: 320,
+          height: 225,
+          width: 400,
           border: "1px solid black",
           margin: "5px 0"
         }}

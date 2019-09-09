@@ -31,6 +31,11 @@ export class Tuple<T> {
     return new ArrayTuple(newPrev, newNext);
   }
 
+  any() {
+    const [prev, next] = this.spread();
+    return prev == null ? next : prev;
+  }
+
   get(_key: any) {
     throw Error("Get only supported in ArrayTuple");
   }

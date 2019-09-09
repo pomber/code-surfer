@@ -21,6 +21,9 @@ declare module "code-surfer-types" {
     key: Number;
     focus?: boolean;
     focusPerToken?: boolean;
+    xFocus: true | number[];
+    xTokens: string[];
+    xTypes: string[];
   }
 
   export interface Step {
@@ -28,8 +31,13 @@ declare module "code-surfer-types" {
     title?: { value: string };
     subtitle?: { value: string };
     focusCenter: number;
+    focusCount: number;
     dimensions?: any;
     longestLineIndex: number;
+    xLines: number[];
+    xFocus: Record<number, true | number[]>;
+    xTypes: string[][];
+    xTokens: string[][];
   }
 
   type StyleItem = {

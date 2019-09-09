@@ -1,22 +1,16 @@
 import React from "react";
 import { useAnimationContext, Context } from "./animation-context";
+import { Step } from "code-surfer-types";
+import { Styled } from "./styles";
+import { LineList } from "./lines";
 import {
-  fadeIn,
   fadeOutIn,
-  fadeOut,
-  exitLine,
-  enterLine,
-  scaleToFocus,
-  switchText,
-  focusLine,
-  focusToken,
+  halfFadeIn,
+  halfFadeOut,
   scrollToFocus,
-  slideToLeft,
-  slideFromRight
-} from "./animations";
-import { Step, Line as LineType, Token } from "code-surfer-types";
-import { Animation, AnimationAndConfig } from "playhead-types";
-import { Styled, getClassFromTokenType } from "./styles";
+  scaleToFocus
+} from "./animation";
+import { Tuple } from "./tuple";
 
 type ContainerProps = {
   stepPlayhead: number;
@@ -31,6 +25,13 @@ function CodeSurferContainer({
 }: ContainerProps) {
   const ctx = useAnimationContext(steps, stepPlayhead);
 
+  // caption props
+  const titlePair = ctx.useSelect(step => step.title && step.title.value).tuple;
+  const subtitlePair = ctx.useSelect(
+    step => step.subtitle && step.subtitle.value
+  ).tuple;
+  const progress = ctx.t;
+
   return (
     <div
       className="cs-container"
@@ -42,32 +43,11 @@ function CodeSurferContainer({
       }}
     >
       <CodeSurferContent dimensions={dimensions} ctx={ctx} />
-      <Title ctx={ctx.useSelect(step => step.title)} />
-      <Subtitle ctx={ctx.useSelect(step => step.subtitle)} />
+      <Title textPair={titlePair} progress={progress} />
+      <Subtitle textPair={subtitlePair} progress={progress} />
     </div>
   );
 }
-
-const heightChangingAnimations: AnimationAndConfig<any, any>[] = [
-  {
-    animation: slideToLeft,
-    when: (prev, next) => prev && !next,
-    stagger: 0.15
-  },
-  {
-    animation: slideFromRight,
-    when: (prev, next) => next && !prev,
-    stagger: 0.15
-  },
-  {
-    animation: exitLine,
-    when: (prev, next) => prev && !next
-  },
-  {
-    animation: enterLine,
-    when: (prev, next) => next && !prev
-  }
-];
 
 function CodeSurferContent({
   dimensions,
@@ -78,18 +58,39 @@ function CodeSurferContent({
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
-  const { scrollTop } = ctx.animate(scrollToFocus);
-  React.useLayoutEffect(() => {
-    if (ref.current == null) return;
-    ref.current.scrollTop = scrollTop;
-  }, [scrollTop]);
+  // lines props
+  const stepPair = ctx.tuple.select(s => ({
+    focus: s.xFocus,
+    lines: s.xLines,
+    focusCenter: s.focusCenter,
+    focusCount: s.focusCount,
+    dimensions: s.dimensions && {
+      paddingBottom: s.dimensions.paddingBottom,
+      paddingTop: s.dimensions.paddingTop
+    }
+  }));
+  const progress = ctx.t;
+  const tokens = ctx.tuple.any().xTokens;
+  const types = ctx.tuple.any().xTypes;
+  const ds = dimensions && {
+    lineHeight: dimensions.lineHeight as number,
+    containerHeight: dimensions.containerHeight,
+    containerWidth: dimensions.containerWidth,
+    contentWidth: dimensions.contentWidth
+  };
 
-  const { scale } = ctx.animate(scaleToFocus);
+  const scrollTop = scrollToFocus(progress, stepPair, dimensions);
+
+  const scale = scaleToFocus(progress, stepPair, ds);
+
   const verticalOrigin = dimensions
     ? dimensions.containerHeight / 2 + scrollTop
     : 0;
 
-  const linesCtx = ctx.useSelectMany(step => step.lines);
+  React.useLayoutEffect(() => {
+    if (ref.current == null) return;
+    ref.current.scrollTop = scrollTop;
+  }, [scrollTop]);
 
   return (
     <Styled.Pre
@@ -115,142 +116,61 @@ function CodeSurferContent({
         }}
       >
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
-        {linesCtx.map((ctx, key) => (
-          <Line ctx={ctx} key={key} />
-        ))}
+        <LineList
+          stepPair={stepPair}
+          progress={progress}
+          tokens={tokens}
+          types={types}
+          dimensions={ds}
+        />
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </Styled.Code>
     </Styled.Pre>
   );
 }
 
-type LineProps = { ctx: Context<LineType> };
-const Line = React.memo(function Line({ ctx }: LineProps) {
-  const lineStyle = ctx.animations([
-    ...heightChangingAnimations,
-    {
-      animation: focusLine
-    }
-  ]);
-
-  const { lineTokens, key, focusPerToken } = ctx.animate((prev, next) => {
-    const line = (prev || next) as LineType;
-    return {
-      lineTokens: line.tokens,
-      key: line.key,
-      focusPerToken:
-        (prev && prev.focusPerToken) || (next && next.focusPerToken)
-    };
-  });
-
-  let tokens: (Token & { animatedStyle: React.CSSProperties })[] = [];
-
-  let tokensCtx = ctx.useSelectMany(line => line.tokens);
-
-  if (focusPerToken) {
-    tokens = tokensCtx.map(tokenCtx => ({
-      ...tokenCtx.animate((prev, next) => (prev || next) as Token),
-      animatedStyle: tokenCtx.animate(focusToken)
-    }));
-  } else {
-    // TODO memoize token elements (yes, React elements)
-    tokens = lineTokens.map(token => ({ ...token, animatedStyle: {} }));
+type CaptionProps = { textPair: Tuple<string>; progress: number };
+function Title({ textPair, progress }: CaptionProps) {
+  if (!textPair.any()) {
+    return null;
   }
+
+  const [prev, next] = textPair.spread();
+  const text = progress < 0.5 ? prev : next;
+  const textStyle = prev !== next ? fadeOutIn()(progress) : undefined;
+  const backgroundStyle =
+    prev && next
+      ? undefined
+      : !prev
+      ? halfFadeIn()(progress)
+      : halfFadeOut()(progress);
 
   return (
-    <div
-      style={{
-        overflow: "hidden",
-        // border: "1px solid red",
-        // boxSizing: "border-box",
-        ...lineStyle
-      }}
-    >
-      <div
-        style={{ display: "inline-block" }}
-        className={`cs-line cs-line-${key}`}
-      >
-        {tokens.map((token, i) => (
-          <span
-            key={i}
-            style={token.animatedStyle}
-            className={getClassFromTokenType(token.type)}
-          >
-            {token.content}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}, isLineStatic);
-
-function isLineStatic(prev: LineProps, next: LineProps) {
-  if (!prev || !next || Math.floor(prev.ctx.t) !== Math.floor(prev.ctx.t)) {
-    // if we are changing steps
-    return false;
-  }
-  const [prevLine, nextLine] = next.ctx.spread();
-  if (!prevLine || !nextLine) {
-    // we are moving the line
-    return false;
-  }
-
-  return prevLine.focus === nextLine.focus;
-}
-
-function Title({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
-  const text = ctx.animate(switchText);
-  const bgStyle = ctx.animate(fadeBackground);
-  const textStyle = ctx.animate(fadeText);
-
-  if (!text) return null;
-
-  return (
-    <Styled.Title className="cs-title" style={bgStyle}>
+    <Styled.Title className="cs-title" style={backgroundStyle}>
       <span style={textStyle}>{text}</span>
     </Styled.Title>
   );
 }
-function Subtitle({ ctx }: { ctx: Context<{ value: string } | undefined> }) {
-  const text = ctx.animate(switchText);
-  const bgStyle = ctx.animate(fadeBackground);
-  const textStyle = ctx.animate(fadeText);
+function Subtitle({ textPair, progress }: CaptionProps) {
+  if (!textPair.any()) {
+    return null;
+  }
 
-  if (!text) return null;
+  const [prev, next] = textPair.spread();
+  const text = progress < 0.5 ? prev : next;
+  const textStyle = prev !== next ? fadeOutIn()(progress) : undefined;
+  const backgroundStyle =
+    prev && next
+      ? undefined
+      : !prev
+      ? halfFadeIn()(progress)
+      : halfFadeOut()(progress);
 
   return (
-    <Styled.Subtitle className="cs-subtitle" style={bgStyle}>
+    <Styled.Subtitle className="cs-subtitle" style={backgroundStyle}>
       <span style={textStyle}>{text}</span>
     </Styled.Subtitle>
   );
 }
-
-const fadeBackground: Animation<any, { opacity: number }> = (prev, next, t) => {
-  let opacity = 1;
-  if (!prev) {
-    opacity = t;
-  }
-  if (!next) {
-    opacity = 1 - t;
-  }
-  return { opacity };
-};
-
-const fadeText: Animation<{ value: any } | undefined, { opacity: number }> = (
-  prev,
-  next,
-  t
-) => {
-  if (prev && next && prev.value !== next.value) {
-    return fadeOutIn(t);
-  }
-  if (!prev) {
-    return fadeIn(t);
-  }
-  if (!next) {
-    return fadeOut(t);
-  }
-  return { opacity: 1 };
-};
 
 export default CodeSurferContainer;

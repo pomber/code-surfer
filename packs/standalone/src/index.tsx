@@ -9,7 +9,7 @@ import "./default-syntaxes";
 
 type CodeSurferProps = {
   steps: InputStep[];
-  progress: number; // float between [0, steps.lenght - 1]
+  progress: number; // float between [0, steps.length - 1]
   theme?: CodeSurferTheme;
 };
 
@@ -60,7 +60,10 @@ function transformSteps(inputSteps: InputStep[]): Step[] {
         key: lineKey,
         focus: !!focus,
         focusPerToken: Array.isArray(focus),
-        tokens
+        tokens,
+        xTokens: parsedSteps.tokens[lineKey],
+        xTypes: parsedSteps.types[lineKey],
+        xFocus: focus
       };
     });
     return {
@@ -69,7 +72,11 @@ function transformSteps(inputSteps: InputStep[]): Step[] {
       focusCenter: pstep.focusCenter,
       focusCount: pstep.focusCount,
       longestLineIndex: pstep.longestLineIndex,
-      lines
+      lines,
+      xFocus: pstep.focus,
+      xLines: pstep.lines,
+      xTokens: parsedSteps.tokens,
+      xTypes: parsedSteps.types
     };
   });
 
