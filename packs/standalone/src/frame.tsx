@@ -1,5 +1,4 @@
 import React from "react";
-import { useAnimationContext, Context } from "./animation-context";
 import { Step } from "code-surfer-types";
 import { Styled } from "./styles";
 import { LineList } from "./lines";
@@ -23,14 +22,20 @@ function CodeSurferContainer({
   dimensions,
   steps
 }: ContainerProps) {
-  const ctx = useAnimationContext(steps, stepPlayhead);
+  const prev = steps[Math.floor(stepPlayhead)];
+  const next = steps[Math.floor(stepPlayhead) + 1];
+  const tuple = React.useMemo(() => new Tuple(prev, next), [prev, next]);
 
-  // caption props
-  const titlePair = ctx.useSelect(step => step.title && step.title.value).tuple;
-  const subtitlePair = ctx.useSelect(
-    step => step.subtitle && step.subtitle.value
-  ).tuple;
-  const progress = ctx.t;
+  const titlePair = React.useMemo(
+    () => tuple.select(step => step.title && step.title.value),
+    [tuple]
+  );
+  const subtitlePair = React.useMemo(
+    () => tuple.select(step => step.subtitle && step.subtitle.value),
+    [tuple]
+  );
+
+  const progress = stepPlayhead % 1;
 
   return (
     <div
@@ -42,7 +47,11 @@ function CodeSurferContainer({
         position: "relative"
       }}
     >
-      <CodeSurferContent dimensions={dimensions} ctx={ctx} />
+      <CodeSurferContent
+        dimensions={dimensions}
+        stepTuple={tuple}
+        progress={progress}
+      />
       <Title textPair={titlePair} progress={progress} />
       <Subtitle textPair={subtitlePair} progress={progress} />
     </div>
@@ -51,15 +60,17 @@ function CodeSurferContainer({
 
 function CodeSurferContent({
   dimensions,
-  ctx
+  stepTuple,
+  progress
 }: {
   dimensions: any;
-  ctx: Context<Step>;
+  stepTuple: Tuple<Step>;
+  progress: number;
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
   // lines props
-  const stepPair = ctx.tuple.select(s => ({
+  const stepPair = stepTuple.select(s => ({
     focus: s.xFocus,
     lines: s.xLines,
     focusCenter: s.focusCenter,
@@ -69,9 +80,8 @@ function CodeSurferContent({
       paddingTop: s.dimensions.paddingTop
     }
   }));
-  const progress = ctx.t;
-  const tokens = ctx.tuple.any().xTokens;
-  const types = ctx.tuple.any().xTypes;
+  const tokens = stepTuple.any().xTokens;
+  const types = stepTuple.any().xTypes;
   const ds = dimensions && {
     lineHeight: dimensions.lineHeight as number,
     containerHeight: dimensions.containerHeight,

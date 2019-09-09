@@ -35,17 +35,17 @@ test("Chain", () => {
     .map((_, i) => i / 20);
 
   const animation = chain([
-    [0.5, (t: number) => ({ height: t })],
+    [0.5, (t: number) => ({ x: t, y: undefined })],
     [0.75, undefined],
-    [1, (t: number) => ({ width: t })]
+    [1, (t: number) => ({ y: t, x: undefined })]
   ]);
 
   const data = ts.map(t => {
-    const { height, width } = animation(t);
-    return [t, height, width];
+    const { x, y } = animation(t);
+    return [t, x, y];
   });
 
-  expect(toTable(data, ["t", "height", "width"], [, 6, 6])).toMatchSnapshot();
+  expect(toTable(data, ["t", "x", "y"], [, 6, 6])).toMatchSnapshot();
 });
 
 test("Line Exit", () => {

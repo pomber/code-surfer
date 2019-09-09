@@ -1,7 +1,6 @@
 import React from "react";
 import { InputStep, Step, Token } from "code-surfer-types";
 import { parseSteps } from "@code-surfer/step-parser";
-import { parseSteps as oldParse } from "./parse-steps";
 import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
 import { UnknownError } from "./errors";
 import { CodeSurfer } from "./code-surfer";
@@ -16,9 +15,6 @@ type CodeSurferProps = {
 function InnerCodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
   const steps = React.useMemo(() => {
     const steps = transformSteps(inputSteps);
-    // const oldSteps = oldParse(inputSteps, inputSteps[0].lang);
-    // console.log(steps);
-    // console.log(oldSteps);
     return steps;
   }, [inputSteps]);
   return <CodeSurfer progress={progress} steps={steps} />;
