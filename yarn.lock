@@ -6887,6 +6887,14 @@ gatsby-react-router-scroll@^2.1.6:
     scroll-behavior "^0.9.10"
     warning "^3.0.0"
 
+gatsby-remark-import-code@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-import-code/-/gatsby-remark-import-code-0.1.1.tgz#7cefff965f6f2c58685f7dab51359713e9f37bed"
+  integrity sha512-sFIgQbMlY5o3DHIHpVO8F4vca9JP1PHIZr9QtElDAPEzwSd5Bxig5OC/ztGhgmZtXpjX5/eazHtrsGwVdLZ6MQ==
+  dependencies:
+    shell-quote "^1.6.1"
+    unist-util-visit "^1.4.1"
+
 gatsby-source-filesystem@^2.1.3:
   version "2.1.18"
   resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.1.18.tgz#fcf80c62f243f4bfdb5ff4b17e8b0a79ace3730d"
@@ -6931,7 +6939,37 @@ gatsby-telemetry@^1.1.19:
     stack-utils "1.0.2"
     uuid "3.3.3"
 
-gatsby-theme-mdx-deck@^3.0.8, gatsby-theme-mdx-deck@^3.0.9:
+gatsby-theme-mdx-deck@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/gatsby-theme-mdx-deck/-/gatsby-theme-mdx-deck-3.0.10.tgz#1847b0d4bf1586960cf0eee7ba118fdcf90676d5"
+  integrity sha512-t+/UfNRxy79O2vT2g/pARAArPM1LlD/JZuMCjjQy6Vx/naWob+ZE5LRcQKSV7dQKXd/ex4eujAWjlyUJ1l0u2w==
+  dependencies:
+    "@emotion/core" "^10.0.14"
+    "@mdx-deck/themes" "^3.0.8"
+    "@mdx-js/mdx" "^1.0.21"
+    "@mdx-js/react" "^1.0.21"
+    "@reach/router" "^1.2.1"
+    debug "^4.1.1"
+    gatsby "^2.13.24"
+    gatsby-plugin-catch-links "^2.1.0"
+    gatsby-plugin-compile-es6-packages "^2.0.0"
+    gatsby-plugin-emotion "^4.1.0"
+    gatsby-plugin-mdx "^1.0.13"
+    gatsby-plugin-react-helmet "^3.1.0"
+    gatsby-plugin-theme-ui "^0.2.6"
+    gatsby-remark-import-code "^0.1.1"
+    gatsby-source-filesystem "^2.1.3"
+    hhmmss "^1.0.0"
+    lodash.get "^4.4.2"
+    lodash.merge "^4.6.1"
+    mkdirp "^0.5.1"
+    react-helmet "^6.0.0-beta"
+    react-swipeable "^5.3.0"
+    remark-emoji "^2.0.2"
+    remark-unwrap-images "^1.0.0"
+    theme-ui "^0.2.14"
+
+gatsby-theme-mdx-deck@^3.0.8:
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/gatsby-theme-mdx-deck/-/gatsby-theme-mdx-deck-3.0.9.tgz#fcf661a9f209535d1dbca324a91b8943c4e5e400"
   integrity sha512-h/U3RPqgqThGHd8tsd7l5KNyS1swsMl+r8h16izs4uFhEoiRm9+eFg7RkxsjquB3OpRE49KVR+IiAMk06zbtzg==
@@ -10228,6 +10266,23 @@ mdurl@^1.0.1:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
+mdx-deck@3.0.10, mdx-deck@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.10.tgz#38d62de6d80ed496ba49a38619d299447b5fe15d"
+  integrity sha512-ef6igJmpxVvcY0EyTty+yaNhCtsX3eMlih0oDMohzxyrknCrboHvt2hfzBSMELYaczEp9+5t/7LKZVh4nPt39A==
+  dependencies:
+    "@mdx-deck/themes" "^3.0.8"
+    chalk "^2.4.2"
+    execa "^2.0.3"
+    fs-extra "^8.1.0"
+    gatsby "^2.13.24"
+    gatsby-plugin-compile-es6-packages "^2.0.0"
+    gatsby-theme-mdx-deck "^3.0.10"
+    initit "^1.0.0-2"
+    meow "^5.0.0"
+    react "^16.8.6"
+    react-dom "^16.8.6"
+
 mdx-deck@3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.8.tgz#b3e107b9877eb6e2740266fbbb72274b2643119c"
@@ -10240,23 +10295,6 @@ mdx-deck@3.0.8:
     gatsby "^2.13.24"
     gatsby-plugin-compile-es6-packages "^2.0.0"
     gatsby-theme-mdx-deck "^3.0.8"
-    initit "^1.0.0-2"
-    meow "^5.0.0"
-    react "^16.8.6"
-    react-dom "^16.8.6"
-
-mdx-deck@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.9.tgz#6e33e3d9fff57dc3bb2d905f835c4ff19274b9fb"
-  integrity sha512-H4gQZqkUmRF90k9TcNJ0GdLeD8kGqkxzbpfP2oJiD6UaxjVV8e3auAlU77OLGtEEq6cTgeYEO/gxTCqzasPWTw==
-  dependencies:
-    "@mdx-deck/themes" "^3.0.8"
-    chalk "^2.4.2"
-    execa "^2.0.3"
-    fs-extra "^8.1.0"
-    gatsby "^2.13.24"
-    gatsby-plugin-compile-es6-packages "^2.0.0"
-    gatsby-theme-mdx-deck "^3.0.9"
     initit "^1.0.0-2"
     meow "^5.0.0"
     react "^16.8.6"
@@ -15280,10 +15318,10 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-theme-ui@^0.2.14:
-  version "0.2.38"
-  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.2.38.tgz#7d294b6bf8b5bae27e36cccb41c0eca60309f0c9"
-  integrity sha512-nPjZlDyRISPu1EYlYHOUT5IKFd22cSEg3i2Kr9EH/mbtD3ezTAqAdE7SKzjUe9tFyagJ9y0UbY/tUI+SENu8wQ==
+theme-ui@^0.2.14, theme-ui@^0.2.41:
+  version "0.2.41"
+  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.2.41.tgz#51ea7160eadb6873972e453c4c68e59409af0fe1"
+  integrity sha512-VketIz3vjXMcmXxTX+7QO4QDx69GqNocmGwrXqYwKngKEOYxvXl0clDZLQzNIZBdo+UZcYa8gKf/jyBXXQ2/xQ==
   dependencies:
     "@emotion/is-prop-valid" "^0.8.1"
     "@styled-system/css" "^5.0.16"

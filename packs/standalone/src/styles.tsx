@@ -20,7 +20,7 @@ function StylesProvider({
   theme?: CodeSurferTheme;
   children: React.ReactNode;
 }) {
-  const { theme: outer } = useThemeUI();
+  const outer = useThemeUI().theme || {};
 
   const base = {
     ...baseTheme,

@@ -22,7 +22,8 @@
     "test:watch": "tsdx test --env=jsdom -u --watch"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.8.0",
+    "theme-ui": "^0.2.41"
   },
   "dependencies": {
     "@code-surfer/step-parser": "3.0.0",

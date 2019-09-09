@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "code-surfer": "*",
-    "mdx-deck": "^3.0.9",
+    "mdx-deck": "^3.0.10",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
