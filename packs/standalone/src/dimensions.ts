@@ -1,13 +1,16 @@
 import React from "react";
-import { Step } from "code-surfer-types";
+import { Step, Dimensions } from "code-surfer-types";
 import useWindowResize from "./use-window-resize";
+
+type DimensionsResult = { steps?: Step[]; dimensions?: Dimensions };
 
 function useDimensions<T extends HTMLElement | null>(
   ref: React.MutableRefObject<T>,
   steps: Step[]
-) {
-  const [result, setResult] = React.useState<any | null>(null);
+): DimensionsResult {
+  const [result, setResult] = React.useState<DimensionsResult | null>(null);
 
+  // TODO reset only if container size changed
   useWindowResize(() => setResult(null), [setResult]);
 
   React.useLayoutEffect(() => {
@@ -39,21 +42,15 @@ function useDimensions<T extends HTMLElement | null>(
         lineHeight,
         contentWidth,
         containerHeight,
-        containerWidth
+        containerWidth,
+        // TODO set or remove
+        contentHeight: undefined
       },
       steps: steps.map((step, i) => ({
         ...step,
-        lines: step.lines.map(l => ({
-          ...l,
-          dimensions: { lineHeight: stepsDimensions[i].lineHeight }
-        })),
         dimensions: {
           paddingTop: stepsDimensions[i].paddingTop,
-          paddingBottom: stepsDimensions[i].paddingBottom,
-          lineHeight: stepsDimensions[i].lineHeight,
-          contentWidth,
-          containerHeight,
-          containerWidth
+          paddingBottom: stepsDimensions[i].paddingBottom
         }
       }))
     });
@@ -63,8 +60,7 @@ function useDimensions<T extends HTMLElement | null>(
 }
 
 function getStepDimensions(container: HTMLElement, step: Step) {
-  const longestLine = getLongestLine(step);
-  const longestLineKey = longestLine && longestLine.key;
+  const longestLineKey = step.lines[step.longestLineIndex];
   const longestLineSpan = container.querySelector(`.cs-line-${longestLineKey}`);
   const containerParent = container.parentElement as HTMLElement;
   const title = container.querySelector(".cs-title") as HTMLElement;
@@ -105,10 +101,6 @@ function outerHeight(element: HTMLElement) {
     parseFloat(styles["marginTop"] || "0") +
     parseFloat(styles["marginBottom"] || "0");
   return element.offsetHeight + margin;
-}
-
-function getLongestLine(step: Step) {
-  return step.lines[step.longestLineIndex];
 }
 
 export default useDimensions;

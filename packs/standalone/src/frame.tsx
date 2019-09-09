@@ -1,5 +1,5 @@
 import React from "react";
-import { Step } from "code-surfer-types";
+import { Step, Dimensions } from "code-surfer-types";
 import { Styled } from "./styles";
 import { LineList } from "./lines";
 import {
@@ -12,30 +12,33 @@ import {
 import { Tuple } from "./tuple";
 
 type ContainerProps = {
-  stepPlayhead: number;
-  dimensions?: any;
+  progress: number;
+  dimensions?: Dimensions;
   steps: Step[];
+  tokens: string[][];
+  types: string[][];
 };
 
 function CodeSurferContainer({
-  stepPlayhead,
+  progress,
   dimensions,
-  steps
+  steps,
+  tokens,
+  types
 }: ContainerProps) {
-  const prev = steps[Math.floor(stepPlayhead)];
-  const next = steps[Math.floor(stepPlayhead) + 1];
-  const tuple = React.useMemo(() => new Tuple(prev, next), [prev, next]);
+  const prev = steps[Math.floor(progress)];
+  const next = steps[Math.floor(progress) + 1];
+  const stepPair = React.useMemo(() => new Tuple(prev, next), [prev, next]);
 
-  const titlePair = React.useMemo(
-    () => tuple.select(step => step.title && step.title.value),
-    [tuple]
-  );
+  const titlePair = React.useMemo(() => stepPair.select(step => step.title), [
+    stepPair
+  ]);
   const subtitlePair = React.useMemo(
-    () => tuple.select(step => step.subtitle && step.subtitle.value),
-    [tuple]
+    () => stepPair.select(step => step.subtitle),
+    [stepPair]
   );
 
-  const progress = stepPlayhead % 1;
+  const t = progress % 1;
 
   return (
     <div
@@ -49,50 +52,34 @@ function CodeSurferContainer({
     >
       <CodeSurferContent
         dimensions={dimensions}
-        stepTuple={tuple}
-        progress={progress}
+        stepPair={stepPair}
+        t={t}
+        tokens={tokens}
+        types={types}
       />
-      <Title textPair={titlePair} progress={progress} />
-      <Subtitle textPair={subtitlePair} progress={progress} />
+      <Title textPair={titlePair} t={t} />
+      <Subtitle textPair={subtitlePair} t={t} />
     </div>
   );
 }
 
 function CodeSurferContent({
   dimensions,
-  stepTuple,
-  progress
+  stepPair,
+  t,
+  tokens,
+  types
 }: {
-  dimensions: any;
-  stepTuple: Tuple<Step>;
-  progress: number;
+  dimensions?: Dimensions;
+  stepPair: Tuple<Step>;
+  t: number;
+  tokens: string[][];
+  types: string[][];
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
-  // lines props
-  const stepPair = stepTuple.select(s => ({
-    focus: s.xFocus,
-    lines: s.xLines,
-    focusCenter: s.focusCenter,
-    focusCount: s.focusCount,
-    dimensions: s.dimensions && {
-      paddingBottom: s.dimensions.paddingBottom,
-      paddingTop: s.dimensions.paddingTop
-    }
-  }));
-  const tokens = stepTuple.any().xTokens;
-  const types = stepTuple.any().xTypes;
-  const ds = dimensions && {
-    lineHeight: dimensions.lineHeight as number,
-    containerHeight: dimensions.containerHeight,
-    containerWidth: dimensions.containerWidth,
-    contentWidth: dimensions.contentWidth
-  };
-
-  const scrollTop = scrollToFocus(progress, stepPair, dimensions);
-
-  const scale = scaleToFocus(progress, stepPair, ds);
-
+  const scale = scaleToFocus(t, stepPair, dimensions);
+  const scrollTop = scrollToFocus(t, stepPair, dimensions);
   const verticalOrigin = dimensions
     ? dimensions.containerHeight / 2 + scrollTop
     : 0;
@@ -116,6 +103,7 @@ function CodeSurferContent({
         className="cs-scaled-content"
         style={{
           display: "block",
+          //TODO isnt contentHeight always undefined?
           height: dimensions ? dimensions.contentHeight : "100%",
           width: dimensions && dimensions.contentWidth,
           margin:
@@ -128,10 +116,10 @@ function CodeSurferContent({
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
         <LineList
           stepPair={stepPair}
-          progress={progress}
+          t={t}
           tokens={tokens}
           types={types}
-          dimensions={ds}
+          dimensions={dimensions}
         />
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </Styled.Code>
@@ -139,21 +127,18 @@ function CodeSurferContent({
   );
 }
 
-type CaptionProps = { textPair: Tuple<string>; progress: number };
-function Title({ textPair, progress }: CaptionProps) {
+type CaptionProps = { textPair: Tuple<string>; t: number };
+
+function Title({ textPair, t }: CaptionProps) {
   if (!textPair.any()) {
     return null;
   }
 
   const [prev, next] = textPair.spread();
-  const text = progress < 0.5 ? prev : next;
-  const textStyle = prev !== next ? fadeOutIn()(progress) : undefined;
+  const text = t < 0.5 ? prev : next;
+  const textStyle = prev !== next ? fadeOutIn()(t) : undefined;
   const backgroundStyle =
-    prev && next
-      ? undefined
-      : !prev
-      ? halfFadeIn()(progress)
-      : halfFadeOut()(progress);
+    prev && next ? undefined : !prev ? halfFadeIn()(t) : halfFadeOut()(t);
 
   return (
     <Styled.Title className="cs-title" style={backgroundStyle}>
@@ -161,20 +146,17 @@ function Title({ textPair, progress }: CaptionProps) {
     </Styled.Title>
   );
 }
-function Subtitle({ textPair, progress }: CaptionProps) {
+
+function Subtitle({ textPair, t }: CaptionProps) {
   if (!textPair.any()) {
     return null;
   }
 
   const [prev, next] = textPair.spread();
-  const text = progress < 0.5 ? prev : next;
-  const textStyle = prev !== next ? fadeOutIn()(progress) : undefined;
+  const text = t < 0.5 ? prev : next;
+  const textStyle = prev !== next ? fadeOutIn()(t) : undefined;
   const backgroundStyle =
-    prev && next
-      ? undefined
-      : !prev
-      ? halfFadeIn()(progress)
-      : halfFadeOut()(progress);
+    prev && next ? undefined : !prev ? halfFadeIn()(t) : halfFadeOut()(t);
 
   return (
     <Styled.Subtitle className="cs-subtitle" style={backgroundStyle}>

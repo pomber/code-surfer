@@ -6,10 +6,17 @@ import { Step } from "code-surfer-types";
 type CodeSurferProps = {
   steps: Step[];
   progress: number; // float between [0, steps.lenght - 1]
+  tokens: string[][];
+  types: string[][];
 };
 
-export function CodeSurfer({ progress, steps }: CodeSurferProps) {
-  const fakeSteps = React.useMemo(() => getFakeSteps(steps), [steps]);
+export function CodeSurfer({
+  progress,
+  steps,
+  tokens,
+  types
+}: CodeSurferProps) {
+  const fakeSteps = React.useMemo(() => getFakeSteps(steps, tokens), [steps]);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const { dimensions, steps: stepsWithDimensions } = useDimensions(ref, steps);
@@ -28,7 +35,12 @@ export function CodeSurfer({ progress, steps }: CodeSurferProps) {
               width: "100%"
             }}
           >
-            <Frame steps={fakeSteps} stepPlayhead={i} />
+            <Frame
+              steps={fakeSteps}
+              progress={i}
+              tokens={tokens}
+              types={types}
+            />
           </div>
         ))}
       </div>
@@ -41,24 +53,35 @@ export function CodeSurfer({ progress, steps }: CodeSurferProps) {
       >
         <Frame
           steps={stepsWithDimensions}
-          stepPlayhead={progress}
+          progress={progress}
           dimensions={dimensions}
+          tokens={tokens}
+          types={types}
         />
       </div>
     );
   }
 }
 
-function getFakeSteps(parsedSteps: Step[]) {
+function getFakeSteps(parsedSteps: Step[], tokens: string[][]) {
+  let shortLineKey = 0;
+  let length = 100;
+  for (let i = 1; i < tokens.length; i++) {
+    if (tokens[i].length < length) {
+      length = tokens[i].length;
+      shortLineKey = i;
+    }
+    if (length <= 1) {
+      break;
+    }
+  }
+
   const fakeSteps = parsedSteps.map(step => {
     const fakeStep: Step = {
       ...step,
-      lines: step.lines.map(line => ({
-        ...line,
-        tokens: line.tokens && [line.tokens[0]]
-      }))
+      lines: step.lines.map(line => shortLineKey),
+      longestLineIndex: 0
     };
-
     fakeStep.lines[0] = step.lines[step.longestLineIndex];
     return fakeStep;
   });

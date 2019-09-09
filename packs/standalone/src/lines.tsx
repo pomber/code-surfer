@@ -16,7 +16,7 @@ type Step = {
 
 type LineListProps = {
   stepPair: Tuple<Step>;
-  progress: number;
+  t: number;
   tokens: string[][];
   types: string[][];
   dimensions?: { lineHeight: number };
@@ -24,7 +24,7 @@ type LineListProps = {
 
 export function LineList({
   stepPair,
-  progress,
+  t,
   tokens,
   types,
   dimensions
@@ -127,7 +127,7 @@ export function LineList({
           lineElement || (
             // TODO avoid spreading (move static style to class)
             <div
-              style={{ overflow: "hidden", ...getLineStyle(progress) }}
+              style={{ overflow: "hidden", ...getLineStyle(t) }}
               key={lineKey}
             >
               <div
@@ -138,7 +138,7 @@ export function LineList({
                   tokens[lineKey].map((token, tokeni) => (
                     <span
                       className={"token-" + types[lineKey][tokeni]}
-                      style={getTokenStyle(progress, tokeni)}
+                      style={getTokenStyle(t, tokeni)}
                       key={tokeni}
                     >
                       {token}

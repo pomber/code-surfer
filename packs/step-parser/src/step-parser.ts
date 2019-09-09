@@ -5,7 +5,13 @@ import { toEntries } from "./object-entries";
 import { applyPatch } from "diff";
 
 export function parseSteps(
-  inputSteps: { code: string; focus?: string; lang?: string }[]
+  inputSteps: {
+    code: string;
+    focus?: string;
+    lang?: string;
+    title?: string;
+    subtitle?: string;
+  }[]
 ) {
   if (inputSteps.length === 0) {
     return {
@@ -32,6 +38,8 @@ export function parseSteps(
     focusCenter: number;
     focusCount: number;
     longestLineIndex: number;
+    title?: string;
+    subtitle?: string;
   }[] = [];
 
   steps.forEach((step, i) => {
@@ -56,7 +64,9 @@ export function parseSteps(
       focus,
       focusCenter,
       focusCount,
-      longestLineIndex: getLongestLineIndex(code)
+      longestLineIndex: getLongestLineIndex(code),
+      title: inputSteps[i].title,
+      subtitle: inputSteps[i].subtitle
     });
   });
 

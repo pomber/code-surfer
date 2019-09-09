@@ -1,43 +1,42 @@
 type Maybe<T> = T | null | undefined;
+interface Flavoring<FlavorT> {
+  _type?: FlavorT;
+}
+type Flavor<T, FlavorT> = T & Flavoring<FlavorT>;
 
 declare module "code-surfer-types" {
   export interface InputStep {
     code: string;
     focus?: string;
-    title?: { value: string };
-    subtitle?: { value: string };
+    title?: string;
+    subtitle?: string;
     lang?: string;
   }
 
-  export interface Token {
-    type: string;
-    content: string;
-    focus?: boolean;
-    key?: number;
-  }
-
-  export interface Line {
-    tokens: Token[];
-    key: Number;
-    focus?: boolean;
-    focusPerToken?: boolean;
-    xFocus: true | number[];
-    xTokens: string[];
-    xTypes: string[];
-  }
+  type LineKey = Flavor<number, "LineKey">;
+  type LineIndex = Flavor<number, "LineIndex">;
+  type StepIndex = Flavor<number, "StepIndex">;
 
   export interface Step {
-    lines: Line[];
-    title?: { value: string };
-    subtitle?: { value: string };
+    lines: LineKey[];
+    longestLineIndex: LineIndex;
+    focus: Record<LineIndex, true | StepIndex[]>;
     focusCenter: number;
     focusCount: number;
-    dimensions?: any;
-    longestLineIndex: number;
-    xLines: number[];
-    xFocus: Record<number, true | number[]>;
-    xTypes: string[][];
-    xTokens: string[][];
+    title?: string;
+    subtitle?: string;
+    dimensions?: {
+      paddingTop: number;
+      paddingBottom: number;
+    };
+  }
+
+  export interface Dimensions {
+    lineHeight: number;
+    containerHeight: number;
+    containerWidth: number;
+    contentHeight: number;
+    contentWidth: number;
   }
 
   type StyleItem = {

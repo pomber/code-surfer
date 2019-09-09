@@ -15,11 +15,11 @@ var x0 = 3`;
 
 function TitleStory() {
   const steps = [
-    { code, title: { value: "Title 1" }, lang: "js" },
-    { code, title: { value: "Title 2" } },
-    { code, title: { value: "Title 2" } },
+    { code, title: "Title 1", lang: "js" },
+    { code, title: "Title 2" },
+    { code, title: "Title 2" },
     { code },
-    { code, title: { value: "Title 3" } }
+    { code, title: "Title 3" }
   ];
   return (
     <StoryWithSlider max={steps.length - 1}>
@@ -29,11 +29,11 @@ function TitleStory() {
 }
 function SubtitleStory() {
   const steps = [
-    { code, subtitle: { value: "Subtitle 1" }, lang: "js" },
-    { code, subtitle: { value: "Subtitle 2" } },
-    { code, subtitle: { value: "Subtitle 2" } },
+    { code, subtitle: "Subtitle 1", lang: "js" },
+    { code, subtitle: "Subtitle 2" },
+    { code, subtitle: "Subtitle 2" },
     { code },
-    { code, subtitle: { value: "Subtitle 3" } }
+    { code, subtitle: "Subtitle 3" }
   ];
   return (
     <StoryWithSlider max={steps.length - 1}>
