@@ -18,13 +18,15 @@
   "scripts": {
     "format": "prettier --ignore-path .gitignore --write '**/*.{js,jsx,css,md,mdx}'",
     "format:check": "prettier --ignore-path .gitignore --check '**/*.{js,jsx,css,md,mdx}'",
+    "build:step-parser": "yarn workspace @code-surfer/step-parser build",
     "build:standalone": "yarn workspace @code-surfer/standalone build",
     "build:codesurfer": "yarn workspace code-surfer build",
     "build:sites": "node sites/build",
-    "prepare": "run-s build:standalone build:codesurfer",
+    "prepare": "run-s build:step-parser build:standalone build:codesurfer",
     "predeploy": "run-s prepare build:sites",
+    "test:step-parser": "yarn workspace @code-surfer/step-parser test",
     "test:standalone": "yarn workspace @code-surfer/standalone test",
     "test:codesurfer": "yarn workspace code-surfer test",
-    "test": "run-p format:check test:standalone test:codesurfer"
+    "test": "run-p format:check test:step-parser test:standalone test:codesurfer"
   }
 }
