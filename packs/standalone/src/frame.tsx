@@ -137,7 +137,7 @@ function CodeSurferContent({
   );
 }
 
-type CaptionProps = { textPair: Tuple<string>; t: number };
+type CaptionProps = { textPair: Tuple<string | undefined>; t: number };
 
 function Title({ textPair, t }: CaptionProps) {
   if (!textPair.any()) {

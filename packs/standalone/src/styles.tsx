@@ -43,7 +43,7 @@ function useStyles(): CodeSurferStyles {
   return (theme as any).styles.CodeSurfer;
 }
 
-function getClassFromTokenType(type) {
+function getClassFromTokenType(type: string) {
   return "token-" + type;
 }
 
@@ -65,7 +65,7 @@ function usePreStyle() {
   return preSx;
 }
 
-const baseTitle = {
+const baseTitle: SxStyleProp = {
   position: "absolute" as "absolute",
   top: 0,
   width: "100%",
@@ -74,7 +74,7 @@ const baseTitle = {
   textAlign: "center"
 };
 
-const baseSubtitle = {
+const baseSubtitle: SxStyleProp = {
   position: "absolute" as "absolute",
   bottom: 0,
   width: "calc(100% - 2em)",
@@ -85,16 +85,21 @@ const baseSubtitle = {
   textAlign: "center"
 };
 
+type HTMLProps<T> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>;
+
 const Styled = {
-  Code: props => <code {...props} sx={useStyles().code} />,
-  Pre: React.forwardRef(
-    (
-      props: React.PropsWithChildren<any>,
-      ref: React.MutableRefObject<HTMLPreElement>
-    ) => <pre {...props} sx={usePreStyle()} ref={ref} />
+  Code: (props: HTMLProps<HTMLElement>) => (
+    <code {...props} sx={useStyles().code} />
   ),
-  Title: props => <h4 {...props} sx={{ ...baseTitle, ...useStyles().title }} />,
-  Subtitle: props => (
+  Pre: React.forwardRef(
+    (props: HTMLProps<HTMLPreElement>, ref: React.Ref<HTMLPreElement>) => (
+      <pre {...props} sx={usePreStyle()} ref={ref} />
+    )
+  ),
+  Title: (props: HTMLProps<HTMLHeadingElement>) => (
+    <h4 {...props} sx={{ ...baseTitle, ...useStyles().title }} />
+  ),
+  Subtitle: (props: HTMLProps<HTMLParagraphElement>) => (
     <p {...props} sx={{ ...baseSubtitle, ...useStyles().subtitle }} />
   )
 };

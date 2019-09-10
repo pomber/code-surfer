@@ -20,7 +20,7 @@ export function CodeSurfer({
 
   const ref = React.useRef<HTMLDivElement>(null);
   const { dimensions, steps: stepsWithDimensions } = useDimensions(ref, steps);
-  if (!dimensions) {
+  if (!dimensions || !stepsWithDimensions) {
     return (
       <div
         ref={ref}
@@ -79,7 +79,7 @@ function getFakeSteps(parsedSteps: Step[], tokens: string[][]) {
   const fakeSteps = parsedSteps.map(step => {
     const fakeStep: Step = {
       ...step,
-      lines: step.lines.map(line => shortLineKey),
+      lines: step.lines.map(_ => shortLineKey),
       longestLineIndex: 0
     };
     fakeStep.lines[0] = step.lines[step.longestLineIndex];

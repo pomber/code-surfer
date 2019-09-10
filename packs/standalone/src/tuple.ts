@@ -28,7 +28,7 @@ export class Tuple<T> {
       prev === null ? null : prev === undefined ? undefined : selector(prev),
       next === null ? null : next === undefined ? undefined : selector(next)
     ];
-    return new ArrayTuple(newPrev, newNext);
+    return new ArrayTuple<S>(newPrev, newNext);
   }
 
   any() {
@@ -75,7 +75,7 @@ export class ArrayTuple<T extends { key?: any }> extends Tuple<T[]> {
     return this._dict;
   }
 
-  get(key: any) {
+  get(key: any): Tuple<T> | undefined {
     const childrenMap = this._getChildrenMap();
     return childrenMap.get(key);
   }

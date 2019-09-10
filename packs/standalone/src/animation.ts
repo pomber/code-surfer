@@ -1,6 +1,7 @@
 import { CSSProperties } from "react";
 import easing, { Easing } from "./easing";
 import { Tuple } from "./tuple";
+import { Step, Dimensions } from "code-surfer-types";
 
 const distx = 250;
 const outOpacity = 0;
@@ -16,21 +17,21 @@ export type StyleAnimation = (t: number) => CSSProperties;
 
 export function exitLine(
   fromOpacity: number,
-  lineHeight: number
+  lineHeight: number = 100
 ): StyleAnimation {
   return chain([
-    [0.2, slideToLeft(fromOpacity)],
-    [0.8, shrinkHeight(lineHeight)],
-    [1.0, undefined]
+    [EXIT, slideToLeft(fromOpacity)],
+    [SCROLL, shrinkHeight(lineHeight)],
+    [ENTER, undefined]
   ]);
 }
 
-export function enterLine(toOpacity: number, lineHeight: number) {
+export function enterLine(toOpacity: number, lineHeight: number = 100) {
   return chain(
     [
-      [0.2, undefined],
-      [0.8, growHeight(lineHeight)],
-      [1.0, slideFromRight(toOpacity)]
+      [EXIT, undefined],
+      [SCROLL, growHeight(lineHeight)],
+      [ENTER, slideFromRight(toOpacity)]
     ],
     {
       transform: `translateX(${distx}px)`,
@@ -61,8 +62,8 @@ export function halfFadeOut(offOpacity = 0) {
 }
 
 export function scrollToFocus(
-  stepPair: Tuple<{ focusCenter: number }>,
-  dimensions?: { lineHeight: number }
+  stepPair: Tuple<Step>,
+  dimensions?: Dimensions
 ): Animation<number> {
   if (!dimensions) {
     return () => 0;
@@ -79,14 +80,14 @@ export function scrollToFocus(
 
   const animation = chain(
     [
-      [0.2, undefined],
+      [EXIT, undefined],
       [
-        0.8,
+        SCROLL,
         t => ({
           scroll: tween(prevCenter, nextCenter, t, easing.easeInOutQuad)
         })
       ],
-      [1, undefined]
+      [ENTER, undefined]
     ],
     { scroll: prevCenter }
   );
@@ -95,16 +96,8 @@ export function scrollToFocus(
 }
 
 export function scaleToFocus(
-  stepPair: Tuple<{
-    focusCount: number;
-    dimensions?: { paddingBottom: number; paddingTop: number };
-  }>,
-  dimensions?: {
-    lineHeight: number;
-    containerWidth: number;
-    containerHeight: number;
-    contentWidth: number;
-  }
+  stepPair: Tuple<Step>,
+  dimensions?: Dimensions
 ): Animation<number> {
   if (!dimensions) {
     return () => 1;
@@ -116,7 +109,12 @@ export function scaleToFocus(
   const nextZoom = getZoom(next, dimensions);
 
   return t =>
-    tween(prevZoom || nextZoom, nextZoom || prevZoom, t, easing.easeInOutQuad);
+    tween(
+      prevZoom || nextZoom!,
+      nextZoom || prevZoom!,
+      t,
+      easing.easeInOutQuad
+    );
 }
 
 //
@@ -190,19 +188,11 @@ export function chain<T extends object>(
   };
 }
 
-function getZoom(
-  step: {
-    focusCount: number;
-    dimensions?: { paddingBottom: number; paddingTop: number };
-  },
-  dimensions: {
-    lineHeight: number;
-    containerWidth: number;
-    containerHeight: number;
-    contentWidth: number;
-  }
-): number | null {
+function getZoom(step: Maybe<Step>, dimensions: Dimensions): number | null {
   if (!step) return null;
+
+  if (!dimensions || !step.dimensions)
+    throw new Error("Can't get zoom without dimensions");
 
   const {
     containerHeight,

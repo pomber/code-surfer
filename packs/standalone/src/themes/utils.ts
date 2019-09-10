@@ -1,7 +1,12 @@
-import { StyleItem } from "code-surfer-types";
-import { CodeSurferTheme, CodeSurferStyles } from "../styles";
+import { CodeSurferStyles } from "../styles";
+import { SxStyleProp } from "theme-ui";
 
-type PrismTheme = {
+type StyleItem = {
+  types: string[];
+  style: SxStyleProp;
+};
+
+export type PrismTheme = {
   plain: { color: string; backgroundColor: string };
   styles: StyleItem[];
 };
@@ -9,8 +14,8 @@ type PrismTheme = {
 export function makeTheme(
   prismTheme: PrismTheme,
   override: Partial<CodeSurferStyles> = {}
-): any {
-  const tokens = {};
+): { styles: { CodeSurfer: CodeSurferStyles } } {
+  const tokens = {} as Record<string, SxStyleProp>;
   prismTheme.styles.forEach(s => {
     tokens[s.types.join(" ")] = s.style;
   });

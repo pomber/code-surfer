@@ -1,4 +1,4 @@
-import { makeTheme } from "./utils";
+import { makeTheme, PrismTheme } from "./utils";
 
 // From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
 
@@ -18,7 +18,7 @@ const colors = {
   operator: "#fc929e"
 };
 
-const prismTheme = {
+const prismTheme: PrismTheme = {
   plain: {
     backgroundColor: "#282c34",
     color: "#ffffff"

@@ -35,14 +35,9 @@ declare module "code-surfer-types" {
     lineHeight: number;
     containerHeight: number;
     containerWidth: number;
-    contentHeight: number;
+    contentHeight?: number;
     contentWidth: number;
   }
-
-  type StyleItem = {
-    types: string[];
-    style: React.CSSProperties;
-  };
 
   type Partial<T> = {
     [P in keyof T]?: T[P];

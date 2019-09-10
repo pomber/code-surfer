@@ -1,5 +1,5 @@
 import { tween, chain, exitLine, enterLine } from "./animation";
-import { table } from "table";
+import { table, TableUserConfig } from "table";
 import easing from "./easing";
 
 test("Tween Easing", () => {
@@ -34,10 +34,10 @@ test("Chain", () => {
     .fill(0)
     .map((_, i) => i / 20);
 
-  const animation = chain([
-    [0.5, (t: number) => ({ x: t, y: undefined })],
+  const animation = chain<{ x?: number; y?: number }>([
+    [0.5, (t: number) => ({ x: t })],
     [0.75, undefined],
-    [1, (t: number) => ({ y: t, x: undefined })]
+    [1, (t: number) => ({ y: t })]
   ]);
 
   const data = ts.map(t => {
@@ -80,14 +80,18 @@ test("Line Enter", () => {
   ).toMatchSnapshot();
 });
 
-function toTable(data: any[][], hr: string[], truncate: number[] = []) {
-  const config = {
+function toTable(
+  data: any[][],
+  hr: string[],
+  truncate: (number | undefined)[] = []
+) {
+  const config: TableUserConfig = {
     drawHorizontalLine: (index, size) => {
       return index === 0 || index === 1 || index === size;
     }
   };
 
-  const newData = data.map((row, rowi) =>
+  const newData = data.map(row =>
     row.map((value, coli) =>
       truncate[coli]
         ? (value == null ? "" : value).toString().slice(0, truncate[coli])

@@ -59,7 +59,10 @@ export function LineList({
 
       const lineElement = isStatic && (
         <div
-          style={{ overflow: "hidden", opacity: !prevFocus && offOpacity }}
+          style={{
+            overflow: "hidden",
+            opacity: prevFocus ? undefined : offOpacity
+          }}
           key={lineKey}
         >
           <div
@@ -71,7 +74,7 @@ export function LineList({
         </div>
       );
 
-      let getLineStyle: StyleAnimation;
+      let getLineStyle: StyleAnimation | undefined = undefined;
       const { lineHeight } = dimensions || {};
       if (!isStatic) {
         if (!prevLine) {
@@ -85,7 +88,9 @@ export function LineList({
         }
       }
 
-      let getTokenStyle: (t: number, i: number) => CSSProperties;
+      let getTokenStyle:
+        | undefined
+        | ((t: number, i: number) => CSSProperties) = undefined;
       if (!areTokensStatic) {
         const fromFocus = tokens.map((_, tokeni) =>
           Array.isArray(prevFocus) ? prevFocus.includes(tokeni) : prevFocus
@@ -125,9 +130,8 @@ export function LineList({
           getTokenStyle
         }) =>
           lineElement || (
-            // TODO avoid spreading (move static style to class)
             <div
-              style={{ overflow: "hidden", ...getLineStyle(t) }}
+              style={{ overflow: "hidden", ...getLineStyle!(t) }}
               key={lineKey}
             >
               <div
@@ -138,7 +142,7 @@ export function LineList({
                   tokens[lineKey].map((token, tokeni) => (
                     <span
                       className={"token-" + types[lineKey][tokeni]}
-                      style={getTokenStyle(t, tokeni)}
+                      style={getTokenStyle!(t, tokeni)}
                       key={tokeni}
                     >
                       {token}

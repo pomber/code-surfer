@@ -1,8 +1,8 @@
-import { makeTheme } from "./utils";
+import { makeTheme, PrismTheme } from "./utils";
 
 // From: https://github.com/FormidableLabs/prism-react-renderer/blob/master/themes/
 
-const prismTheme = {
+const prismTheme: PrismTheme = {
   plain: {
     color: "#9CDCFE",
     backgroundColor: "#1E1E1E"
@@ -66,7 +66,6 @@ const prismTheme = {
     {
       // Fix tag color for HTML
       types: ["tag"],
-      languages: ["markup"],
       style: {
         color: "rgb(86, 156, 214)"
       }
@@ -80,7 +79,6 @@ const prismTheme = {
     {
       // Fix punctuation color for HTML
       types: ["punctuation"],
-      languages: ["markup"],
       style: {
         color: "#808080"
       }
