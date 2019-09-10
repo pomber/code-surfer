@@ -167,7 +167,7 @@ export function chain<T extends object>(
   start: T = {} as T
 ): Animation<T> {
   return (t: number) => {
-    let style = start;
+    let style = Object.assign({}, start);
     let prevTop = 0;
     for (let i = 0; i < steps.length; i++) {
       const [top, fn] = steps[i];
