@@ -3,10 +3,9 @@ import React, { CSSProperties } from "react";
 import {
   enterLine,
   exitLine,
-  focus,
-  unfocus,
   StyleAnimation,
-  tween
+  emptyStyle,
+  changeFocus
 } from "./animation";
 
 type Step = {
@@ -47,8 +46,9 @@ export function LineList({
       const isChangingFocus = prevFocus !== nextFocus;
       const isStatic = !isMoving && !isChangingFocus;
 
-      const areTokensStatic =
-        isStatic || (!Array.isArray(prevFocus) && !Array.isArray(nextFocus));
+      const areTokensAnimated =
+        !isStatic && (Array.isArray(prevFocus) || Array.isArray(nextFocus));
+      const areTokensStatic = !areTokensAnimated;
 
       const tokenElements =
         areTokensStatic &&
@@ -75,17 +75,25 @@ export function LineList({
         </div>
       );
 
-      let getLineStyle: StyleAnimation | undefined = undefined;
+      let getLineStyle: StyleAnimation = emptyStyle;
       const { lineHeight } = dimensions || {};
       if (!isStatic) {
         if (!prevLine) {
-          getLineStyle = enterLine(nextFocus ? 1 : offOpacity, lineHeight);
+          const fromOpacity = Array.isArray(nextFocus) ? 1 : 0;
+          const toOpacity = nextFocus ? 1 : offOpacity;
+          getLineStyle = enterLine(fromOpacity, toOpacity, lineHeight);
         } else if (!nextLine) {
-          getLineStyle = exitLine(prevFocus ? 1 : offOpacity, lineHeight);
+          const fromOpacity = prevFocus ? 1 : offOpacity;
+          const toOpacity = Array.isArray(prevFocus) ? 1 : 0;
+          getLineStyle = exitLine(fromOpacity, toOpacity, lineHeight);
         } else if (!prevFocus && nextFocus) {
-          getLineStyle = focus(offOpacity);
+          const fromOpacity = Array.isArray(nextFocus) ? 1 : offOpacity;
+          const toOpacity = 1;
+          getLineStyle = changeFocus(fromOpacity, toOpacity);
         } else if (prevFocus && !nextFocus) {
-          getLineStyle = unfocus(offOpacity);
+          const fromOpacity = 1;
+          const toOpacity = Array.isArray(prevFocus) ? 1 : offOpacity;
+          getLineStyle = changeFocus(fromOpacity, toOpacity);
         }
       }
 
@@ -93,20 +101,19 @@ export function LineList({
         | undefined
         | ((t: number, i: number) => CSSProperties) = undefined;
       if (!areTokensStatic) {
-        const fromFocus = tokens.map((_, tokeni) =>
+        const fromFocus = tokens[lineKey].map((_, tokeni) =>
           Array.isArray(prevFocus) ? prevFocus.includes(tokeni) : prevFocus
         );
-        const toFocus = tokens.map((_, tokeni) =>
+        const toFocus = tokens[lineKey].map((_, tokeni) =>
           Array.isArray(nextFocus) ? nextFocus.includes(tokeni) : nextFocus
         );
         getTokenStyle = (t, i) => {
-          return {
-            opacity: tween(
-              fromFocus[i] ? 1 : offOpacity,
-              toFocus[i] ? 1 : offOpacity,
-              t
-            )
-          };
+          const animation = changeFocus(
+            !prevLine ? 0 : fromFocus[i] ? 1 : offOpacity,
+            !nextLine ? 0 : toFocus[i] ? 1 : offOpacity
+          );
+          const result = animation(t);
+          return result;
         };
       }
 
@@ -132,7 +139,7 @@ export function LineList({
         }) =>
           lineElement || (
             <div
-              style={{ overflow: "hidden", ...getLineStyle!(t) }}
+              style={{ overflow: "hidden", ...getLineStyle(t) }}
               key={lineKey}
             >
               <div

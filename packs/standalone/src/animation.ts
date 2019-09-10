@@ -4,34 +4,42 @@ import { Tuple } from "./tuple";
 import { Step, Dimensions } from "code-surfer-types";
 
 const distx = 250;
-const outOpacity = 0;
 const outHeight = 0;
 
 // 20% line slide to left
 // 80% line change height and scroll
 // 20% line slide from right
-const [EXIT, SCROLL, ENTER] = [0.2, 0.8, 1];
+const [EXIT, SCROLL, ENTER] = [0.3, 0.7, 1];
 
 type Animation<T> = (t: number) => T;
 export type StyleAnimation = (t: number) => CSSProperties;
 
+export function emptyStyle() {
+  return {} as CSSProperties;
+}
+
 export function exitLine(
   fromOpacity: number,
+  toOpacity: number,
   lineHeight: number = 100
 ): StyleAnimation {
   return chain([
-    [EXIT, slideToLeft(fromOpacity)],
+    [EXIT, slideToLeft(fromOpacity, toOpacity)],
     [SCROLL, shrinkHeight(lineHeight)],
     [ENTER, undefined]
   ]);
 }
 
-export function enterLine(toOpacity: number, lineHeight: number = 100) {
+export function enterLine(
+  fromOpacity: number,
+  toOpacity: number,
+  lineHeight: number = 100
+) {
   return chain(
     [
       [EXIT, undefined],
       [SCROLL, growHeight(lineHeight)],
-      [ENTER, slideFromRight(toOpacity)]
+      [ENTER, slideFromRight(fromOpacity, toOpacity)]
     ],
     {
       transform: `translateX(${distx}px)`,
@@ -41,12 +49,44 @@ export function enterLine(toOpacity: number, lineHeight: number = 100) {
   );
 }
 
-export function focus(offOpacity: number) {
-  return (t: number) => ({ opacity: tween(offOpacity, 1, t) });
+export function focus(fromOpacity: number, toOpacity: number) {
+  return (t: number) => ({ opacity: tween(fromOpacity, toOpacity, t) });
 }
 
-export function unfocus(offOpacity: number) {
-  return (t: number) => ({ opacity: tween(1, offOpacity, t) });
+export function unfocus(fromOpacity: number, toOpacity: number) {
+  return (t: number) => ({ opacity: tween(fromOpacity, toOpacity, t) });
+}
+
+export function changeFocus(fromOpacity: number, toOpacity: number) {
+  if (fromOpacity < toOpacity) {
+    return chain(
+      [
+        [EXIT, undefined],
+        [SCROLL, undefined],
+        [
+          ENTER,
+          t => ({
+            opacity: tween(fromOpacity, toOpacity, t)
+          })
+        ]
+      ],
+      { opacity: fromOpacity }
+    );
+  } else {
+    return chain(
+      [
+        [
+          EXIT,
+          t => ({
+            opacity: tween(fromOpacity, toOpacity, t)
+          })
+        ],
+        [SCROLL, undefined],
+        [ENTER, undefined]
+      ],
+      { opacity: fromOpacity }
+    );
+  }
 }
 
 export function fadeOutIn(offOpacity = 0) {
@@ -119,16 +159,19 @@ export function scaleToFocus(
 
 //
 
-function slideToLeft(startOpacity: number): StyleAnimation {
+function slideToLeft(startOpacity: number, endOpacity: number): StyleAnimation {
   return (t: number) => ({
-    opacity: tween(startOpacity, outOpacity, t),
+    opacity: tween(startOpacity, endOpacity, t),
     transform: `translateX(${tween(0, -distx, t)}px)`
   });
 }
 
-function slideFromRight(endOpacity: number): StyleAnimation {
+function slideFromRight(
+  startOpacity: number,
+  endOpacity: number
+): StyleAnimation {
   return (t: number) => ({
-    opacity: tween(outOpacity, endOpacity, t),
+    opacity: tween(startOpacity, endOpacity, t),
     transform: `translateX(${tween(distx, 0, t)}px)`
   });
 }

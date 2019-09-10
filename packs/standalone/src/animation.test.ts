@@ -53,7 +53,7 @@ test("Line Exit", () => {
     .fill(0)
     .map((_, i) => i / 20);
 
-  const animation = exitLine(0.8, 100);
+  const animation = exitLine(0.8, 0, 100);
   const data = ts.map(t => {
     const { transform, height, opacity } = animation(t);
     return [t, transform, height, opacity];
@@ -69,7 +69,7 @@ test("Line Enter", () => {
     .fill(0)
     .map((_, i) => i / 20);
 
-  const animation = enterLine(0.8, 100);
+  const animation = enterLine(0, 0.8, 100);
   const data = ts.map(t => {
     const { transform, height, opacity } = animation(t);
     return [t, transform, height, opacity];

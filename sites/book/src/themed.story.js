@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
-storiesOf("Code Surfer", module).add("Themed", () => <Story />);
+storiesOf("Basic", module).add("Themed", () => <Story />);
 
 const steps = [
   {

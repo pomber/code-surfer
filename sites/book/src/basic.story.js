@@ -5,8 +5,8 @@ import { storiesOf } from "@storybook/react";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
-storiesOf("Code Surfer", module)
-  .add("Basic", () => <Story />)
+storiesOf("Basic", module)
+  .add("Steps", () => <Story />)
   .add("Parsed Steps", () => <ParsedStepsStory />);
 
 const steps = [
