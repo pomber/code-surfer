@@ -88,6 +88,17 @@ const baseSubtitle: SxStyleProp = {
 type HTMLProps<T> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>;
 
 const Styled = {
+  Placeholder: () => {
+    return (
+      <div
+        sx={{
+          height: "100%",
+          width: "100%",
+          backgroundColor: useStyles().pre.backgroundColor as string
+        }}
+      />
+    );
+  },
   Code: (props: HTMLProps<HTMLElement>) => (
     <code {...props} sx={useStyles().code} />
   ),

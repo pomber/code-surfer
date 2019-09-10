@@ -36,6 +36,7 @@ export function LineList({
         focus: step.focus[lineIndex]
       }))
     );
+
     return linesPair.map((lineTuple, lineKey) => {
       //TODO get from theme
       const offOpacity = 0.3;

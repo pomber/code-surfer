@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
-storiesOf("Code Surfer", module).add("50 Steps", () => <Story />);
+storiesOf("Perf", module).add("50 Steps", () => <Story />);
 
 const steps = [
   {

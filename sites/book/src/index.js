@@ -3,6 +3,7 @@
 import "./basic.story";
 import "./themed.story";
 import "./big.story";
+import "./parsed-steps.story";
 import "./title.story";
 
 // TODO

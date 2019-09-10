@@ -1,21 +1,33 @@
 import React from "react";
-import { InputStep } from "code-surfer-types";
+import { InputStep, Step } from "code-surfer-types";
 import { parseSteps } from "@code-surfer/step-parser";
 import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
 import { UnknownError } from "./errors";
 import { CodeSurfer } from "./code-surfer";
 import "./default-syntaxes";
 
+type ParsedSteps = {
+  steps: Step[];
+  tokens: string[][];
+  types: string[][];
+};
+
 type CodeSurferProps = {
-  steps: InputStep[];
-  progress: number; // float between [0, steps.length - 1]
+  steps?: InputStep[];
+  parsedSteps?: ParsedSteps;
+  progress: number;
   theme?: CodeSurferTheme;
 };
 
-function InnerCodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
+function InnerCodeSurfer({
+  progress,
+  steps: inputSteps,
+  parsedSteps
+}: CodeSurferProps) {
   const { steps, tokens, types } = React.useMemo(() => {
-    return parseSteps(inputSteps);
-  }, [inputSteps]);
+    if (parsedSteps) return parsedSteps;
+    return parseSteps(inputSteps!);
+  }, [inputSteps, parsedSteps]);
 
   return (
     <CodeSurfer
@@ -27,19 +39,24 @@ function InnerCodeSurfer({ progress, steps: inputSteps }: CodeSurferProps) {
   );
 }
 
-function CodeSurferWrapper({ theme, steps, ...props }: CodeSurferProps) {
-  const [wait, setWait] = React.useState(steps.length > 3);
+function CodeSurferWrapper({ theme, ...props }: CodeSurferProps) {
+  const [wait, setWait] = React.useState(true);
 
   React.useEffect(() => {
     if (!wait) return;
     setWait(false);
   }, []);
 
-  if (wait) return null;
+  if (wait)
+    return (
+      <StylesProvider theme={theme}>
+        <Styled.Placeholder />
+      </StylesProvider>
+    );
 
   return (
     <StylesProvider theme={theme}>
-      <InnerCodeSurfer steps={steps} {...props} />
+      <InnerCodeSurfer {...props} />
     </StylesProvider>
   );
 }
