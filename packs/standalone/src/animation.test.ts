@@ -1,4 +1,11 @@
-import { tween, chain, exitLine, enterLine } from "./animation";
+import {
+  tween,
+  chain,
+  exitLine,
+  enterLine,
+  stagger,
+  fadeInFocus
+} from "./animation";
 import { table, TableUserConfig } from "table";
 import easing from "./easing";
 
@@ -48,12 +55,48 @@ test("Chain", () => {
   expect(toTable(data, ["t", "x", "y"], [, 6, 6])).toMatchSnapshot();
 });
 
+test("Stagger", () => {
+  const ts = Array(21)
+    .fill(0)
+    .map((_, i) => i / 20);
+
+  const animation = (t: number) => tween(0, 100, t);
+
+  const data = ts.map(t => {
+    return [
+      t,
+      stagger(animation, 0, 3)(t),
+      stagger(animation, 1, 3)(t),
+      stagger(animation, 2, 3)(t)
+    ];
+  });
+
+  expect(toTable(data, ["t", "s0", "s1", "s2"], [, 6, 6, 6])).toMatchSnapshot();
+});
+
+test("Fade In Focus", () => {
+  const ts = Array(21)
+    .fill(0)
+    .map((_, i) => i / 20);
+
+  const data = ts.map(t => {
+    return [
+      t,
+      fadeInFocus(0, 1, 0, 3)(t).opacity,
+      fadeInFocus(0, 1, 1, 3)(t).opacity,
+      fadeInFocus(0, 1, 2, 3)(t).opacity
+    ];
+  });
+
+  expect(toTable(data, ["t", "s0", "s1", "s2"], [, 6, 6, 6])).toMatchSnapshot();
+});
+
 test("Line Exit", () => {
   const ts = Array(21)
     .fill(0)
     .map((_, i) => i / 20);
 
-  const animation = exitLine(0.8, 0, 100);
+  const animation = exitLine(0.8, 0, 0, 1, 100);
   const data = ts.map(t => {
     const { transform, height, opacity } = animation(t);
     return [t, transform, height, opacity];
@@ -69,7 +112,7 @@ test("Line Enter", () => {
     .fill(0)
     .map((_, i) => i / 20);
 
-  const animation = enterLine(0, 0.8, 100);
+  const animation = enterLine(0, 0.8, 0, 1, 100);
   const data = ts.map(t => {
     const { transform, height, opacity } = animation(t);
     return [t, transform, height, opacity];

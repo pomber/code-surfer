@@ -12,6 +12,8 @@ export function StoryWithSlider({ max, children }) {
   const p = useSpring({
     target: progress,
     current: force ? progress : undefined
+    // tension: 80,
+    // friction: 50
   });
   return (
     <div>

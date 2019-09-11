@@ -6,9 +6,6 @@ import { Step, Dimensions } from "code-surfer-types";
 const distx = 250;
 const outHeight = 0;
 
-// 20% line slide to left
-// 80% line change height and scroll
-// 20% line slide from right
 const [EXIT, SCROLL, ENTER] = [0.3, 0.7, 1];
 
 type Animation<T> = (t: number) => T;
@@ -21,10 +18,15 @@ export function emptyStyle() {
 export function exitLine(
   fromOpacity: number,
   toOpacity: number,
+  staggerIndex: number,
+  staggerLength: number,
   lineHeight: number = 100
 ): StyleAnimation {
   return chain([
-    [EXIT, slideToLeft(fromOpacity, toOpacity)],
+    [
+      EXIT,
+      stagger(slideToLeft(fromOpacity, toOpacity), staggerIndex, staggerLength)
+    ],
     [SCROLL, shrinkHeight(lineHeight)],
     [ENTER, undefined]
   ]);
@@ -33,13 +35,22 @@ export function exitLine(
 export function enterLine(
   fromOpacity: number,
   toOpacity: number,
+  staggerIndex: number,
+  staggerLength: number,
   lineHeight: number = 100
 ) {
   return chain(
     [
       [EXIT, undefined],
       [SCROLL, growHeight(lineHeight)],
-      [ENTER, slideFromRight(fromOpacity, toOpacity)]
+      [
+        ENTER,
+        stagger(
+          slideFromRight(fromOpacity, toOpacity),
+          staggerIndex,
+          staggerLength
+        )
+      ]
     ],
     {
       transform: `translateX(${distx}px)`,
@@ -57,36 +68,54 @@ export function unfocus(fromOpacity: number, toOpacity: number) {
   return (t: number) => ({ opacity: tween(fromOpacity, toOpacity, t) });
 }
 
-export function changeFocus(fromOpacity: number, toOpacity: number) {
-  if (fromOpacity < toOpacity) {
-    return chain(
+export function fadeInFocus(
+  fromOpacity: number,
+  toOpacity: number,
+  staggerIndex: number,
+  staggerLength: number
+) {
+  return chain(
+    [
+      [EXIT, undefined],
+      [SCROLL, undefined],
       [
-        [EXIT, undefined],
-        [SCROLL, undefined],
-        [
-          ENTER,
+        ENTER,
+        stagger(
           t => ({
             opacity: tween(fromOpacity, toOpacity, t)
-          })
-        ]
-      ],
-      { opacity: fromOpacity }
-    );
-  } else {
-    return chain(
+          }),
+          staggerIndex,
+          staggerLength
+        )
+      ]
+    ],
+    { opacity: fromOpacity }
+  );
+}
+
+export function fadeOutFocus(
+  fromOpacity: number,
+  toOpacity: number,
+  staggerIndex: number,
+  staggerLength: number
+) {
+  return chain(
+    [
       [
-        [
-          EXIT,
+        EXIT,
+        stagger(
           t => ({
             opacity: tween(fromOpacity, toOpacity, t)
-          })
-        ],
-        [SCROLL, undefined],
-        [ENTER, undefined]
+          }),
+          staggerIndex,
+          staggerLength
+        )
       ],
-      { opacity: fromOpacity }
-    );
-  }
+      [SCROLL, undefined],
+      [ENTER, undefined]
+    ],
+    { opacity: fromOpacity }
+  );
 }
 
 export function fadeOutIn(offOpacity = 0) {
@@ -124,7 +153,7 @@ export function scrollToFocus(
       [
         SCROLL,
         t => ({
-          scroll: tween(prevCenter, nextCenter, t, easing.easeInOutQuad)
+          scroll: tween(prevCenter, nextCenter, t, easing.easeInOutCubic)
         })
       ],
       [ENTER, undefined]
@@ -178,13 +207,13 @@ function slideFromRight(
 
 function shrinkHeight(lineHeight: number): StyleAnimation {
   return (t: number) => ({
-    height: tween(lineHeight, outHeight, t, easing.easeInOutQuad)
+    height: tween(lineHeight, outHeight, t, easing.easeInOutCubic)
   });
 }
 
 function growHeight(lineHeight: number): StyleAnimation {
   return (t: number) => ({
-    height: tween(outHeight, lineHeight, t, easing.easeInOutQuad)
+    height: tween(outHeight, lineHeight, t, easing.easeInOutCubic)
   });
 }
 
@@ -228,6 +257,22 @@ export function chain<T extends object>(
       prevTop = top;
     }
     return style;
+  };
+}
+
+export function stagger<T>(
+  animation: Animation<T>,
+  staggerIndex: number,
+  staggerLength: number,
+  interval = 0.3
+): Animation<T> {
+  if (staggerLength <= 1) return animation;
+  const steps = interval / (staggerLength - 1);
+  const start = steps * staggerIndex;
+  const end = 1 - interval + start;
+  return t => {
+    const st = Math.max(0, Math.min(1, (t - start) / (end - start)));
+    return animation(st);
   };
 }
 

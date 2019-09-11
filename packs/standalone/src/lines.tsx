@@ -5,7 +5,8 @@ import {
   exitLine,
   StyleAnimation,
   emptyStyle,
-  changeFocus
+  fadeInFocus,
+  fadeOutFocus
 } from "./animation";
 
 type Step = {
@@ -35,6 +36,30 @@ export function LineList({
         focus: step.focus[lineIndex]
       }))
     );
+
+    const fadeInLines = linesPair
+      .map((linePair, lineKey: number) => {
+        const [prev] = linePair.spread();
+        const [prevFocus, nextFocus] = linePair.select(l => l.focus).spread();
+        const isFadeIn =
+          !prev ||
+          (!prevFocus && nextFocus) ||
+          (nextFocus && Array.isArray(prevFocus));
+        return isFadeIn ? lineKey : -1;
+      })
+      .filter(key => key !== -1);
+
+    const fadeOutLines = linesPair
+      .map((linePair, lineKey: number) => {
+        const [, next] = linePair.spread();
+        const [prevFocus, nextFocus] = linePair.select(l => l.focus).spread();
+        const isFadeOut =
+          !next ||
+          (!nextFocus && prevFocus) ||
+          (prevFocus && Array.isArray(nextFocus));
+        return isFadeOut ? lineKey : -1;
+      })
+      .filter(key => key !== -1);
 
     return linesPair.map((lineTuple, lineKey) => {
       //TODO get from theme
@@ -79,27 +104,47 @@ export function LineList({
       const { lineHeight } = dimensions || {};
       if (!isStatic) {
         if (!prevLine) {
+          const fadeInIndex = fadeInLines.indexOf(lineKey);
           const fromOpacity = Array.isArray(nextFocus) ? 1 : 0;
           const toOpacity = nextFocus ? 1 : offOpacity;
-          getLineStyle = enterLine(fromOpacity, toOpacity, lineHeight);
+          getLineStyle = enterLine(
+            fromOpacity,
+            toOpacity,
+            fadeInIndex,
+            fadeInLines.length,
+            lineHeight
+          );
         } else if (!nextLine) {
+          const fadeOutIndex = fadeOutLines.indexOf(lineKey);
           const fromOpacity = prevFocus ? 1 : offOpacity;
           const toOpacity = Array.isArray(prevFocus) ? 1 : 0;
-          getLineStyle = exitLine(fromOpacity, toOpacity, lineHeight);
-        } else if (!prevFocus && nextFocus) {
-          const fromOpacity = Array.isArray(nextFocus) ? 1 : offOpacity;
-          const toOpacity = 1;
-          getLineStyle = changeFocus(fromOpacity, toOpacity);
-        } else if (prevFocus && !nextFocus) {
-          const fromOpacity = 1;
-          const toOpacity = Array.isArray(prevFocus) ? 1 : offOpacity;
-          getLineStyle = changeFocus(fromOpacity, toOpacity);
+          getLineStyle = exitLine(
+            fromOpacity,
+            toOpacity,
+            fadeOutIndex,
+            fadeOutLines.length,
+            lineHeight
+          );
+        } else if (!prevFocus && nextFocus && !Array.isArray(nextFocus)) {
+          const fadeInIndex = fadeInLines.indexOf(lineKey);
+          getLineStyle = fadeInFocus(
+            offOpacity,
+            1,
+            fadeInIndex,
+            fadeInLines.length
+          );
+        } else if (prevFocus && !nextFocus && !Array.isArray(prevFocus)) {
+          const fadeOutIndex = fadeOutLines.indexOf(lineKey);
+          getLineStyle = fadeOutFocus(
+            1,
+            offOpacity,
+            fadeOutIndex,
+            fadeOutLines.length
+          );
         }
       }
 
-      let getTokenStyle:
-        | undefined
-        | ((t: number, i: number) => CSSProperties) = undefined;
+      let getTokenStyle: (t: number, i: number) => CSSProperties = emptyStyle;
       if (!areTokensStatic) {
         const fromFocus = tokens[lineKey].map((_, tokeni) =>
           Array.isArray(prevFocus) ? prevFocus.includes(tokeni) : prevFocus
@@ -107,13 +152,26 @@ export function LineList({
         const toFocus = tokens[lineKey].map((_, tokeni) =>
           Array.isArray(nextFocus) ? nextFocus.includes(tokeni) : nextFocus
         );
+        const fadeInIndex = fadeInLines.indexOf(lineKey);
+        const fadeOutIndex = fadeOutLines.indexOf(lineKey);
         getTokenStyle = (t, i) => {
-          const animation = changeFocus(
-            !prevLine ? 0 : fromFocus[i] ? 1 : offOpacity,
-            !nextLine ? 0 : toFocus[i] ? 1 : offOpacity
-          );
-          const result = animation(t);
-          return result;
+          const fromOpacity = !prevLine ? 0 : fromFocus[i] ? 1 : offOpacity;
+          const toOpacity = !nextLine ? 0 : toFocus[i] ? 1 : offOpacity;
+          const animation =
+            fromOpacity < toOpacity
+              ? fadeInFocus(
+                  fromOpacity,
+                  toOpacity,
+                  fadeInIndex,
+                  fadeInLines.length
+                )
+              : fadeOutFocus(
+                  fromOpacity,
+                  toOpacity,
+                  fadeOutIndex,
+                  fadeOutLines.length
+                );
+          return animation(t);
         };
       }
 
