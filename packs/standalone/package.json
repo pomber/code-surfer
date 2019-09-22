@@ -2,6 +2,7 @@
   "name": "@code-surfer/standalone",
   "description": "Code Surfer React component",
   "version": "3.0.0",
+  "private": false,
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",

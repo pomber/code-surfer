@@ -1,6 +1,7 @@
 {
   "name": "@code-surfer/step-parser",
   "version": "3.0.0",
+  "private": false,
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",
