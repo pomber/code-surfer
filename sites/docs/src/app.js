@@ -5,13 +5,6 @@ import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
 
 const steps = [
   {
-    code: "doo",
-    subtitle: {
-      value: "With Code Surfer you can make Rad Code Slides, like this one"
-    },
-    lang: "py"
-  },
-  {
     code: `def partition(arr, low, high):
     i = low - 1 
     pivot = arr[high]
@@ -31,7 +24,8 @@ def quickSort(arr, low, high):
         
         quickSort(arr, low, pi - 1)
         quickSort(arr, pi + 1, high)`,
-    lang: "py"
+    lang: "py",
+    subtitle: "With Code Surfer you can make Rad Code Slides, like this one"
   },
   {
     code: `function foo() {

@@ -5,11 +5,12 @@ import useSpring from "./use-spring";
 import { getTextFromNotes } from "./notes";
 import { Global, css } from "@emotion/core";
 import { Swipeable } from "react-swipeable";
-import { useThemeUI } from 'theme-ui';
+import { useThemeUI } from "theme-ui";
 
 const Teleprompter = ({ index, children, ...rest }) => {
   const ref = React.useRef(null);
   const [target, setTarget] = React.useState(0);
+  // TODO replace with use-spring module
   const scrollTop = useSpring({
     target,
     friction: 25

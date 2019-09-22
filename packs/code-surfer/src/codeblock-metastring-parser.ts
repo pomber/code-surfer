@@ -1,8 +1,6 @@
 import { parse } from "shell-quote";
 
-type ParsedMetastring =
-  | { focus?: string }
-  | { [key: string]: { value: string } };
+type ParsedMetastring = { focus?: string } | { [key: string]: string };
 
 /**
  * The metastring is the thing that comes after the language in markdown codeblocks

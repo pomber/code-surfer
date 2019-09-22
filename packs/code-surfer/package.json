@@ -32,7 +32,8 @@
     "diff": "^4.0.1",
     "prismjs": "^1.16.0",
     "rebound": "^0.1.0",
-    "shell-quote": "^1.6.1"
+    "shell-quote": "^1.6.1",
+    "use-spring": "^0.1.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
