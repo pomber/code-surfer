@@ -1,19 +1,20 @@
 import React from "react";
-import useSpring from "./use-spring";
+import { useSpring } from "use-spring";
 
 const height = 225;
 const width = 400;
 
 export function StoryWithSlider({ max, children }) {
-  const [{ progress, force }, setProgress] = React.useState({
+  const [{ progress, teleport }, setProgress] = React.useState({
     progress: 0,
-    force: true
+    teleport: true
   });
-  const p = useSpring({
-    target: progress,
-    current: force ? progress : undefined
-    // tension: 80,
-    // friction: 50
+  const p = useSpring(progress, {
+    decimals: 3,
+    stiffness: 80,
+    damping: 48,
+    mass: 8,
+    teleport
   });
   return (
     <div>
@@ -22,7 +23,7 @@ export function StoryWithSlider({ max, children }) {
           onClick={() =>
             setProgress(({ progress }) => ({
               progress: Math.max(Math.ceil(progress) - 1, 0),
-              force: false
+              teleport: false
             }))
           }
         >
@@ -33,7 +34,7 @@ export function StoryWithSlider({ max, children }) {
           type="range"
           value={p}
           onChange={e =>
-            setProgress({ progress: +e.target.value, force: true })
+            setProgress({ progress: +e.target.value, teleport: true })
           }
           max={max}
           step={0.01}
@@ -45,7 +46,7 @@ export function StoryWithSlider({ max, children }) {
           onClick={() =>
             setProgress(({ progress }) => ({
               progress: Math.min(Math.floor(progress) + 1, max),
-              force: false
+              teleport: false
             }))
           }
         >
