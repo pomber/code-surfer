@@ -4,7 +4,7 @@ import {
   Step,
 } from "code-surfer"
 
-import { github } from "@code-surfer/themes"
+import { github, nightOwl, shadesOfPurple } from "@code-surfer/themes"
 
 import { Notes, Horizontal } from "mdx-deck"
 export const theme = github
@@ -12,6 +12,42 @@ export const theme = github
 # Foo 1
 
 <Notes>Notes for slide 1, lorem ipsum blah blah</Notes>
+
+---
+
+<CodeSurferLayout theme={nightOwl}>
+
+```js 2 title="Night Owl"
+function hello(world) {
+  return "hello " + world
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<CodeSurferLayout theme={shadesOfPurple}>
+
+```js 2 title="Shades of Purple"
+function hello(world) {
+  return "hello " + world
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<CodeSurferLayout theme={github}>
+
+```js 2 title="GitHub"
+function hello(world) {
+  return "hello " + world
+}
+```
+
+</CodeSurferLayout>
 
 ---
 

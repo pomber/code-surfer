@@ -109,7 +109,7 @@ const prismTheme: PrismTheme = {
 };
 
 const theme = makeTheme(prismTheme, {
-  title: { background: "rgba(1, 22, 39, 0.8)" }
+  title: { background: "rgba(1, 22, 39, 0.8)", color: "#d6deeb" }
 });
 
 export { theme };

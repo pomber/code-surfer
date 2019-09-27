@@ -1,12 +1,11 @@
 import React from "react";
-import { useDeck, Notes } from "mdx-deck";
+import { useDeck } from "mdx-deck";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
-// import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
 
-function CodeSurferLayout({ children }) {
+function CodeSurferLayout({ children, theme }) {
   const deck = useDeck();
   const steps = React.useMemo(getStepsFromChildren(children), [deck.index]);
 
@@ -26,7 +25,7 @@ function CodeSurferLayout({ children }) {
       }}
       className="cs-layout"
     >
-      <CodeSurfer steps={steps} progress={progress} />
+      <CodeSurfer steps={steps} progress={progress} theme={theme} />
     </div>
   );
 }

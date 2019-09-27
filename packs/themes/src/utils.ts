@@ -36,7 +36,8 @@ export function makeTheme(
       CodeSurfer: {
         tokens,
         title: {
-          backgroundColor: prismTheme.plain.backgroundColor
+          backgroundColor: prismTheme.plain.backgroundColor,
+          color: prismTheme.plain.color
         },
         subtitle: {
           color: "#d6deeb",
