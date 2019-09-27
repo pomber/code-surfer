@@ -1,4 +1,6 @@
-export default {
+import { CodeSurferTheme } from "./utils";
+
+const theme: CodeSurferTheme = {
   colors: {
     background: "rgb(246, 248, 250)",
     text: "rgb(57, 58, 52)",
@@ -28,8 +30,9 @@ export default {
       subtitle: {
         color: "#d6deeb",
         backgroundColor: "rgba(10,10,10,0.9)"
-      },
-      container: {}
+      }
     }
   }
 };
+
+export { theme };

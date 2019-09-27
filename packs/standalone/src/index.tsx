@@ -1,7 +1,7 @@
 import React from "react";
 import { InputStep, Step } from "code-surfer-types";
 import { parseSteps } from "@code-surfer/step-parser";
-import { StylesProvider, CodeSurferTheme, Styled } from "./styles";
+import { StylesProvider, CodeSurferTheme, Styled } from "@code-surfer/themes";
 import { UnknownError } from "./errors";
 import { CodeSurfer } from "./code-surfer";
 import "./default-syntaxes";
@@ -61,10 +61,4 @@ function CodeSurferWrapper({ theme, ...props }: CodeSurferProps) {
   );
 }
 
-export * from "./themes";
-export {
-  CodeSurferWrapper as CodeSurfer,
-  Styled,
-  StylesProvider,
-  UnknownError
-};
+export { CodeSurferWrapper as CodeSurfer, UnknownError };

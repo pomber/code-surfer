@@ -6,7 +6,7 @@ import { Step, Dimensions } from "code-surfer-types";
 const distx = 250;
 const outHeight = 0;
 
-const [EXIT, SCROLL, ENTER] = [0.3, 0.7, 1];
+const [EXIT, SCROLL, ENTER] = [0.25, 0.75, 1];
 
 type Animation<T> = (t: number) => T;
 export type StyleAnimation = (t: number) => CSSProperties;

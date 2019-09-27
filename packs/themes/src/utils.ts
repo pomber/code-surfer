@@ -1,5 +1,12 @@
-import { CodeSurferStyles } from "../styles";
-import { SxStyleProp } from "theme-ui";
+import { SxStyleProp, Theme } from "theme-ui";
+
+export type CodeSurferStyles = {
+  title: SxStyleProp;
+  subtitle: SxStyleProp;
+  code: SxStyleProp;
+  pre: SxStyleProp;
+  tokens: Record<string, SxStyleProp>;
+};
 
 type StyleItem = {
   types: string[];
@@ -9,6 +16,10 @@ type StyleItem = {
 export type PrismTheme = {
   plain: { color: string; backgroundColor: string };
   styles: StyleItem[];
+};
+
+export type CodeSurferTheme = Theme & {
+  styles?: { CodeSurfer?: CodeSurferStyles };
 };
 
 export function makeTheme(

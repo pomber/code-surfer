@@ -1934,6 +1934,16 @@
     "@types/styled-system__css" "*"
     csstype "^2.6.6"
 
+"@types/theme-ui@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@types/theme-ui/-/theme-ui-0.2.3.tgz#c9357daaba2ec1a207be680ab2c2315e2e00758e"
+  integrity sha512-4/y1KSggMp0bMDljCriKyxpo5JUUYm3NLcL0gdhzmSDsu7AVMrhRH/HEYt5DDoYIi5qfLoawoHgo5lpY5njqiA==
+  dependencies:
+    "@types/react" "*"
+    "@types/styled-system" "*"
+    "@types/styled-system__css" "*"
+    csstype "^2.6.6"
+
 "@types/tmp@^0.0.32":
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.0.32.tgz#0d3cb31022f8427ea58c008af32b80da126ca4e3"

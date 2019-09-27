@@ -1,6 +1,6 @@
 import React from "react";
 import { Step, Dimensions } from "code-surfer-types";
-import { Styled } from "./styles";
+import { Styled } from "@code-surfer/themes";
 import { LineList } from "./lines";
 import {
   fadeOutIn,

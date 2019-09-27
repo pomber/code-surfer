@@ -1,7 +1,8 @@
 import React from "react";
 import devImg from "./female-technologist_1f469-200d-1f4bb.png";
 import useDimensions from "./use-dimensions";
-import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
+import { CodeSurfer } from "@code-surfer/standalone";
+import { nightOwl } from "@code-surfer/themes";
 
 const steps = [
   {

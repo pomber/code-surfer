@@ -2,7 +2,8 @@
 
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { CodeSurfer, nightOwl } from "@code-surfer/standalone";
+import { CodeSurfer } from "@code-surfer/standalone";
+import { nightOwl } from "@code-surfer/themes";
 import { StoryWithSlider } from "./utils";
 
 storiesOf("Basic", module).add("Themed", () => <Story />);

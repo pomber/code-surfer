@@ -3,14 +3,14 @@ import { useDeck, Notes } from "mdx-deck";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { readStepFromElement } from "./step-reader";
 import ErrorBoundary from "./error-boundary";
-import { useNotes } from "./notes";
+// import { useNotes } from "./notes";
 import { useStepSpring } from "./use-step-spring";
 
 function CodeSurferLayout({ children }) {
   const deck = useDeck();
   const steps = React.useMemo(getStepsFromChildren(children), [deck.index]);
 
-  useNotes(steps.map(s => s.notesElement));
+  // useNotes(steps.map(s => s.notesElement));
   const progress = useStepSpring(steps.length);
 
   return (
@@ -37,14 +37,14 @@ const getStepsFromChildren = children => () => {
     .map((child, i) => {
       const step = readStepFromElement(child);
       if (!step) return;
-      const nextChild = kids[i + 1];
-      if (
-        nextChild &&
-        nextChild.props &&
-        nextChild.props.originalType === Notes
-      ) {
-        step.notesElement = nextChild;
-      }
+      // const nextChild = kids[i + 1];
+      // if (
+      //   nextChild &&
+      //   nextChild.props &&
+      //   nextChild.props.originalType === Notes
+      // ) {
+      //   step.notesElement = nextChild;
+      // }
       return step;
     })
     .filter(x => x);

@@ -1,17 +1,8 @@
 /** @jsx jsx */
-import { ThemeProvider, jsx, useThemeUI, SxStyleProp, Theme } from "theme-ui";
-import baseTheme from "./themes/base";
+import { ThemeProvider, jsx, useThemeUI, SxStyleProp } from "theme-ui";
+import { theme as baseTheme } from "./theme.base";
+import { CodeSurferTheme, CodeSurferStyles } from "./utils";
 import React from "react";
-
-type CodeSurferStyles = {
-  title: SxStyleProp;
-  subtitle: SxStyleProp;
-  code: SxStyleProp;
-  pre: SxStyleProp;
-  tokens: Record<string, SxStyleProp>;
-};
-
-type CodeSurferTheme = Theme & { styles?: { CodeSurfer?: CodeSurferStyles } };
 
 function StylesProvider({
   theme = {},
@@ -115,10 +106,4 @@ const Styled = {
   )
 };
 
-export {
-  StylesProvider,
-  Styled,
-  getClassFromTokenType,
-  CodeSurferTheme,
-  CodeSurferStyles
-};
+export { StylesProvider, Styled, getClassFromTokenType };
