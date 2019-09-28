@@ -2,6 +2,7 @@ import React from "react";
 import devImg from "./female-technologist_1f469-200d-1f4bb.png";
 import useDimensions from "./use-dimensions";
 import { CodeSurfer } from "@code-surfer/standalone";
+import "./index.css";
 import { nightOwl } from "@code-surfer/themes";
 
 const steps = [
@@ -45,6 +46,9 @@ def quickSort(arr, low, high):
 
 function App() {
   const dimensions = useDimensions();
+
+  if (!dimensions) return null;
+
   const { perspective, origin } = dimensions;
 
   return (

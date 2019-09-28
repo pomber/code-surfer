@@ -1,30 +1,17 @@
 {
   "name": "docs",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "dependencies": {
-    "@code-surfer/standalone": "*",
-    "react-scripts": "3.0.1"
+    "code-surfer": "*",
+    "gatsby": "^2.15.28",
+    "gatsby-theme-mdx-deck": "^3.0.13",
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "start": "gatsby develop",
+    "build": "gatsby build"
   }
 }

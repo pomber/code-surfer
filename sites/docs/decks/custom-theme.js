@@ -1,10 +1,8 @@
-import { CodeSurferTheme } from "./utils";
-
-const theme: CodeSurferTheme = {
+export default {
   colors: {
-    background: "rgb(246, 248, 250)",
-    text: "rgb(57, 58, 52)",
-    primary: "rgb(0, 164, 219)"
+    background: "#222",
+    text: "#ddd",
+    primary: "#a66"
   },
   styles: {
     CodeSurfer: {
@@ -35,5 +33,3 @@ const theme: CodeSurferTheme = {
     }
   }
 };
-
-export { theme };

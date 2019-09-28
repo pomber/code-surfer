@@ -9,7 +9,8 @@ body {
 
 html,
 body,
-#root {
+#___gatsby,
+#gatsby-focus-wrapper {
   height: 100%;
 }
 

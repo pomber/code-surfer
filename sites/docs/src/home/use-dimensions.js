@@ -1,6 +1,8 @@
 export default function useDimensions() {
   const [vw, vh] = useWindowDimensions();
 
+  if (!vw) return null;
+
   const p = 1000;
 
   // screen
@@ -133,5 +135,7 @@ export default function useDimensions() {
 }
 
 function useWindowDimensions() {
+  if (typeof window === "undefined") return [];
+  // TODO handle resize
   return [window.innerWidth, window.innerHeight];
 }
