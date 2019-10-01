@@ -89,9 +89,13 @@ function Subtitle({ text }) {
 }
 
 function getColumnsFromChildren(children, sizes = []) {
-  console.log("1");
   const columns = [];
   const stepElements = React.Children.toArray(children);
+
+  if (stepElements.length === 0) {
+    throw Error("No <Step/> found inside <CodeSurferColumns/>");
+  }
+
   stepElements.forEach((stepElement, stepIndex) => {
     React.Children.toArray(stepElement.props.children)
       .filter(element => element.props && element.props.originalType !== Notes)
@@ -107,6 +111,10 @@ function getColumnsFromChildren(children, sizes = []) {
         };
       });
   });
+
+  if (columns.length === 0) {
+    throw Error("<Step/> shouldn't be empty");
+  }
 
   columns.forEach((column, columnIndex) => {
     column.flex = sizes[columnIndex] || 1;

@@ -31,22 +31,13 @@ function CodeSurferLayout({ children, theme }) {
 }
 
 const getStepsFromChildren = children => () => {
-  const kids = React.Children.toArray(children);
-  return kids
-    .map((child, i) => {
-      const step = readStepFromElement(child);
-      if (!step) return;
-      // const nextChild = kids[i + 1];
-      // if (
-      //   nextChild &&
-      //   nextChild.props &&
-      //   nextChild.props.originalType === Notes
-      // ) {
-      //   step.notesElement = nextChild;
-      // }
-      return step;
-    })
-    .filter(x => x);
+  const steps = React.Children.map(children || [], child =>
+    readStepFromElement(child)
+  ).filter(x => x);
+  if (steps.length === 0) {
+    throw Error("No codeblocks found inside <CodeSurfer/>");
+  }
+  return steps;
 };
 
 export default props => (

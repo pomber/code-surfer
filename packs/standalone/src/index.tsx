@@ -29,6 +29,10 @@ function InnerCodeSurfer({
     return parseSteps(inputSteps!);
   }, [inputSteps, parsedSteps]);
 
+  if (!steps || steps.length === 0) {
+    throw new Error("No steps");
+  }
+
   return (
     <CodeSurfer
       progress={progress}

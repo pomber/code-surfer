@@ -1,7 +1,12 @@
 import { parseMetastring } from "./codeblock-metastring-parser";
 
 export function readStepFromElement(element) {
-  if (!element.props.children || !element.props.children.props) {
+  if (
+    !element ||
+    !element.props ||
+    !element.props.children ||
+    !element.props.children.props
+  ) {
     return null;
   }
   const { props } = element.props.children;
