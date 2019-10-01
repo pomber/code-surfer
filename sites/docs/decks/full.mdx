@@ -1,0 +1,197 @@
+import { CodeSurfer, CodeSurferColumns, Step } from "code-surfer";
+import { nightOwl, github, oceanicNext, vsDark } from "@code-surfer/themes";
+import MyComponent from "./full/my-component.js";
+import customTheme from "./full/custom-theme.js";
+import "prismjs/components/prism-smalltalk";
+
+export const theme = github;
+
+<CodeSurfer>
+
+```js 1:5 subtitle="First function"
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor) : [];
+}
+
+function incididunt(ipsum, ut = 1) {
+  ut = labore.et(amet(ut), 0);
+  const sit = ipsum == null ? 0 : ipsum.sit;
+
+  if (!sit || ut < 1) {
+    return [];
+  }
+
+  let dolore = 0;
+  let magna = 0;
+  const aliqua = new eiusmod(labore.ut(sit / ut));
+
+  while (dolore < sit) {
+    aliqua[magna++] = consectetur(ipsum, dolore, (dolore += ut));
+  }
+
+  return aliqua;
+}
+```
+
+```js subtitle="Second function"
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor) : [];
+}
+
+function adipiscing(...elit) {
+  if (!elit.sit) {
+    return [];
+  }
+
+  const sed = elit[0];
+  return eiusmod.tempor(sed) ? sed : [sed];
+}
+
+function incididunt(ipsum, ut = 1) {
+  ut = labore.et(amet(ut), 0);
+  const sit = ipsum == null ? 0 : ipsum.sit;
+
+  if (!sit || ut < 1) {
+    return [];
+  }
+
+  let dolore = 0;
+  let magna = 0;
+  const aliqua = new eiusmod(labore.ut(sit / ut));
+
+  while (dolore < sit) {
+    aliqua[magna++] = consectetur(ipsum, dolore, (dolore += ut));
+  }
+
+  return aliqua;
+}
+```
+
+```diff 16:33  subtitle="Third function"
+
+```
+
+```diff subtitle="All functions"
+
+```
+
+```diff 7[10:19] subtitle="Adipiscing?"
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk title="Some Smalltalk" subtitle="with a different theme"
+result := a > b
+    ifTrue:[ 'greater' ]
+    ifFalse:[ 'less or equal' ]
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={customTheme}>
+
+```jsx file="./full/my-component.js" title="Imported code from some file" subtitle="with custom theme"
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns themes={[vsDark, github, nightOwl]} sizes={[2,1,2]}>
+
+<Step>
+
+```jsx title="Class"
+class Counter extends Component {
+  render() {
+    const count = 1;
+    return (
+      <div>
+        <button>Less</button>
+        <h1>{count}</h1>
+        <button>More</button>
+      </div>
+    );
+  }
+}
+```
+
+<div>
+
+I can write
+
+- some
+- markdown
+- here
+
+Or use a component...
+
+</div>
+
+```jsx title="Function"
+function Counter() {
+  const count = 1;
+  return (
+    <div>
+      <button>Less</button>
+      <h1>{count}</h1>
+      <button>More</button>
+    </div>
+  );
+}
+```
+
+</Step>
+
+<Step>
+
+```jsx title="Class"
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 1
+    };
+  }
+  render() {
+    const { count } = this.state;
+    return (
+      <div>
+        <button onClick={_ => this.setState(c => c - 1)}>Less</button>
+        <h1>{count}</h1>
+        <button onClick={_ => this.setState(c => c + 1)}>More</button>
+      </div>
+    );
+  }
+}
+```
+
+<MyComponent />
+
+```jsx title="Function"
+function Counter() {
+  const [count, setCount] = useState(1);
+  return (
+    <div>
+      <button onClick={_ => setCount(c => c - 1)}>Less</button>
+      <h1>{count}</h1>
+      <button onClick={_ => setCount(c => c + 1)}>More</button>
+    </div>
+  );
+}
+```
+
+</Step>
+
+</CodeSurferColumns>

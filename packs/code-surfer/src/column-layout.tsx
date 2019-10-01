@@ -57,7 +57,16 @@ function Column({ column, progress, theme }) {
       {column.isCode ? (
         <CodeSurfer steps={column.steps} progress={progress} theme={theme} />
       ) : (
-        column.steps[Math.round(progress)].element
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%"
+          }}
+        >
+          {column.steps[Math.round(progress)].element}
+        </div>
       )}
     </div>
   );
@@ -80,6 +89,7 @@ function Subtitle({ text }) {
 }
 
 function getColumnsFromChildren(children, sizes = []) {
+  console.log("1");
   const columns = [];
   const stepElements = React.Children.toArray(children);
   stepElements.forEach((stepElement, stepIndex) => {
