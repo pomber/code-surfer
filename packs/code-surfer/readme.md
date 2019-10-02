@@ -1,4 +1,9 @@
-[Demo image]
+<div align="center">
+<br/>
+<a href="https://deploy-preview-58--code-surfer.netlify.com/demo/)">
+<img alt="demo" src="https://user-images.githubusercontent.com/1911623/66018869-358b9900-e4b7-11e9-8023-135c40601837.gif" width="600" />
+</a>
+</div>
 
 # Code Surfer
 
@@ -14,9 +19,9 @@ npm start
 
 ## Use
 
-MDX Deck uses MDX files to create slides.
+[MDX Deck](https://github.com/jxnblk/mdx-deck) uses MDX files to create slides.
 
-To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags.
+To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags (the empty lines before and after the codeblock are required):
 
 ````md
 import { CodeSurfer } from "code-surfer"
@@ -36,21 +41,21 @@ console.log(3);
 </CodeSurfer>
 ````
 
-Options:
+Features:
 
-- Focus
-- Steps
-- Title and Subtitle
-- Themes
-- Custom Styles
-- Languages
-- Columns
-- Import Code
-- Diffs
+- [Focus](#focus)
+- [Steps](#steps)
+- [Title and Subtitle](#title-and-subtitle)
+- [Themes](#themes)
+- [Custom Styles](#custom-styles)
+- [Languages](#languages)
+- [Columns](#columns)
+- [Import Code](#import-code)
+- [Diffs](#diffs)
 
-> Here is a live [deck using all the options]() (and its [mdx source]()) just in case you don't like to read docs.
+> Here is a live [deck using all the options](https://deploy-preview-58--code-surfer.netlify.com/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
 
-### Focus
+## Focus
 
 You can tell Code Sufer what lines and columns you want to focus by providing a _focus string_ after the language in the first line of a codeblock.
 
@@ -76,7 +81,7 @@ In the example above `1:2,3[8:10]` means: "focus from the line 1 to line 2 and t
 - `2[5:8]` focus columns 5, 6, 7 and 8 in line 2
 - `1,2[1,3:5,7],3` focus line 1, columns 1, 3, 4, 5 and 7 in line 2 and line 3
 
-### Steps
+## Steps
 
 Add more codeblocks to add steps to a Code Surfer slide.
 
@@ -108,7 +113,7 @@ console.log(5);
 
 You can change the focus and/or the code for different steps and Code Surfer will make the transition between the steps: zooming, scrolling, fading in, fading out, adding and removing lines.
 
-### Title and Subtitle
+## Title and Subtitle
 
 ````md
 <CodeSurfer>
@@ -128,11 +133,11 @@ console.log(3);
 </CodeSurfer>
 ````
 
-### Themes
+## Themes
 
-[themes screenshot]
+[![Code Surfer Themes](https://user-images.githubusercontent.com/1911623/66016573-97df9c00-e4ad-11e9-9095-225d5c9b46a8.png)](https://deploy-preview-58--code-surfer.netlify.com/themes/)
 
-There are many Code Surfer themes available in the `@code-surfer/themes` package.
+There are many Code Surfer themes available in the [`@code-surfer/themes`](https://github.com/pomber/code-surfer/blob/code-surfer-v2/packs/themes/src/index.ts) package.
 
 You can pass the theme as a prop for a slide `<CodeSurfer theme={someTheme}>`:
 
@@ -170,7 +175,7 @@ console.log(3);
 </CodeSurfer>
 ````
 
-### Custom Styles
+## Custom Styles
 
 You can write your own Code Surfer theme and change the style of the code, title or subtitle:
 
@@ -232,7 +237,7 @@ console.log(3);
 </CodeSurfer>
 ````
 
-### Languages
+## Languages
 
 Code Surfer uses [Prism](https://prismjs.com/) for parsing different languages, so it supports [all the langauges supported by Prism](https://prismjs.com/#supported-languages).
 
@@ -253,7 +258,7 @@ result := a > b
 </CodeSurfer>
 ````
 
-### Columns
+## Columns
 
 If you want to show more than one piece of code at the same time, use `<CodeSurferColumns>`:
 
@@ -330,7 +335,7 @@ console.log(2);
 </CodeSurferColumns>
 ````
 
-### Import Code
+## Import Code
 
 Instead of writing the code inside codeblocks you can import it from a file:
 
@@ -348,7 +353,7 @@ import { CodeSurfer } from "code-surfer"
 </CodeSurfer>
 ````
 
-### Diffs
+## Diffs
 
 Codeblocks can also be diffs. This is particularly useful when using empty diffs for code that doesn't change:
 

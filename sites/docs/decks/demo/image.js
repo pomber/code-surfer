@@ -3,12 +3,17 @@ import img from "./surfer.jpg";
 
 export default ({ style }) => {
   return (
-    <div>
+    <div
+      style={{
+        width: "70%",
+        paddingLeft: "15%"
+      }}
+    >
       <img
         src={img}
         alt="surfer"
         style={{
-          height: "400px",
+          width: "100%",
           borderRadius: "10px",
           transition: "0.8s",
           ...style
