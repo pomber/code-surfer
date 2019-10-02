@@ -9991,23 +9991,6 @@ mdx-deck@3.0.8:
     react "^16.8.6"
     react-dom "^16.8.6"
 
-mdx-deck@^3.0.10:
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-3.0.13.tgz#fdb492e8f844f2b6a05cfdb368833b254cf0d45a"
-  integrity sha512-yKmls4BSEeR2g/kfanPAC+A8diagsQs0BFbGm41vi8UScKkE8LnlZDCypTdkhIcr0B0wU9Ft+fcL19WQABr8hQ==
-  dependencies:
-    "@mdx-deck/themes" "^3.0.8"
-    chalk "^2.4.2"
-    execa "^2.0.3"
-    fs-extra "^8.1.0"
-    gatsby "^2.13.24"
-    gatsby-plugin-compile-es6-packages "^2.0.0"
-    gatsby-theme-mdx-deck "^3.0.13"
-    initit "^1.0.0-2"
-    meow "^5.0.0"
-    react "^16.8.6"
-    react-dom "^16.8.6"
-
 meant@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/meant/-/meant-1.0.1.tgz#66044fea2f23230ec806fb515efea29c44d2115d"
