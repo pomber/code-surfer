@@ -1,0 +1,2 @@
+# Redirect domain aliases to primary domain
+https://codesurfer.js.org/* https://codesurfer.pomb.us/:splat 301!
