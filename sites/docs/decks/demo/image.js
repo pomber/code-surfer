@@ -14,6 +14,7 @@ export default ({ style }) => {
         alt="surfer"
         style={{
           width: "100%",
+          margin: "22% 0",
           borderRadius: "10px",
           transition: "0.8s",
           ...style
@@ -26,13 +27,12 @@ export default ({ style }) => {
 
 const credit = (
   <div style={{ fontSize: "12px", textAlign: "center" }}>
-    Photo by
+    Photo by{" "}
     <a
       target="_blank"
       rel="noopener noreferrer"
       href="https://unsplash.com/@bady?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
     >
-      {" "}
       bady qb
     </a>{" "}
     on Unsplash

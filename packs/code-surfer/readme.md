@@ -3,11 +3,14 @@
 <a href="https://deploy-preview-58--code-surfer.netlify.com/demo/)">
 <img alt="demo" src="https://user-images.githubusercontent.com/1911623/66018869-358b9900-e4b7-11e9-8023-135c40601837.gif" width="600" />
 </a>
+<br/>
 </div>
 
 # Code Surfer
 
-Code Surfer adds code highlighting, code zooming, code scrolling, code focusing, code morphing, and fun to MDX Deck slides.
+Code Surfer adds code highlighting, code zooming, code scrolling, code focusing, code morphing, and fun to [MDX Deck](https://github.com/jxnblk/mdx-deck) slides.
+
+> You can help keep this project alive with your [support](https://opencollective.com/code-surfer) ❤️
 
 To create a new project run:
 
@@ -17,11 +20,11 @@ cd my-deck
 npm start
 ```
 
-## Use
+## How to use Code Surfer
 
 [MDX Deck](https://github.com/jxnblk/mdx-deck) uses MDX files to create slides.
 
-To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags (the empty lines before and after the codeblock are required):
+To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags (the **empty lines before and after the codeblock are required**):
 
 ````md
 import { CodeSurfer } from "code-surfer"
@@ -41,6 +44,8 @@ console.log(3);
 </CodeSurfer>
 ````
 
+> Here is a live [deck using all the features](https://deploy-preview-58--code-surfer.netlify.com/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
+
 Features:
 
 - [Focus](#focus)
@@ -53,11 +58,9 @@ Features:
 - [Import Code](#import-code)
 - [Diffs](#diffs)
 
-> Here is a live [deck using all the options](https://deploy-preview-58--code-surfer.netlify.com/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
-
 ## Focus
 
-You can tell Code Sufer what lines and columns you want to focus by providing a _focus string_ after the language in the first line of a codeblock.
+Add a _focus string_ after the language in the first line of a codeblock to tell Code Sufer what lines and columns you want to focus.
 
 Code Surfer will fade out all the code that isn't focused and, if necessary, zoom it out to fit it in the slide.
 
@@ -137,9 +140,9 @@ console.log(3);
 
 [![Code Surfer Themes](https://user-images.githubusercontent.com/1911623/66016573-97df9c00-e4ad-11e9-9095-225d5c9b46a8.png)](https://deploy-preview-58--code-surfer.netlify.com/themes/)
 
-There are many Code Surfer themes available in the [`@code-surfer/themes`](https://github.com/pomber/code-surfer/blob/code-surfer-v2/packs/themes/src/index.ts) package.
+There are many Code Surfer themes available on the [`@code-surfer/themes`](https://github.com/pomber/code-surfer/blob/code-surfer-v2/packs/themes/src/index.ts) package.
 
-You can pass the theme as a prop for a slide `<CodeSurfer theme={someTheme}>`:
+You can pass the theme as a prop `<CodeSurfer theme={someTheme}>`:
 
 ````md
 import { CodeSurfer } from "code-surfer"
@@ -156,7 +159,7 @@ console.log(3);
 </CodeSurfer>
 ````
 
-Or set the theme for all the deck as any other [MDX Deck theme](https://github.com/jxnblk/mdx-deck#theming):
+Or set the theme for the whole deck as any other [MDX Deck theme](https://github.com/jxnblk/mdx-deck#theming):
 
 ````md
 import { CodeSurfer } from "code-surfer"
@@ -177,7 +180,7 @@ console.log(3);
 
 ## Custom Styles
 
-You can write your own Code Surfer theme and change the style of the code, title or subtitle:
+You can write your own Code Surfer theme and change the style of the code, title and subtitle:
 
 > Themes use [Theme UI](https://theme-ui.com/) internally
 
@@ -382,3 +385,36 @@ console.log(3);
 
 </CodeSurfer>
 ````
+
+## Examples
+
+- [React Conf 2018 Hooks Demo](https://github.com/pomber/react-conf-2018-hooks-demo)
+
+## Related
+
+- [MDX Deck](https://github.com/jxnblk/mdx-deck)
+- [spectacle-code-slide](https://github.com/jamiebuilds/spectacle-code-slide)
+- [Prism](https://github.com/PrismJS/prism)
+- [create-code-surfer-deck](https://github.com/pomber/create-code-surfer-deck)
+- [Gatsby Waves](https://github.com/pomber/gatsby-waves)
+
+## Support Code Surfer
+
+You can help keep this project alive.
+
+### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/code-surfer#sponsor)]
+
+<a href="https://opencollective.com/code-surfer/sponsor/0/website" target="_blank"><img src="https://opencollective.com/code-surfer/sponsor/0/avatar.svg"></a>
+
+### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/code-surfer#backer)]
+
+<a href="https://opencollective.com/code-surfer#backers" target="_blank"><img src="https://opencollective.com/code-surfer/backers.svg?width=890"></a>
+
+### Contributors
+
+This project exists thanks to all the people who contribute.
+<img src="https://opencollective.com/code-surfer/contributors.svg?width=890&button=false" />

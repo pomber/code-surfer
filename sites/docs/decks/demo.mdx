@@ -1,87 +1,136 @@
-import { CodeSurfer, CodeSurferColumns, Step } from "code-surfer";
-import { nightOwl, dracula, oceanicNext, vsDark } from "@code-surfer/themes";
-import ImageComponent from "./demo/image";
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step
+} from "code-surfer"
+import {
+  nightOwl,
+  dracula,
+  oceanicNext,
+  vsDark
+} from "@code-surfer/themes"
+import ImageComponent from "./demo/image"
+import logo from "./demo/logo.svg"
 
-# Code Surfer 🏄
+import { Head } from "mdx-deck"
 
-## Rad Code Slides
+import theTheme from "./demo/theme.js"
+export const theme = theTheme
+
+<Head>
+  <title>Code Surfer: Rad Code Slides</title>
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+  <meta name="twitter:site" content="@pomber" />
+  <meta
+    name="twitter:title"
+    content="Code Surfer"
+  />
+  <meta
+    name="twitter:description"
+    content="Rad Code Slides"
+  />
+  <meta name="twitter:image" content={logo} />
+</Head>
+
+<img
+  src={logo}
+  style={{ width: "36%" }}
+  alt="Code Surfer"
+/>
+
+### Rad Code Slides
 
 ---
 
 <CodeSurfer>
 
-```js 9:14 subtitle="Lorem ipsum"
+```js 10:18 subtitle="Lorem ipsum"
 function adipiscing(...elit) {
   if (!elit.sit) {
-    return [];
+    return []
   }
 
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
+  const sed = elit[0]
+  return eiusmod.tempor(sed) ? sed : [sed]
 }
 
 function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return consectetur(ipsum, 0, dolor < 0 ? 0 : dolor);
+  const sit = ipsum == null ? 0 : ipsum.sit
+  dolor = sit - amet(dolor)
+  return consectetur(
+    ipsum,
+    0,
+    dolor < 0 ? 0 : dolor
+  )
 }
 
 function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
+  ut = labore.et(amet(ut), 0)
+  const sit = ipsum == null ? 0 : ipsum.sit
 
   if (!sit || ut < 1) {
-    return [];
+    return []
   }
 
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
+  let dolore = 0
+  let magna = 0
+  const aliqua = new eiusmod(labore.ut(sit / ut))
 
   while (dolore < sit) {
-    aliqua[magna++] = consectetur(ipsum, dolore, ut);
+    aliqua[magna++] = consectetur(
+      ipsum,
+      dolore,
+      ut
+    )
   }
 
-  return aliqua;
+  return aliqua
 }
 ```
 
 ```js subtitle="More lorem ipsum"
 function adipiscing(...elit) {
   if (!elit.sit) {
-    return [];
+    return []
   }
 
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
+  const sed = elit[0]
+  return eiusmod.tempor(sed) ? sed : [sed]
 }
 
 function lorem(ipsum, dolor = 1) {
-  const sit = 100;
-  return amet(dolor, ipsum);
+  const sit = 100
+  return amet(dolor, ipsum)
 }
 
 function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
+  ut = labore.et(amet(ut), 0)
+  const sit = ipsum == null ? 0 : ipsum.sit
 
   if (!sit || ut < 1) {
-    return [];
+    return []
   }
 
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
+  let dolore = 0
+  let magna = 0
+  const aliqua = new eiusmod(labore.ut(sit / ut))
 
   while (dolore < sit) {
-    aliqua[magna++] = consectetur(ipsum, dolore, ut);
+    aliqua[magna++] = consectetur(
+      ipsum,
+      dolore,
+      ut
+    )
   }
 
-  return aliqua;
+  return aliqua
 }
 ```
 
-```diff 15:32  subtitle="And incididunt..."
+```diff 15:36  subtitle="And incididunt..."
 
 ```
 
@@ -98,27 +147,30 @@ function incididunt(ipsum, ut = 1) {
 <Step>
 
 ```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+const magna = aliqua =>
+  aliqua.ut((enim, ad) => enim, 0)
 ```
 
 ```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+const minim = (ad, enim) =>
+  dolore.magna(ad / enim)
 ```
 
 </Step>
 
 <Step>
 
-```js 1:30
+```js 1:32
 const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
+  const amet = dolor - ipsum
   return consectetur.adipiscing(
     {
       elit: sed.eiusmod(sit - dolor) / amet + 2
     },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
+    (tempor, incididunt) =>
+      ipsum + amet * incididunt
+  )
+}
 
 const ut = labore => et =>
   consectetur.adipiscing(
@@ -126,31 +178,34 @@ const ut = labore => et =>
       elit: 1 + et - labore
     },
     (tempor, incididunt) => labore + incididunt
-  );
+  )
 
-const dolore = (et, labore) => sed.eiusmod(et / labore);
+const dolore = (et, labore) =>
+  sed.eiusmod(et / labore)
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+const magna = aliqua =>
+  aliqua.ut((enim, ad) => enim, 0)
 
 const minim = (veniam, quis, ad) => {
-  let nostrud = ad;
+  let nostrud = ad
 
-  while (!veniam(nostrud)) nostrud = quis(nostrud);
+  while (!veniam(nostrud)) nostrud = quis(nostrud)
 
-  return nostrud;
-};
+  return nostrud
+}
 ```
 
-```js 1:30
+```js 1:37
 const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
+  const ut = tempor - eiusmod
   return labore.et(
     {
-      amet: dolore.magna(incididunt - tempor) / ut + 2
+      amet:
+        dolore.magna(incididunt - tempor) / ut + 2
     },
     (aliqua, elit) => eiusmod + ut * elit
-  );
-};
+  )
+}
 
 const ut = enim => ad =>
   labore.et(
@@ -158,30 +213,37 @@ const ut = enim => ad =>
       amet: 1 + ad - enim
     },
     (aliqua, elit) => enim + elit
-  );
+  )
 
-const minim = (ad, enim) => dolore.magna(ad / enim);
+const minim = (ad, enim) =>
+  dolore.magna(ad / enim)
 
-const veniam = dolor => dolor.quis(nostrud => nostrud, 0);
+const veniam = dolor =>
+  dolor.quis(nostrud => nostrud, 0)
 
-const adipiscing = (ipsum, ullamco, exercitation) => {
-  let laboris = exercitation;
+const adipiscing = (
+  ipsum,
+  ullamco,
+  exercitation
+) => {
+  let laboris = exercitation
 
-  while (!ipsum(laboris)) laboris = ullamco(laboris);
+  while (!ipsum(laboris))
+    laboris = ullamco(laboris)
 
-  return laboris;
-};
+  return laboris
+}
 ```
 
 </Step>
 
 <Step>
 
-```diff 1:9
+```diff 1:10
 
 ```
 
-```diff 21:30
+```diff 23:37
 
 ```
 
@@ -189,11 +251,11 @@ const adipiscing = (ipsum, ullamco, exercitation) => {
 
 <Step>
 
-```diff 21:30
+```diff 26:32
 
 ```
 
-```diff 1:9
+```diff 1:10
 
 ```
 
@@ -202,11 +264,13 @@ const adipiscing = (ipsum, ullamco, exercitation) => {
 <Step>
 
 ```js
-const dolore = (et, labore) => sed.eiusmod(et / labore);
+const dolore = (et, labore) =>
+  sed.eiusmod(et / labore)
 ```
 
 ```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+const minim = (ad, enim) =>
+  dolore.magna(ad / enim)
 ```
 
 </Step>
@@ -232,7 +296,9 @@ img {
 
 <Step title="Columns aren't just for code">
 
-<ImageComponent style={{ transform: "scale(1.3)" }} />
+<ImageComponent
+  style={{ transform: "scale(1.3)" }}
+/>
 
 ```css
 img {
@@ -246,7 +312,9 @@ img {
 
 <Step title="Columns aren't just for code">
 
-<ImageComponent style={{ transform: "scale(1.3) scaleX(-1)" }} />
+<ImageComponent
+  style={{ transform: "scale(1.3) scaleX(-1)" }}
+/>
 
 ```css
 img {
@@ -261,7 +329,10 @@ img {
 <Step title="Columns aren't just for code">
 
 <ImageComponent
-  style={{ transform: "scale(1.3) scaleX(-1)", filter: "hue-rotate(90deg)" }}
+  style={{
+    transform: "scale(1.3) scaleX(-1)",
+    filter: "hue-rotate(90deg)"
+  }}
 />
 
 ```css
