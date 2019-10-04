@@ -1,16 +1,16 @@
 <div align="center">
 <br/>
-<a href="https://deploy-preview-58--code-surfer.netlify.com/demo/)">
-<img alt="demo" src="https://user-images.githubusercontent.com/1911623/66018869-358b9900-e4b7-11e9-8023-135c40601837.gif" width="600" />
+<a href="https://codesurfer.pomb.us/demo/">
+<img alt="demo" src="https://user-images.githubusercontent.com/1911623/66186294-49bacc00-e658-11e9-8d73-e4e6d8df476b.gif" width="600" />
 </a>
 <br/>
 </div>
 
 # Code Surfer
 
-Code Surfer adds code highlighting, code zooming, code scrolling, code focusing, code morphing, and fun to [MDX Deck](https://github.com/jxnblk/mdx-deck) slides.
+> Help to keep this project alive with your [support](https://opencollective.com/code-surfer) ❤️
 
-> You can help keep this project alive with your [support](https://opencollective.com/code-surfer) ❤️
+Code Surfer adds code highlighting, code zooming, code scrolling, code focusing, code morphing, and fun to [MDX Deck](https://github.com/jxnblk/mdx-deck) slides.
 
 To create a new project run:
 
@@ -22,7 +22,7 @@ npm start
 
 ## How to use Code Surfer
 
-[MDX Deck](https://github.com/jxnblk/mdx-deck) uses MDX files to create slides.
+> It may help to know how [MDX Deck](https://github.com/jxnblk/mdx-deck) works first
 
 To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags (the **empty lines before and after the codeblock are required**):
 
@@ -44,8 +44,6 @@ console.log(3);
 </CodeSurfer>
 ````
 
-> Here is a live [deck using all the features](https://deploy-preview-58--code-surfer.netlify.com/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
-
 Features:
 
 - [Focus](#focus)
@@ -57,6 +55,8 @@ Features:
 - [Columns](#columns)
 - [Import Code](#import-code)
 - [Diffs](#diffs)
+
+> Here is a live [deck using all the features](https://codesurfer.pomb.us/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
 
 ## Focus
 
@@ -138,7 +138,7 @@ console.log(3);
 
 ## Themes
 
-[![Code Surfer Themes](https://user-images.githubusercontent.com/1911623/66016573-97df9c00-e4ad-11e9-9095-225d5c9b46a8.png)](https://deploy-preview-58--code-surfer.netlify.com/themes/)
+[![Code Surfer Themes](https://user-images.githubusercontent.com/1911623/66016573-97df9c00-e4ad-11e9-9095-225d5c9b46a8.png)](https://codesurfer.pomb.us/themes/)
 
 There are many Code Surfer themes available on the [`@code-surfer/themes`](https://github.com/pomber/code-surfer/blob/code-surfer-v2/packs/themes/src/index.ts) package.
 
