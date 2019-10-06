@@ -10,7 +10,8 @@ storiesOf("Focus", module)
   .add("Scroll Lines", () => <ScrollStory />)
   .add("Scale Lines", () => <LongStory />)
   .add("Columns", () => <ColumnsStory />)
-  .add("Moving Lines", () => <MovingStory />);
+  .add("Moving Lines", () => <MovingStory />)
+  .add("Bigger Font", () => <BigFontStory />);
 
 function Story() {
   const code = `
@@ -198,5 +199,41 @@ console.log(9)
     <StoryWithSlider max={steps.length - 1}>
       {progress => <CodeSurfer progress={progress} steps={steps} />}
     </StoryWithSlider>
+  );
+}
+
+function BigFontStory() {
+  const code = `
+console.log(1)
+console.log(2)
+console.log(3)
+console.log(4)
+console.log(5)
+console.log(6)
+console.log(7)
+console.log(8)
+console.log(9)
+  `.trim();
+  const steps = [
+    {
+      code: `
+console.log(1)
+        `.trim(),
+      lang: "js"
+    },
+    {
+      code
+    }
+  ];
+  return (
+    <div
+      style={{
+        fontSize: "38.4px"
+      }}
+    >
+      <StoryWithSlider max={steps.length - 1}>
+        {progress => <CodeSurfer progress={progress} steps={steps} />}
+      </StoryWithSlider>
+    </div>
   );
 }

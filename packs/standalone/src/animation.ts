@@ -22,14 +22,23 @@ export function exitLine(
   staggerLength: number,
   lineHeight: number = 100
 ): StyleAnimation {
-  return chain([
+  return chain(
     [
-      EXIT,
-      stagger(slideToLeft(fromOpacity, toOpacity), staggerIndex, staggerLength)
+      [
+        EXIT,
+        stagger(
+          slideToLeft(fromOpacity, toOpacity),
+          staggerIndex,
+          staggerLength
+        )
+      ],
+      [SCROLL, shrinkHeight(lineHeight)],
+      [ENTER, undefined]
     ],
-    [SCROLL, shrinkHeight(lineHeight)],
-    [ENTER, undefined]
-  ]);
+    {
+      height: lineHeight
+    }
+  );
 }
 
 export function enterLine(

@@ -18,7 +18,14 @@ export function StoryWithSlider({ max, children }) {
   });
   return (
     <div>
-      <div style={{ width, display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          width,
+          display: "flex",
+          alignItems: "center",
+          fontSize: "1rem"
+        }}
+      >
         <button
           onClick={() =>
             setProgress(({ progress }) => ({

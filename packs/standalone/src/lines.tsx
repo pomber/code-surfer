@@ -83,11 +83,14 @@ export function LineList({
           </span>
         ));
 
+      const { lineHeight } = dimensions || {};
+
       const lineElement = isStatic && (
         <div
           style={{
             overflow: "hidden",
-            opacity: prevFocus ? undefined : offOpacity
+            opacity: prevFocus ? undefined : offOpacity,
+            height: lineHeight
           }}
           key={lineKey}
         >
@@ -101,7 +104,6 @@ export function LineList({
       );
 
       let getLineStyle: StyleAnimation = emptyStyle;
-      const { lineHeight } = dimensions || {};
       if (!isStatic) {
         if (!prevLine) {
           const fadeInIndex = fadeInLines.indexOf(lineKey);
