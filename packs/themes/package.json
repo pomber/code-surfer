@@ -1,6 +1,7 @@
 {
   "name": "@code-surfer/themes",
-  "version": "3.0.0",
+  "description": "Themes for Code Surfer",
+  "version": "3.0.0-beta.0",
   "private": false,
   "license": "MIT",
   "author": "pomber",
