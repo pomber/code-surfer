@@ -219,6 +219,10 @@ export default {
       subtitle: {
         color: "#d6deeb",
         backgroundColor: "rgba(10,10,10,0.9)"
+      },
+      unfocused: {
+        // only the opacity of unfocused code can be changed
+        opacity: 0.1
       }
     }
   }

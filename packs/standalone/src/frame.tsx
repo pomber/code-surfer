@@ -1,6 +1,6 @@
 import React from "react";
 import { Step, Dimensions } from "code-surfer-types";
-import { Styled } from "@code-surfer/themes";
+import { Styled, useUnfocusedStyle } from "@code-surfer/themes";
 import { LineList } from "./lines";
 import {
   fadeOutIn,
@@ -99,6 +99,8 @@ function CodeSurferContent({
     ref.current.scrollTop = scrollTop;
   }, [scrollTop]);
 
+  const unfocusedStyle = useUnfocusedStyle();
+
   return (
     <Styled.Pre
       className="cs-content"
@@ -130,6 +132,7 @@ function CodeSurferContent({
           tokens={tokens}
           types={types}
           dimensions={dimensions}
+          unfocusedStyle={unfocusedStyle}
         />
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </Styled.Code>

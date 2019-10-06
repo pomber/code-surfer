@@ -10,4 +10,9 @@ export { theme as ultramin } from "./theme.ultramin";
 export { theme as vsDark } from "./theme.vs-dark";
 
 export { CodeSurferTheme } from "./utils";
-export { StylesProvider, Styled, getClassFromTokenType } from "./styles";
+export {
+  StylesProvider,
+  Styled,
+  getClassFromTokenType,
+  useUnfocusedStyle
+} from "./styles";

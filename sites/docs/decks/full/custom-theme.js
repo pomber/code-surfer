@@ -2,7 +2,7 @@ export default {
   colors: {
     background: "#222",
     text: "#ddd",
-    primary: "#e99"
+    primary: "#1e9"
   },
   styles: {
     CodeSurfer: {
@@ -38,6 +38,9 @@ export default {
         color: "#222",
         backgroundColor: "#d6deeb99",
         transform: "rotate(-5deg) translateY(-100px)"
+      },
+      unfocused: {
+        opacity: 0.1
       }
     }
   }

@@ -6,6 +6,9 @@ export type CodeSurferStyles = {
   code: SxStyleProp;
   pre: SxStyleProp;
   tokens: Record<string, SxStyleProp>;
+  unfocused?: {
+    opacity: number;
+  };
 };
 
 type StyleItem = {

@@ -106,4 +106,7 @@ const Styled = {
   )
 };
 
-export { StylesProvider, Styled, getClassFromTokenType };
+function useUnfocusedStyle() {
+  return useStyles().unfocused || { opacity: 0.3 };
+}
+export { StylesProvider, Styled, getClassFromTokenType, useUnfocusedStyle };

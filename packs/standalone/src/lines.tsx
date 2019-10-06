@@ -20,6 +20,7 @@ type LineListProps = {
   tokens: string[][];
   types: string[][];
   dimensions?: { lineHeight: number };
+  unfocusedStyle: { opacity: number };
 };
 
 export function LineList({
@@ -27,7 +28,8 @@ export function LineList({
   t,
   tokens,
   types,
-  dimensions
+  dimensions,
+  unfocusedStyle
 }: LineListProps) {
   const lines = React.useMemo(() => {
     const linesPair = stepPair.selectMany((step: Step) =>
@@ -63,7 +65,7 @@ export function LineList({
 
     return linesPair.map((lineTuple, lineKey) => {
       //TODO get from theme
-      const offOpacity = 0.3;
+      const offOpacity = unfocusedStyle.opacity;
 
       const [prevLine, nextLine] = lineTuple.spread();
       const [prevFocus, nextFocus] = lineTuple.select(l => l.focus).spread();

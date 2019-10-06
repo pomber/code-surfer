@@ -31,6 +31,9 @@ const theme: CodeSurferTheme = {
       subtitle: {
         color: "#d6deeb",
         backgroundColor: "rgba(10,10,10,0.9)"
+      },
+      unfocused: {
+        opacity: 0.3
       }
     }
   }
