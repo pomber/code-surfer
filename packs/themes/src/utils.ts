@@ -25,13 +25,17 @@ export type CodeSurferTheme = Theme & {
 export function makeTheme(
   prismTheme: PrismTheme,
   override: Partial<CodeSurferStyles> = {}
-): { styles: { CodeSurfer: CodeSurferStyles } } {
+): CodeSurferTheme {
   const tokens = {} as Record<string, SxStyleProp>;
   prismTheme.styles.forEach(s => {
     tokens[s.types.join(" ")] = s.style;
   });
 
-  return {
+  const theme: CodeSurferTheme = {
+    colors: {
+      text: prismTheme.plain.color,
+      background: prismTheme.plain.backgroundColor
+    },
     styles: {
       CodeSurfer: {
         tokens,
@@ -55,4 +59,12 @@ export function makeTheme(
       }
     }
   };
+
+  const stringStyle = prismTheme.styles.find(s => s.types.includes("string"));
+  const primary = stringStyle && (stringStyle.style.color as string);
+  if (theme.colors && primary) {
+    theme.colors.primary = primary;
+  }
+
+  return theme;
 }
