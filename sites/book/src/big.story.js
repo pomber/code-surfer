@@ -5,7 +5,9 @@ import { storiesOf } from "@storybook/react";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { StoryWithSlider } from "./utils";
 
-storiesOf("Perf", module).add("50 Steps", () => <Story />);
+storiesOf("Perf", module)
+  .add("50 Steps", () => <Story />)
+  .add("50 Steps (nonblocking)", () => <NonblockingStory />);
 
 const steps = [
   {
@@ -74,6 +76,21 @@ function Story() {
   return (
     <StoryWithSlider max={steps.length - 1}>
       {progress => <CodeSurfer progress={progress} steps={steps} />}
+    </StoryWithSlider>
+  );
+}
+function NonblockingStory() {
+  const [shouldLoad, setLoad] = React.useState(false);
+
+  if (!shouldLoad) {
+    return <button onClick={() => setLoad(true)}>Load</button>;
+  }
+
+  return (
+    <StoryWithSlider max={steps.length - 1}>
+      {progress => (
+        <CodeSurfer progress={progress} steps={steps} nonblocking={true} />
+      )}
     </StoryWithSlider>
   );
 }

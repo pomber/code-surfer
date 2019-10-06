@@ -17,6 +17,7 @@ type CodeSurferProps = {
   parsedSteps?: ParsedSteps;
   progress: number;
   theme?: CodeSurferTheme;
+  nonblocking?: boolean;
 };
 
 function InnerCodeSurfer({
@@ -43,8 +44,8 @@ function InnerCodeSurfer({
   );
 }
 
-function CodeSurferWrapper({ theme, ...props }: CodeSurferProps) {
-  const [wait, setWait] = React.useState(true);
+function CodeSurferWrapper({ theme, nonblocking, ...props }: CodeSurferProps) {
+  const [wait, setWait] = React.useState(nonblocking);
 
   React.useEffect(() => {
     if (!wait) return;
