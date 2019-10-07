@@ -1,5 +1,5 @@
 import React from "react";
-import { readStepFromElement } from "./step-reader";
+import { readStepFromElement, isCode } from "./step-reader";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { StylesProvider, Styled } from "@code-surfer/themes";
 import { useDeck, Notes } from "mdx-deck";
@@ -93,27 +93,35 @@ function getColumnsFromChildren(children, sizes = []) {
   const stepElements = React.Children.toArray(children);
 
   if (stepElements.length === 0) {
-    throw Error("No <Step/> found inside <CodeSurferColumns/>");
+    throw Error("No <Step/> found inside <CodeSurferColumns/>.");
   }
-
   stepElements.forEach((stepElement, stepIndex) => {
-    React.Children.toArray(stepElement.props.children)
-      .filter(element => element.props && element.props.originalType !== Notes)
-      .forEach((codeElement, columnIndex) => {
+    React.Children.toArray(stepElement.props.children).forEach(
+      (cellElement, columnIndex) => {
+        if (!cellElement || !cellElement.props) {
+          throw Error(
+            "Invalid element inside <Step/>. Make sure to add empty lines (no spaces) before and after each element."
+          );
+        }
+
         columns[columnIndex] = columns[columnIndex] || {
           steps: [],
           isCode: true
         };
-        const step = readStepFromElement(codeElement);
-        columns[columnIndex].isCode = columns[columnIndex].isCode && step;
-        columns[columnIndex].steps[stepIndex] = step || {
-          element: codeElement
-        };
-      });
+
+        const step = isCode(cellElement)
+          ? readStepFromElement(cellElement)
+          : { element: cellElement };
+
+        columns[columnIndex].steps[stepIndex] = step;
+        columns[columnIndex].isCode =
+          columns[columnIndex].isCode && isCode(cellElement);
+      }
+    );
   });
 
   if (columns.length === 0) {
-    throw Error("<Step/> shouldn't be empty");
+    throw Error("<Step/> shouldn't be empty.");
   }
 
   columns.forEach((column, columnIndex) => {

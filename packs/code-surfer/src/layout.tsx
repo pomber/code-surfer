@@ -35,7 +35,7 @@ const getStepsFromChildren = children => () => {
     readStepFromElement(child)
   ).filter(x => x);
   if (steps.length === 0) {
-    throw Error("No codeblocks found inside <CodeSurfer/>");
+    throw Error("No codeblocks found inside <CodeSurfer/>.");
   }
   return steps;
 };
