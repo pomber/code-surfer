@@ -95,11 +95,11 @@ exports[`Line Exit 1`] = `
 ╔══════╤════════════════════╤════════╤═════════╗
 ║ t    │ transform          │ height │ opacity ║
 ╟──────┼────────────────────┼────────┼─────────╢
-║ 0    │ translateX(0px)    │        │ 0.8     ║
-║ 0.05 │ translateX(-50px)  │        │ 0.64    ║
-║ 0.1  │ translateX(-100px) │        │ 0.48    ║
-║ 0.15 │ translateX(-150px) │        │ 0.3200  ║
-║ 0.2  │ translateX(-200px) │        │ 0.1599  ║
+║ 0    │ translateX(0px)    │ 100    │ 0.8     ║
+║ 0.05 │ translateX(-50px)  │ 100    │ 0.64    ║
+║ 0.1  │ translateX(-100px) │ 100    │ 0.48    ║
+║ 0.15 │ translateX(-150px) │ 100    │ 0.3200  ║
+║ 0.2  │ translateX(-200px) │ 100    │ 0.1599  ║
 ║ 0.25 │ translateX(-250px) │ 100    │ 0       ║
 ║ 0.3  │ translateX(-250px) │ 99.6   │ 0       ║
 ║ 0.35 │ translateX(-250px) │ 96.8   │ 0       ║

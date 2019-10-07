@@ -10,3 +10,4 @@ build
 notes.md
 *.tgz
 sites/demo/public
+sites/docs/public
