@@ -2,3 +2,5 @@
   base    = ""
   command = "yarn predeploy"
   publish = "sites/dist/"
+
+/:site/*    /:site/index.html   200
