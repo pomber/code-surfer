@@ -178,6 +178,8 @@ console.log(3);
 </CodeSurfer>
 ````
 
+> Exporting the theme like this will also change the text and background colors for slides that aren't using Code Surfer. If you want to keep the colors from a different mdx deck theme you can [compose both themes](https://github.com/jxnblk/mdx-deck/blob/master/docs/theming.md#composing-themes) together: `export const themes = [codeSurferTheme, mdxDeckTheme]`
+
 ## Custom Styles
 
 You can write your own Code Surfer theme and change the style of the code, title and subtitle:
@@ -217,6 +219,10 @@ export default {
       subtitle: {
         color: "#d6deeb",
         backgroundColor: "rgba(10,10,10,0.9)"
+      },
+      unfocused: {
+        // only the opacity of unfocused code can be changed
+        opacity: 0.1
       }
     }
   }
@@ -347,10 +353,10 @@ import { CodeSurfer } from "code-surfer"
 
 <CodeSurfer>
 
-```js 5:10 file="./my-code.js"
+```js 5:10 file=./my-code.js
 ```
 
-```js file="./my-other-code.js"
+```js file=./my-other-code.js
 ```
 
 </CodeSurfer>
