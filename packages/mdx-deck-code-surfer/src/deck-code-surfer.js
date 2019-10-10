@@ -57,6 +57,7 @@ class InnerCodeSurfer extends React.Component {
       theme,
       prismTheme,
       showNumbers,
+      containerStyles,
       ...rest
     } = this.props;
 
@@ -82,15 +83,19 @@ class InnerCodeSurfer extends React.Component {
           color: prismTheme && prismTheme.plain.color,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
+          ...(containerStyles || {})
         }}
       >
         <div
           style={{
-            height: "100vh",
+            height: (containerStyles && containerStyles.height) || "100vh",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
+            ...(containerStyles && containerStyles.width
+              ? { width: containerStyles.width }
+              : {})
           }}
         >
           {currentTitle && <Title title={currentTitle} />}
