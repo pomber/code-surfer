@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "pomber",
   "license": "MIT",
   "private": true,
@@ -11,7 +11,7 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "1.6.3",
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",

@@ -1,7 +1,7 @@
 import CodeSurfer from "code-surfer";
 import React from "react";
-import { withDeck, updaters } from "mdx-deck";
-import { withTheme } from "styled-components";
+import { withContext } from "@mdx-deck/components";
+import { withTheme } from "emotion-theming";
 import memoizeOne from "memoize-one";
 
 const Notes = ({ notes }) =>
@@ -17,14 +17,10 @@ const Title = ({ title }) =>
 class InnerCodeSurfer extends React.Component {
   constructor(props) {
     super(props);
-    const { update, index } = props.deck;
+    const { register, index } = props.context;
+    if (typeof register !== "function") return;
     const parsedSteps = this.parseSteps(props.steps);
-    const maxStep = parsedSteps.length - 1;
-    update(updaters.setSteps(index, maxStep));
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return !!nextProps.deck.active;
+    register(index, { steps: parsedSteps.length - 1 });
   }
 
   parseSteps = memoizeOne((steps, notes) => {
@@ -50,6 +46,7 @@ class InnerCodeSurfer extends React.Component {
 
   render() {
     let {
+      context,
       code,
       steps,
       title,
@@ -60,7 +57,8 @@ class InnerCodeSurfer extends React.Component {
       ...rest
     } = this.props;
 
-    const stepIndex = this.props.deck.step || 0;
+    const { step } = context;
+    const stepIndex = step || 0;
     const mdxDeckTheme = theme;
     prismTheme = prismTheme || mdxDeckTheme.codeSurfer;
     showNumbers = showNumbers || (prismTheme && prismTheme.showNumbers);
@@ -88,6 +86,7 @@ class InnerCodeSurfer extends React.Component {
         <div
           style={{
             height: "100vh",
+            maxWidth: "100vw",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center"
@@ -121,7 +120,7 @@ class InnerCodeSurfer extends React.Component {
 }
 
 // Things I need to do to avoid props name collisions
-const EnhancedCodeSurfer = withDeck(withTheme(InnerCodeSurfer));
+const EnhancedCodeSurfer = withContext(withTheme(InnerCodeSurfer));
 export default ({ theme, ...rest }) => (
   <EnhancedCodeSurfer {...rest} prismTheme={theme} />
 );
