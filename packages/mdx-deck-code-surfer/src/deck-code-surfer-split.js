@@ -43,7 +43,8 @@ export default withDeck(
           stepsBottom,
           title,
           showNumbers,
-          notes
+          notes,
+          Prism
         } = this.props;
         const { step, mode } = this.props.deck;
         const currentStepTop =
@@ -67,6 +68,7 @@ export default withDeck(
                 code={codeTop}
                 step={currentStepTop}
                 showNumbers={showNumbers}
+                Prism={Prism}
               />
             </div>
             <div style={{ height: "25px" }} />
@@ -78,6 +80,7 @@ export default withDeck(
                 code={codeBottom}
                 step={currentStepBottom}
                 showNumbers={showNumbers}
+                Prism={Prism}
               />
             </div>
             <div style={{ height: "25px" }} />
