@@ -1,6 +1,6 @@
 import React from "react";
 import useWindowSize from "./use-window-size";
-import speaker from "./speaker.png";
+import Speaker from "./speaker";
 import logo from "./logo.small.svg";
 import wood from "./wood.png";
 import brightSquares from "./bright-squares.png";
@@ -245,11 +245,7 @@ function Pulpit() {
         <div style={{ fontSize: scale * 0.15 }}>CONF</div>
       </Plane>
       <Plane w={w} h={w} z={-0.2} y={-h * 0.93} pinY={"bottom"}>
-        <img
-          src={speaker}
-          alt="speaker"
-          style={{ width: "100%", height: "auto" }}
-        />
+        <Speaker />
       </Plane>
     </React.Fragment>
   );
