@@ -12615,6 +12615,11 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
+react-vista@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-vista/-/react-vista-0.1.1.tgz#ecc8a5692b0efed46579a9e6ccd0474919f4f4da"
+  integrity sha512-xohhHKz19XvNyUqC4VC+RYqekRJLOa0Gx+EsZnLObVWBYsVLohzk2y4LF8fmk/EeeQyEDN03yS/44WH3vwvuWw==
+
 react@^16.10.0, react@^16.8.3, react@^16.8.6, react@^16.9.0:
   version "16.10.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.10.0.tgz#95c41e8fc1c706e174deef54b663b5ab94c8ee32"

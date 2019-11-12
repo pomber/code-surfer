@@ -1,3 +1,3 @@
-import Home from "../../home/wip";
+import Home from "../../home/app";
 
 export default Home;
