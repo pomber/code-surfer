@@ -6,10 +6,12 @@
   "dependencies": {
     "code-surfer": "3.0.0-beta.1",
     "gatsby": "^2.15.28",
+    "gatsby-plugin-react-helmet": "^3.1.15",
     "gatsby-theme-mdx-deck": "^3.0.13",
     "prism-react-renderer": "^1.0.2",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
+    "react-helmet": "^5.2.1",
     "react-vista": "^0.1.1"
   },
   "scripts": {

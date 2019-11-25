@@ -395,6 +395,7 @@ console.log(3);
 ## Examples
 
 - [React Conf 2018 Hooks Demo](https://github.com/pomber/react-conf-2018-hooks-demo)
+- [Formidable's GraphQL Workshop](https://advanced-graphql-workshop.netlify.com/) by [Phil Pluckthun](https://twitter.com/_philpl)
 
 ## Related
 

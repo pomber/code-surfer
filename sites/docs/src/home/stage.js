@@ -13,14 +13,9 @@ import {
   Plane,
   Roof,
   Floor,
-  LWall,
-  RWall,
-  RotateX,
   RotateY,
-  RotateZ,
   Move,
   useScale,
-  FabricTexture,
   SpotLight,
   NoLights,
   PointLight
@@ -32,7 +27,7 @@ const dividerTexture = `url("${brightSquares}")`;
 export default function Stage({ children, deck }) {
   const [vw, vh] = useWindowSize();
   if (!vw) return null;
-  const h = Math.max((vw / vh < 1.12 ? vw / 1.12 : vh) * 0.75, 330);
+  const h = Math.max((vw / vh < 1.16 ? vw / 1.16 : vh) * 0.75, 330);
   const scale = h * 0.2;
   const yMiddle = 0.33;
   const yOrigin = (0.6 * h) / vh;
