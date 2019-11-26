@@ -29,7 +29,7 @@ export default function Stage({ children, deck }) {
   if (!vw) return null;
   const h = Math.max((vw / vh < 1.16 ? vw / 1.16 : vh) * 0.75, 330);
   const scale = h * 0.2;
-  const yMiddle = 0.33;
+  const yMiddle = 0.28;
   const yOrigin = (0.6 * h) / vh;
   return (
     <div
@@ -107,12 +107,16 @@ export default function Stage({ children, deck }) {
 
 function StageObjects({ sceneWidth, sceneHeight, yMiddle, deck }) {
   const startZ = -4;
+  const [lightsOn, setLightsOn] = React.useState(false);
   return (
     <React.Fragment>
+      {lightsOn && <Lights />}
       <Move dz={startZ - 4}>
-        <Screen deck={deck} />
+        <NoLights>
+          <Screen deck={deck} />
+        </NoLights>
       </Move>
-      <Move dz={startZ - 3} dy={-3}>
+      <Move dz={startZ - 3} dy={-2.7}>
         <Top />
       </Move>
       {sceneWidth > 7 && (
@@ -130,16 +134,18 @@ function StageObjects({ sceneWidth, sceneHeight, yMiddle, deck }) {
         </React.Fragment>
       )}
       <Move dy={3.2} dx={2} dz={startZ - 1}>
-        <Pulpit />
+        <Pulpit onClick={() => setLightsOn(on => !on)} />
       </Move>
       <Move dy={3.1} dz={startZ}>
         <Platform />
       </Move>
-      <Divider
-        sceneWidth={sceneWidth}
-        sceneHeight={sceneHeight}
-        yMiddle={yMiddle}
-      />
+      <NoLights>
+        <Divider
+          sceneWidth={sceneWidth}
+          sceneHeight={sceneHeight}
+          yMiddle={yMiddle}
+        />
+      </NoLights>
     </React.Fragment>
   );
 }
@@ -219,7 +225,7 @@ function Platform() {
   );
 }
 
-function Pulpit() {
+function Pulpit({ onClick }) {
   const w = 0.5;
   const h = 0.9;
   const scale = useScale();
@@ -233,9 +239,12 @@ function Pulpit() {
           color: "#FFF8",
           textAlign: "center",
           fontFamily: "monospace",
-          backgroundImage: `url("${purtyWood}")`
+          backgroundImage: `url("${purtyWood}")`,
+          userSelect: "none",
+          cursor: "pointer"
         }}
         pinY={"bottom"}
+        onClick={onClick}
       >
         <div style={{ fontSize: scale * 0.2, paddingTop: "40%" }}>RAD</div>
         <div style={{ fontSize: scale * 0.15 }}>CONF</div>
@@ -286,5 +295,23 @@ function Divider({ sceneWidth, sceneHeight, yMiddle }) {
       y={sceneHeight * (1 - yMiddle)}
       pinY="bottom"
     />
+  );
+}
+
+function Lights() {
+  const orange = "#f9bc00";
+  const blue = "#539ed8";
+  const pink = "#c30083";
+  return (
+    <React.Fragment>
+      <PointLight color="#333" z={10} />
+      <SpotLight y={-5} color={blue} z={-2} toZ={-4} toX={-0.5} x={-2} />
+      <SpotLight y={-5} color={blue} z={-2} toZ={-4} toX={2} x={-2} />
+      <SpotLight y={-5} color={orange} z={-2} toZ={-4} toX={1} x={0} />
+      <SpotLight y={-5} color={orange} z={-2} toZ={-4} toX={-1} x={-1.5} />
+      <SpotLight y={-5} color={pink} z={-2} toZ={-4} toX={2.5} x={2} />
+      <SpotLight color={pink} x={-5} y={4} z={-5} toX={-5} toY={2} toZ={-6} />
+      <SpotLight color={pink} x={5} y={4} z={-5} toX={5} toY={2} toZ={-6} />
+    </React.Fragment>
   );
 }
