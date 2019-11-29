@@ -1,12 +1,21 @@
 import React, { useRef, useEffect } from "react";
 
+function isInViewport(element) {
+  var rect = element.getBoundingClientRect();
+  return rect.bottom > 80;
+}
+
 export default function Deck() {
   const ref = useRef();
   useInterval(() => {
-    ref.current.contentWindow.dispatchEvent(
-      new KeyboardEvent("keydown", { keyCode: 39 })
-    );
+    const iframe = ref.current;
+    if (isInViewport(iframe)) {
+      iframe.contentWindow.dispatchEvent(
+        new KeyboardEvent("keydown", { keyCode: 39 })
+      );
+    }
   });
+
   return (
     <iframe
       src="demo/"
