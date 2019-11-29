@@ -2,6 +2,8 @@ import React from "react";
 import useWindowSize from "./use-window-size";
 import Speaker from "./speaker";
 import logo from "./logo.small.svg";
+import jabci from "./logos/jabci.png";
+import ocollective from "./logos/ocollective.svg";
 import wood from "./wood.png";
 import brightSquares from "./bright-squares.png";
 import purtyWood from "./purty-wood.png";
@@ -257,6 +259,7 @@ function Pulpit({ onClick }) {
 }
 
 function Banner() {
+  const scale = useScale();
   return (
     <Plane
       w={1.5}
@@ -271,12 +274,40 @@ function Banner() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          paddingTop: "10%",
+          justifyContent: "space-around",
+          height: "100%",
+          boxSizing: "border-box",
           opacity: 0.7,
           transformStyle: "preserve-3d"
         }}
       >
-        <img src={logo} alt="Code Surfer Logo" width="70%" />
+        <a
+          href="https://github.com/pomber/code-surfer"
+          style={{ width: "70%" }}
+        >
+          <img src={logo} alt="Code Surfer Logo" width="100%" />
+        </a>
+        <a href="http://jabci.com/" style={{ width: "65%" }}>
+          <img src={jabci} alt="jabci Logo" width="100%" />
+        </a>
+        <a
+          href="https://opencollective.com/code-surfer#sponsor"
+          style={{
+            width: "80%",
+            textDecoration: "none",
+            color: "rgb(15, 35, 50)",
+            fontSize: scale * 0.16,
+            fontWeight: "bolder",
+            textAlign: "center",
+            display: "flex"
+          }}
+        >
+          <img src={ocollective} alt="Open Collective Logo" width="30%" />
+          <div style={{ flex: 1 }}>
+            <div>Become a</div>
+            <div style={{ fontSize: "1.2em" }}>Sponsor</div>
+          </div>
+        </a>
       </div>
     </Plane>
   );
