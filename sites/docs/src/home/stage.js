@@ -239,7 +239,7 @@ function Pulpit({ onClick }) {
         h={h}
         style={{
           background: "#333",
-          color: "#FFF8",
+          color: "#FFFA",
           textAlign: "center",
           fontFamily: "monospace",
           backgroundImage: `url("${purtyWood}")`,
@@ -290,7 +290,7 @@ function Banner() {
           <img src={logo} alt="Code Surfer Logo" width="100%" />
         </a>
         <a
-          href="https://opencollective.com/code-surfer#sponsor"
+          href="https://github.com/jxnblk/mdx-deck/"
           style={{
             width: "80%",
             textDecoration: "none",
