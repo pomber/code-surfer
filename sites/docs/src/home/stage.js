@@ -4,6 +4,7 @@ import Speaker from "./speaker";
 import logo from "./logo.small.svg";
 import jabci from "./logos/jabci.png";
 import ocollective from "./logos/ocollective.svg";
+import mdxdeck from "./logos/mdxdeck.png";
 import wood from "./wood.png";
 import brightSquares from "./bright-squares.png";
 import purtyWood from "./purty-wood.png";
@@ -90,7 +91,7 @@ export default function Stage({ children, deck }) {
               style={{
                 zIndex: "1",
                 position: "absolute",
-                bottom: 0,
+                bottom: -1,
                 height: "90%"
               }}
             >
@@ -274,7 +275,8 @@ function Banner() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
+          padding: `${scale * 0.25}px 0`,
           height: "100%",
           boxSizing: "border-box",
           opacity: 0.7,
@@ -286,6 +288,24 @@ function Banner() {
           style={{ width: "70%" }}
         >
           <img src={logo} alt="Code Surfer Logo" width="100%" />
+        </a>
+        <a
+          href="https://opencollective.com/code-surfer#sponsor"
+          style={{
+            width: "80%",
+            textDecoration: "none",
+            color: "black",
+            fontSize: scale * 0.19,
+            fontWeight: "bolder",
+            textAlign: "center",
+            display: "flex"
+          }}
+        >
+          <img src={mdxdeck} alt="MDX Deck Logo" width="35%" />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: "1.1em" }}>MDX</div>
+            <div>Deck</div>
+          </div>
         </a>
         <a href="http://jabci.com/" style={{ width: "65%" }}>
           <img src={jabci} alt="jabci Logo" width="100%" />
