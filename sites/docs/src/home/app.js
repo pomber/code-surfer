@@ -13,6 +13,7 @@ function App() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Code Surfer - Rad Code Slides</title>
+        <meta name="og:title" content="Code Surfer - Rad Code Slides" />
         <meta
           name="description"
           content="Code Surfer adds code highlighting, code zooming, code scrolling, code focusing, code morphing, and fun to MDX Deck slides."
