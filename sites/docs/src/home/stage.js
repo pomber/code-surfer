@@ -301,7 +301,12 @@ function Banner() {
             display: "flex"
           }}
         >
-          <img src={mdxdeck} alt="MDX Deck Logo" width="35%" />
+          <img
+            src={mdxdeck}
+            alt="MDX Deck Logo"
+            width="35%"
+            height={scale * 0.5}
+          />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: "1.1em" }}>MDX</div>
             <div>Deck</div>
