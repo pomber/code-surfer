@@ -1,7 +1,7 @@
 {
   "name": "@code-surfer/standalone",
   "description": "Code Surfer React component",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0",
   "private": false,
   "license": "MIT",
   "author": "pomber",
@@ -26,8 +26,8 @@
     "react": "^16.8.0"
   },
   "dependencies": {
-    "@code-surfer/step-parser": "3.0.0-beta.2",
-    "@code-surfer/themes": "3.0.0-beta.2",
+    "@code-surfer/step-parser": "3.0.0",
+    "@code-surfer/themes": "3.0.0",
     "@types/table": "^4.0.7",
     "@types/theme-ui": "^0.2.2",
     "array.prototype.flat": "^1.2.1",

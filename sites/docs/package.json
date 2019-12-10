@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "code-surfer": "3.0.0-beta.2",
+    "code-surfer": "3.0.0",
     "gatsby": "^2.15.28",
     "gatsby-plugin-react-helmet": "^3.1.15",
     "gatsby-theme-mdx-deck": "^3.0.13",

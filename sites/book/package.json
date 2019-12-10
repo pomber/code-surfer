@@ -8,7 +8,7 @@
     "build": "build-storybook -c ./src -o ./dist"
   },
   "dependencies": {
-    "@code-surfer/standalone": "3.0.0-beta.2",
+    "@code-surfer/standalone": "3.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "theme-ui": "^0.2.41",

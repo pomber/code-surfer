@@ -46,7 +46,7 @@ npm start`}</code>
       <p style={{ width: "90%", maxWidth: "400px" }}>
         This site is a work in progress, here are the provisional{" "}
         <a href="https://github.com/pomber/code-surfer/blob/code-surfer-v2/readme.md">
-          docs for Code Surfer v3.0.0-beta.2
+          docs for Code Surfer v3.0.0
         </a>
       </p>
     </div>
