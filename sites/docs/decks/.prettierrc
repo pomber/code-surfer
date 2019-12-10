@@ -1,0 +1,11 @@
+{
+  "overrides": [
+    {
+      "files": "demo.mdx",
+      "options": {
+        "printWidth": 50,
+        "semi": false
+      }
+    }
+  ]
+}

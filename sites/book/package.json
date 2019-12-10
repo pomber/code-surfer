@@ -1,0 +1,23 @@
+{
+  "name": "book",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "start-storybook -c ./src",
+    "build": "build-storybook -c ./src -o ./dist"
+  },
+  "dependencies": {
+    "@code-surfer/standalone": "3.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "theme-ui": "^0.2.41",
+    "use-spring": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@storybook/react": "^5.1.9",
+    "babel-loader": "^8.0.6",
+    "raw-loader": "^3.1.0"
+  }
+}

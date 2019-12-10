@@ -1,0 +1,67 @@
+{
+  "name": "code-surfer",
+  "description": "Rad code slides",
+  "version": "3.0.0",
+  "license": "MIT",
+  "author": "pomber",
+  "repository": "pomber/code-surfer",
+  "main": "dist/index.js",
+  "module": "dist/code-surfer.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "cross-env CI=1 tsdx test --env=jsdom",
+    "test:watch": "tsdx test --env=jsdom"
+  },
+  "peerDependencies": {
+    "mdx-deck": "3.0.10",
+    "react": "^16.8.0"
+  },
+  "dependencies": {
+    "@code-surfer/standalone": "3.0.0",
+    "@types/theme-ui": "^0.2.0",
+    "array.prototype.flat": "^1.2.1",
+    "diff": "^4.0.1",
+    "prismjs": "^1.16.0",
+    "rebound": "^0.1.0",
+    "shell-quote": "^1.6.1",
+    "use-spring": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/prismjs": "^1.16.0",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "cross-env": "^5.2.0",
+    "husky": "^2.7.0",
+    "mdx-deck": "3.0.10",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "tsdx": "^0.7.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.2"
+  },
+  "keywords": [
+    "mdx",
+    "mdx-deck",
+    "slides",
+    "react",
+    "code",
+    "highlight",
+    "token",
+    "prism",
+    "animation",
+    "transition",
+    "reactjs"
+  ]
+}

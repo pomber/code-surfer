@@ -1,0 +1,40 @@
+{
+  "name": "@code-surfer/themes",
+  "description": "Themes for Code Surfer",
+  "version": "3.0.0",
+  "private": false,
+  "license": "MIT",
+  "author": "pomber",
+  "repository": "pomber/code-surfer",
+  "main": "dist/index.js",
+  "module": "dist/themes.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "cross-env CI=1 tsdx test --env=jsdom",
+    "test:watch": "tsdx test --env=jsdom -u --watch"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "theme-ui": "^0.2.41"
+  },
+  "devDependencies": {
+    "@types/theme-ui": "^0.2.3",
+    "tsdx": "^0.7.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.2"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/**/?(*.)(spec|test).(ts|js)?(x)"
+    ]
+  }
+}

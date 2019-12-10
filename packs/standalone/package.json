@@ -1,0 +1,78 @@
+{
+  "name": "@code-surfer/standalone",
+  "description": "Code Surfer React component",
+  "version": "3.0.0",
+  "private": false,
+  "license": "MIT",
+  "author": "pomber",
+  "repository": "pomber/code-surfer",
+  "main": "dist/index.js",
+  "module": "dist/standalone.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "cross-env CI=1 tsdx test --env=jsdom",
+    "test:watch": "tsdx test --env=jsdom -u --watch"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
+  "dependencies": {
+    "@code-surfer/step-parser": "3.0.0",
+    "@code-surfer/themes": "3.0.0",
+    "@types/table": "^4.0.7",
+    "@types/theme-ui": "^0.2.2",
+    "array.prototype.flat": "^1.2.1",
+    "diff": "^4.0.1",
+    "prismjs": "^1.16.0",
+    "rebound": "^0.1.0",
+    "shell-quote": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/diff": "^4.0.2",
+    "@types/jest": "^24.0.15",
+    "@types/prismjs": "^1.16.0",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "cross-env": "^5.2.0",
+    "execa": "^2.0.1",
+    "fs-extra": "^8.1.0",
+    "husky": "^2.7.0",
+    "mdx-deck": "3.0.8",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "table": "^5.4.6",
+    "tsdx": "^0.7.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.2"
+  },
+  "keywords": [
+    "mdx",
+    "mdx-deck",
+    "slides",
+    "react",
+    "code",
+    "highlight",
+    "token",
+    "prism",
+    "animation",
+    "transition",
+    "reactjs"
+  ],
+  "jest": {
+    "testMatch": [
+      "<rootDir>/**/?(*.)(spec|test).(ts|js)?(x)"
+    ]
+  }
+}

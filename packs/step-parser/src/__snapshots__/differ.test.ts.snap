@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`differ works ? 1`] = `
+Object {
+  "lineIds": Array [
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+  ],
+  "steps": Array [
+    Array [
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+    ],
+    Array [],
+  ],
+}
+`;
+
+exports[`differ works 1`] = `
+Object {
+  "lineIds": Array [
+    0.25,
+    0.3125,
+    0.375,
+    0.5,
+    0.75,
+  ],
+  "steps": Array [
+    Array [
+      0.25,
+      0.5,
+      0.75,
+    ],
+    Array [
+      0.25,
+      0.375,
+    ],
+    Array [
+      0.25,
+      0.3125,
+      0.375,
+    ],
+    Array [
+      0.25,
+      0.3125,
+      0.375,
+    ],
+  ],
+}
+`;
+
+exports[`differ works when last line changes 1`] = `
+Object {
+  "lineIds": Array [
+    0.5,
+    0.75,
+  ],
+  "steps": Array [
+    Array [
+      0.5,
+    ],
+    Array [
+      0.5,
+      0.75,
+    ],
+  ],
+}
+`;
+
+exports[`differ works with empty old code 1`] = `
+Object {
+  "lineIds": Array [
+    0.3333333333333333,
+    0.6666666666666666,
+  ],
+  "steps": Array [
+    Array [],
+    Array [
+      0.3333333333333333,
+      0.6666666666666666,
+    ],
+    Array [],
+  ],
+}
+`;
