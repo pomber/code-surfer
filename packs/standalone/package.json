@@ -70,6 +70,10 @@
     "transition",
     "reactjs"
   ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/code-surfer"
+  },
   "jest": {
     "testMatch": [
       "<rootDir>/**/?(*.)(spec|test).(ts|js)?(x)"

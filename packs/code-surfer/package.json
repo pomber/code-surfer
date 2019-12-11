@@ -63,5 +63,9 @@
     "animation",
     "transition",
     "reactjs"
-  ]
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/code-surfer"
+  }
 }
