@@ -89,6 +89,8 @@ In the example above `1:2,3[8:10]` means: "focus from the line 1 to line 2 and t
 - `2[5:8]` focus columns 5, 6, 7 and 8 in line 2
 - `1,2[1,3:5,7],3` focus line 1, columns 1, 3, 4, 5 and 7 in line 2 and line 3
 
+_Note: In previous versions of CodeSurfer we used tokens instead of columns._
+
 ## Steps
 
 Add more codeblocks to add steps to a Code Surfer slide.
