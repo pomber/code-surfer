@@ -65,7 +65,7 @@ Features:
 
 ## Focus
 
-Add a _focus string_ after the language in the first line of a codeblock to tell Code Sufer what lines and columns you want to focus.
+Add a _focus string_ after the language in the first line of a codeblock to tell Code Surfer what lines and columns you want to focus.
 
 Code Surfer will fade out all the code that isn't focused and, if necessary, zoom it out to fit it in the slide.
 
@@ -255,7 +255,7 @@ console.log(3);
 
 ## Languages
 
-Code Surfer uses [Prism](https://prismjs.com/) for parsing different languages, so it supports [all the langauges supported by Prism](https://prismjs.com/#supported-languages).
+Code Surfer uses [Prism](https://prismjs.com/) for parsing different languages, so it supports [all the languages supported by Prism](https://prismjs.com/#supported-languages).
 
 Most popular languages are supported out of the box, for the rest you need to import them:
 
