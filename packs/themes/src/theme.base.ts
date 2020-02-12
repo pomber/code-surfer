@@ -22,6 +22,9 @@ const theme: CodeSurferTheme = {
         },
         "builtin changed keyword punctuation operator tag deleted string attr-value char number inserted": {
           color: "primary"
+        },
+        "line-number": {
+          opacity: 0.65
         }
       },
       title: {
