@@ -15,14 +15,21 @@ export function parseMetastring(metastring: string): ParsedMetastring {
   }
 
   const argv = parse(metastring);
-
   const result: ParsedMetastring = {};
   argv.forEach(arg => {
     if (!arg.includes("=")) {
-      result.focus = arg;
+      if (arg === "showNumbers") {
+        result["showNumbers"] = true;
+      } else {
+        result.focus = arg;
+      }
     } else {
       const [key, value] = arg.split(/=(.*)/);
-      result[key] = value;
+      if (value === "true") {
+        result[key] = true;
+      } else {
+        result[key] = value;
+      }
     }
   });
   return result;

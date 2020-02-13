@@ -9,6 +9,7 @@ type CodeSurferProps = {
   tokens: string[][];
   types: string[][];
   maxLineCount: number;
+  showNumbers?: boolean;
 };
 
 export function CodeSurfer({
@@ -16,7 +17,8 @@ export function CodeSurfer({
   steps,
   tokens,
   types,
-  maxLineCount
+  maxLineCount,
+  showNumbers = false
 }: CodeSurferProps) {
   const fakeSteps = React.useMemo(() => getFakeSteps(steps, tokens), [steps]);
 
@@ -43,6 +45,7 @@ export function CodeSurfer({
               tokens={tokens}
               types={types}
               maxLineCount={maxLineCount}
+              showNumbers={showNumbers}
             />
           </div>
         ))}
@@ -61,6 +64,7 @@ export function CodeSurfer({
           tokens={tokens}
           types={types}
           maxLineCount={maxLineCount}
+          showNumbers={showNumbers}
         />
       </div>
     );

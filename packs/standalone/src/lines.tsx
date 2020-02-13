@@ -33,7 +33,7 @@ export function LineList({
   dimensions,
   unfocusedStyle,
   maxLineCount,
-  showNumbers = true
+  showNumbers
 }: LineListProps) {
   const lines = React.useMemo(() => {
     const linesPair = stepPair.selectMany((step: Step) =>

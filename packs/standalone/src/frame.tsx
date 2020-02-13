@@ -18,6 +18,7 @@ type ContainerProps = {
   tokens: string[][];
   types: string[][];
   maxLineCount: number;
+  showNumbers: boolean;
 };
 
 function CodeSurferContainer({
@@ -26,7 +27,8 @@ function CodeSurferContainer({
   steps,
   tokens,
   types,
-  maxLineCount
+  maxLineCount,
+  showNumbers
 }: ContainerProps) {
   const prev = steps[Math.floor(progress)];
   const next = steps[Math.floor(progress) + 1];
@@ -59,6 +61,7 @@ function CodeSurferContainer({
         tokens={tokens}
         types={types}
         maxLineCount={maxLineCount}
+        showNumbers={showNumbers}
       />
       <Title textPair={titlePair} t={t} />
       <Subtitle textPair={subtitlePair} t={t} />
@@ -72,7 +75,8 @@ function CodeSurferContent({
   t,
   tokens,
   types,
-  maxLineCount
+  maxLineCount,
+  showNumbers
 }: {
   dimensions?: Dimensions;
   stepPair: Tuple<Step>;
@@ -80,6 +84,7 @@ function CodeSurferContent({
   tokens: string[][];
   types: string[][];
   maxLineCount: number;
+  showNumbers: boolean;
 }) {
   const ref = React.useRef<HTMLPreElement | null>(null);
 
@@ -139,6 +144,7 @@ function CodeSurferContent({
           dimensions={dimensions}
           unfocusedStyle={unfocusedStyle}
           maxLineCount={maxLineCount}
+          showNumbers={showNumbers}
         />
         <div style={{ height: dimensions && dimensions.containerHeight / 2 }} />
       </Styled.Code>

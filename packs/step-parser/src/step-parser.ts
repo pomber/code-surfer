@@ -11,6 +11,7 @@ export function parseSteps(
     lang?: string;
     title?: string;
     subtitle?: string;
+    showNumbers?: boolean;
   }[]
 ) {
   if (inputSteps.length === 0) {
@@ -21,7 +22,7 @@ export function parseSteps(
     };
   }
 
-  const lang = inputSteps[0].lang;
+  const { lang, showNumbers = false } = inputSteps[0];
 
   if (!lang) {
     throw new Error("Missing code language");
@@ -102,7 +103,8 @@ export function parseSteps(
     tokens: allTokens,
     types: allTypes,
     steps: allSteps,
-    maxLineCount
+    maxLineCount,
+    showNumbers
   };
 }
 

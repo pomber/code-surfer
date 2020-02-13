@@ -23,6 +23,11 @@ export default {
         },
         function: {
           color: "text"
+        },
+        "line-number": {
+          color: "yellow",
+          transform: "rotate(-20deg)",
+          display: "inline-block"
         }
       },
       title: {
