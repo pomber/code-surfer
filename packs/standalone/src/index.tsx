@@ -10,6 +10,8 @@ type ParsedSteps = {
   steps: Step[];
   tokens: string[][];
   types: string[][];
+  maxLineCount: number;
+  showNumbers?: boolean;
 };
 
 type CodeSurferProps = {
@@ -25,7 +27,13 @@ function InnerCodeSurfer({
   steps: inputSteps,
   parsedSteps
 }: CodeSurferProps) {
-  const { steps, tokens, types } = React.useMemo(() => {
+  const {
+    steps,
+    tokens,
+    types,
+    maxLineCount,
+    showNumbers
+  } = React.useMemo(() => {
     if (parsedSteps) return parsedSteps;
     return parseSteps(inputSteps!);
   }, [inputSteps, parsedSteps]);
@@ -40,6 +48,8 @@ function InnerCodeSurfer({
       steps={steps}
       tokens={tokens}
       types={types}
+      maxLineCount={maxLineCount!}
+      showNumbers={showNumbers}
     />
   );
 }

@@ -59,6 +59,7 @@ Features:
 - [Languages](#languages)
 - [Columns](#columns)
 - [Import Code](#import-code)
+- [Line Numbers](#line-numbers)
 - [Diffs](#diffs)
 
 > Here is a live [deck using all the features](https://codesurfer.pomb.us/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
@@ -217,6 +218,9 @@ export default {
         },
         "builtin changed keyword punctuation operator tag deleted string attr-value char number inserted": {
           color: "primary"
+        },
+        "line-number": {
+          opacity: 0.8
         }
       },
       title: {
@@ -364,6 +368,30 @@ import { CodeSurfer } from "code-surfer"
 ```
 
 ```js file=./my-other-code.js
+```
+
+</CodeSurfer>
+````
+
+## Line Numbers
+
+To show line numbers add the `showNumbers` flag to the first step:
+
+````md
+import { CodeSurfer } from "code-surfer"
+
+<CodeSurfer>
+
+```js showNumbers
+console.log(1);
+console.log(2);
+console.log(3);
+```
+
+```js
+console.log(1);
+console.log(2);
+console.log(4);
 ```
 
 </CodeSurfer>

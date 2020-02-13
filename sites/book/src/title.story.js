@@ -50,7 +50,7 @@ console.log(1)
 console.log(1)
 console.log(1)
 console.log(1)`;
-  const code = fiveLines + fiveLines + fiveLines;
+  const code = (fiveLines + fiveLines + fiveLines).trim();
   const steps = [
     { code, title: "title 1", subtitle: "Subtitle 1", lang: "js" },
     { code, subtitle: "Subtitle 2" },

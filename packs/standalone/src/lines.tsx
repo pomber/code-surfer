@@ -21,6 +21,8 @@ type LineListProps = {
   types: string[][];
   dimensions?: { lineHeight: number };
   unfocusedStyle: { opacity: number };
+  maxLineCount: number;
+  showNumbers?: boolean;
 };
 
 export function LineList({
@@ -29,12 +31,15 @@ export function LineList({
   tokens,
   types,
   dimensions,
-  unfocusedStyle
+  unfocusedStyle,
+  maxLineCount,
+  showNumbers
 }: LineListProps) {
   const lines = React.useMemo(() => {
     const linesPair = stepPair.selectMany((step: Step) =>
       step.lines.map((lineKey, lineIndex) => ({
         key: lineKey,
+        lineNumber: lineIndex + 1,
         focus: step.focus[lineIndex]
       }))
     );
@@ -64,7 +69,6 @@ export function LineList({
       .filter(key => key !== -1);
 
     return linesPair.map((lineTuple, lineKey) => {
-      //TODO get from theme
       const offOpacity = unfocusedStyle.opacity;
 
       const [prevLine, nextLine] = lineTuple.spread();
@@ -87,6 +91,15 @@ export function LineList({
 
       const { lineHeight } = dimensions || {};
 
+      const anyLine = lineTuple.any();
+      const pad = maxLineCount.toString().replace(/./g, " ");
+      const lineNumber = anyLine
+        ? (pad + anyLine.lineNumber).slice(-pad.length)
+        : "";
+      const lineNumberElement = showNumbers && (
+        <span className={"token-line-number"}>{lineNumber + " "}</span>
+      );
+
       const lineElement = isStatic && (
         <div
           style={{
@@ -96,6 +109,7 @@ export function LineList({
           }}
           key={lineKey}
         >
+          {lineNumberElement}
           <div
             style={{ display: "inline-block" }}
             className={`cs-line cs-line-${lineKey}`}
@@ -184,7 +198,8 @@ export function LineList({
         lineElement,
         tokenElements,
         getLineStyle,
-        getTokenStyle
+        getTokenStyle,
+        lineNumberElement
       };
     });
   }, [stepPair]);
@@ -197,7 +212,8 @@ export function LineList({
           lineKey,
           tokenElements,
           getLineStyle,
-          getTokenStyle
+          getTokenStyle,
+          lineNumberElement
         }) =>
           lineElement || (
             <div
@@ -208,6 +224,7 @@ export function LineList({
                 style={{ display: "inline-block" }}
                 className={`cs-line cs-line-${lineKey}`}
               >
+                {lineNumberElement}
                 {tokenElements ||
                   tokens[lineKey].map((token, tokeni) => (
                     <span

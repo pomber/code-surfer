@@ -2,6 +2,8 @@
 
 exports[`Parsing steps adds default focus 1`] = `
 Object {
+  "maxLineCount": 4,
+  "showNumbers": false,
   "steps": Array [
     Object {
       "focus": Object {
@@ -119,6 +121,8 @@ Object {
 
 exports[`Parsing steps works 1`] = `
 Object {
+  "maxLineCount": 3,
+  "showNumbers": false,
   "steps": Array [
     Object {
       "focus": Object {
@@ -229,6 +233,8 @@ Object {
 
 exports[`Parsing steps works with empty diff 1`] = `
 Object {
+  "maxLineCount": 3,
+  "showNumbers": false,
   "steps": Array [
     Object {
       "focus": Object {

@@ -7,22 +7,8 @@ import { StoryWithSlider } from "./utils";
 
 storiesOf("Basic", module)
   .add("Steps", () => <Story />)
-  .add("Parsed Steps", () => <ParsedStepsStory />);
-
-const steps = [
-  {
-    code: `var x1 = 1
-debugger`,
-    focus: "1",
-    lang: "js"
-  },
-  {
-    code: `var x0 = 3
-var x1 = 1
-var x0 = 3`,
-    lang: "js"
-  }
-];
+  .add("Parsed Steps", () => <ParsedStepsStory />)
+  .add("Line Numbers", () => <StoryWithNumbers />);
 
 function Story() {
   return (
@@ -39,7 +25,28 @@ function ParsedStepsStory() {
     </StoryWithSlider>
   );
 }
+function StoryWithNumbers() {
+  return (
+    <StoryWithSlider max={stepsWithNumbers.length - 1}>
+      {progress => <CodeSurfer progress={progress} steps={stepsWithNumbers} />}
+    </StoryWithSlider>
+  );
+}
 
+const steps = [
+  {
+    code: `var x1 = 1
+debugger`,
+    focus: "1",
+    lang: "js"
+  },
+  {
+    code: `var x0 = 3
+var x1 = 1
+var x0 = 3`,
+    lang: "js"
+  }
+];
 const parsedSteps = {
   steps: [
     {
@@ -68,5 +75,22 @@ const parsedSteps = {
     ["keyword", "plain", "operator", "plain", "number"],
     ["keyword", "plain", "operator", "plain", "number"],
     ["keyword"]
-  ]
+  ],
+  maxLineCount: 4
 };
+
+const stepsWithNumbers = [
+  {
+    code: `var x1 = 1
+debugger`,
+    focus: "1",
+    lang: "js",
+    showNumbers: true
+  },
+  {
+    code: `var x0 = 3
+var x1 = 1
+var x0 = 3`,
+    lang: "js"
+  }
+];

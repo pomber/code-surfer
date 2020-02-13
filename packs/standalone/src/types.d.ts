@@ -11,6 +11,7 @@ declare module "code-surfer-types" {
     title?: string;
     subtitle?: string;
     lang?: string;
+    showNumbers?: boolean;
   }
 
   type LineKey = Flavor<number, "LineKey">;

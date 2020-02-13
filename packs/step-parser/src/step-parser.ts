@@ -11,6 +11,7 @@ export function parseSteps(
     lang?: string;
     title?: string;
     subtitle?: string;
+    showNumbers?: boolean;
   }[]
 ) {
   if (inputSteps.length === 0) {
@@ -21,7 +22,7 @@ export function parseSteps(
     };
   }
 
-  const lang = inputSteps[0].lang;
+  const { lang, showNumbers = false } = inputSteps[0];
 
   if (!lang) {
     throw new Error("Missing code language");
@@ -92,10 +93,18 @@ export function parseSteps(
     }
   });
 
+  // get the line count from the step with more lines
+  const maxLineCount = allSteps.reduce(
+    (max, step) => (step.lines.length > max ? step.lines.length : max),
+    0
+  );
+
   return {
     tokens: allTokens,
     types: allTypes,
-    steps: allSteps
+    steps: allSteps,
+    maxLineCount,
+    showNumbers
   };
 }
 

@@ -8,13 +8,17 @@ type CodeSurferProps = {
   progress: number; // float between [0, steps.lenght - 1]
   tokens: string[][];
   types: string[][];
+  maxLineCount: number;
+  showNumbers?: boolean;
 };
 
 export function CodeSurfer({
   progress,
   steps,
   tokens,
-  types
+  types,
+  maxLineCount,
+  showNumbers = false
 }: CodeSurferProps) {
   const fakeSteps = React.useMemo(() => getFakeSteps(steps, tokens), [steps]);
 
@@ -40,6 +44,8 @@ export function CodeSurfer({
               progress={i}
               tokens={tokens}
               types={types}
+              maxLineCount={maxLineCount}
+              showNumbers={showNumbers}
             />
           </div>
         ))}
@@ -57,6 +63,8 @@ export function CodeSurfer({
           dimensions={dimensions}
           tokens={tokens}
           types={types}
+          maxLineCount={maxLineCount}
+          showNumbers={showNumbers}
         />
       </div>
     );
