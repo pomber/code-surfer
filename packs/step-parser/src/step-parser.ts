@@ -92,10 +92,17 @@ export function parseSteps(
     }
   });
 
+  // get the line count from the step with more lines
+  const maxLineCount = allSteps.reduce(
+    (max, step) => (step.lines.length > max ? step.lines.length : max),
+    0
+  );
+
   return {
     tokens: allTokens,
     types: allTypes,
-    steps: allSteps
+    steps: allSteps,
+    maxLineCount
   };
 }
 

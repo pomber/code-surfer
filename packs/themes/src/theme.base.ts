@@ -24,7 +24,8 @@ const theme: CodeSurferTheme = {
           color: "primary"
         },
         "line-number": {
-          opacity: 0.65
+          opacity: 0.65,
+          userSelect: "none"
         }
       },
       title: {

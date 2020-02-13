@@ -21,6 +21,7 @@ type LineListProps = {
   types: string[][];
   dimensions?: { lineHeight: number };
   unfocusedStyle: { opacity: number };
+  maxLineCount: number;
   showNumbers?: boolean;
 };
 
@@ -31,6 +32,7 @@ export function LineList({
   types,
   dimensions,
   unfocusedStyle,
+  maxLineCount,
   showNumbers = true
 }: LineListProps) {
   const lines = React.useMemo(() => {
@@ -90,9 +92,12 @@ export function LineList({
       const { lineHeight } = dimensions || {};
 
       const anyLine = lineTuple.any();
-      const lineNumber = anyLine ? anyLine.lineNumber : 0;
+      const pad = maxLineCount.toString().replace(/./g, " ");
+      const lineNumber = anyLine
+        ? (pad + anyLine.lineNumber).slice(-pad.length)
+        : "";
       const lineNumberElement = showNumbers && (
-        <span className={"token-line-number"}>{lineNumber} </span>
+        <span className={"token-line-number"}>{lineNumber + " "}</span>
       );
 
       const lineElement = isStatic && (

@@ -68,5 +68,6 @@ const parsedSteps = {
     ["keyword", "plain", "operator", "plain", "number"],
     ["keyword", "plain", "operator", "plain", "number"],
     ["keyword"]
-  ]
+  ],
+  maxLineCount: 4
 };
