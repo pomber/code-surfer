@@ -11,6 +11,8 @@
   - http://localhost:8000/themes/
   - http://localhost:8000/errors/
 
-- Start the module you want to change
-  - `yarn workspace @code-surfer/step-parser`
-  - `yarn workspace @code-surfer/standalone`
+- Start the module/s you want to change
+  - `yarn workspace @code-surfer/step-parser start`
+  - `yarn workspace @code-surfer/standalone start`
+  - `yarn workspace @code-surfer/themes start`
+  - `yarn workspace code-surfer start`
