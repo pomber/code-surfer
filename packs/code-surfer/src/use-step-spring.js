@@ -6,7 +6,7 @@ function useStepSpring(stepsCount) {
   const targetStepIndex = useSteps(stepsCount - 1);
 
   // real number between 0 and stepsCount - 1
-  const currentStepSpring = useSpring(targetStepIndex, {
+  const [currentStepSpring] = useSpring(targetStepIndex, {
     decimals: 3,
     stiffness: 80,
     damping: 48,

@@ -12,7 +12,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "theme-ui": "^0.2.41",
-    "use-spring": "^0.1.1"
+    "use-spring": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

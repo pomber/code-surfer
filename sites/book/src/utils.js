@@ -9,7 +9,7 @@ export function StoryWithSlider({ max, children }) {
     progress: 0,
     teleport: true
   });
-  const p = useSpring(progress, {
+  const [p] = useSpring(progress, {
     decimals: 3,
     stiffness: 80,
     damping: 48,
