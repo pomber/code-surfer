@@ -1,7 +1,7 @@
 {
   "name": "code-surfer",
   "description": "Rad code slides",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "license": "MIT",
   "author": "pomber",
   "repository": "pomber/code-surfer",
@@ -26,14 +26,14 @@
     "react": "^16.8.0"
   },
   "dependencies": {
-    "@code-surfer/standalone": "3.1.0",
+    "@code-surfer/standalone": "3.1.1",
     "@types/theme-ui": "^0.2.0",
     "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",
     "prismjs": "^1.16.0",
     "rebound": "^0.1.0",
     "shell-quote": "^1.6.1",
-    "use-spring": "^0.1.1"
+    "use-spring": "^0.2.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",

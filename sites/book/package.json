@@ -8,11 +8,11 @@
     "build": "build-storybook -c ./src -o ./dist"
   },
   "dependencies": {
-    "@code-surfer/standalone": "3.1.0",
+    "@code-surfer/standalone": "3.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "theme-ui": "^0.2.41",
-    "use-spring": "^0.1.1"
+    "use-spring": "^0.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
