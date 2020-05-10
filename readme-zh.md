@@ -29,7 +29,6 @@ npm start
 
 > 首先了解 [MDX Deck](https://github.com/jxnblk/mdx-deck) 的工作方式可能会有所帮助
 
-To use Code Surfer you need to import it and wrap the code you want to show inside `<CodeSurfer>` tags (the **empty lines before and after the codeblock are required**):
 
 要使用 Code Surfer，你需要先将其导入，并使用 `<CodeSurfer>` 标签包裹要显示的代码（**需要在代码块之前和之后保留空行**）:
 
@@ -58,19 +57,18 @@ console.log(3);
 - [标题和副标题](#title-and-subtitle)
 - [主题](#themes)
 - [自定义样式](#custom-styles)
-- [多语言支持]](#languages)
+- [多语言支持](#languages)
 - [列](#columns)
 - [导入代码](#import-code)
 - [行号](#line-numbers)
 - [差异](#diffs)
 
-> Here is a live [deck using all the features](https://codesurfer.pomb.us/full/) (and its [mdx source](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx)) just in case you prefer to read code instead of docs.
 
-> 这是一个 [使用所有功能](https://codesurfer.pomb.us/full/) (及 [mdx 源码](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx))的演示文稿，万一您更喜欢阅读代码而不是文档😀
+> 这是一个 [使用所有功能](https://codesurfer.pomb.us/full/) (及 [mdx 源码](https://raw.githubusercontent.com/pomber/code-surfer/code-surfer-v2/sites/docs/decks/full.mdx))的演示文稿，万一你更喜欢阅读代码而不是文档😀
 
-## 聚焦
+## 高亮
 
-在代码块第一行中的（设置）语言之后添加 _高亮字符串位置_，以告诉Code Surfer你要聚焦的行和列。
+在代码块第一行中的（设置）语言之后添加 _高亮字符串位置_，以告诉Code Surfer你要高亮的行和列。
 
 Code Surfer将淡出所有未高亮的代码，并在必要时将其缩小以适合幻灯片。
 
@@ -85,8 +83,6 @@ console.log(3);
 
 </CodeSurfer>
 ````
-
-In the example above `1:2,3[8:10]` means: "focus from the line 1 to line 2 and the columns 8 to 10 from line 3". More examples:
 
 在上面的示例中，`1:2,3[8:10]` 意思是：“行1行2高亮，行3到列8到10高亮”。更多示例：
 
@@ -128,7 +124,7 @@ console.log(5);
 </CodeSurfer>
 ````
 
-您可以为不同的步骤更改焦点和/或代码，然后 Code Surfer 会在以下步骤之间进行变换：缩放，滚动，淡入，淡出，添加和删除行。
+你可以为不同的步骤更改焦点和/或代码，然后 Code Surfer 会在以下步骤之间进行变换：缩放，滚动，淡入，淡出，添加和删除行。
 
 ## 标题和副标题
 
@@ -196,7 +192,7 @@ console.log(3);
 
 ## 自定义样式
 
-您可以编写自己的Code Surfer主题，更改代码，标题和副标题的样式：
+你可以编写自己的Code Surfer主题，更改代码，标题和副标题的样式：
 
 > 在主题中使用 [Theme UI](https://theme-ui.com/)
 
@@ -326,7 +322,7 @@ console.log("b");
 
 每个 `<Step>` 有自己的 `title` and `subtitle`.
 
-您可以为各列使用不同的主题: `<CodeSurferColumns themes={[nightOwl, ultramin]}>`. 并更改列的相对大小 `<CodeSurferColumns sizes={[1,3]}>`.
+你可以为各列使用不同的主题: `<CodeSurferColumns themes={[nightOwl, ultramin]}>`. 并更改列的相对大小 `<CodeSurferColumns sizes={[1,3]}>`.
 
 列不仅用于代码，还可以将它们用于任何类型的内容：
 
@@ -445,11 +441,11 @@ console.log(3);
 
 ## 支持 Code Surfer
 
-您可以帮助保持该项目的生命。
+你可以帮助保持该项目的生命。
 
 ### 赞助商
 
-通过成为赞助者来支持该项目。您的徽标将显示在此处，并带有指向您网站的链接。 [[成为赞助商](https://opencollective.com/code-surfer#sponsor)]
+通过成为赞助者来支持该项目。你的徽标将显示在此处，并带有指向你网站的链接。 [[成为赞助商](https://opencollective.com/code-surfer#sponsor)]
 
 <a href="https://opencollective.com/code-surfer/sponsor/0/website" target="_blank"><img src="https://opencollective.com/code-surfer/sponsor/0/avatar.svg"></a>
 
