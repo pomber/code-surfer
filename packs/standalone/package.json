@@ -32,7 +32,7 @@
     "@types/theme-ui": "^0.2.2",
     "array.prototype.flat": "^1.2.1",
     "diff": "^4.0.1",
-    "prismjs": "^1.16.0",
+    "prismjs": "^1.21.0",
     "rebound": "^0.1.0",
     "shell-quote": "^1.6.1"
   },
