@@ -9,7 +9,7 @@ export { theme as shadesOfPurple } from "./theme.shades-of-purple";
 export { theme as ultramin } from "./theme.ultramin";
 export { theme as vsDark } from "./theme.vs-dark";
 
-export { CodeSurferTheme } from "./utils";
+export { CodeSurferTheme, makeTheme } from "./utils";
 export {
   StylesProvider,
   Styled,
