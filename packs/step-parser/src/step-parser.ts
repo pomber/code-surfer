@@ -41,6 +41,7 @@ export function parseSteps(
     longestLineIndex: number;
     title?: string;
     subtitle?: string;
+    annotations: Record<number, React.ReactNode>;
   }[] = [];
 
   steps.forEach((step, i) => {
@@ -67,7 +68,8 @@ export function parseSteps(
       focusCount,
       longestLineIndex: getLongestLineIndex(code),
       title: inputSteps[i].title,
-      subtitle: inputSteps[i].subtitle
+      subtitle: inputSteps[i].subtitle,
+      annotations: inputSteps[i].annotations
     });
   });
 
