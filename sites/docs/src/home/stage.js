@@ -2,7 +2,7 @@ import React from "react";
 import useWindowSize from "./use-window-size";
 import Speaker from "./speaker";
 import logo from "./logo.small.svg";
-import jabci from "./logos/jabci.png";
+import bairesdev from "./logos/bairesdev.png";
 import ocollective from "./logos/ocollective.svg";
 import mdxdeck from "./logos/mdxdeck.png";
 import wood from "./wood.png";
@@ -21,7 +21,7 @@ import {
   useScale,
   SpotLight,
   NoLights,
-  PointLight
+  PointLight,
 } from "react-vista";
 const whiteBackground = "#FAF9F5";
 const darkBackground = "#202226";
@@ -41,7 +41,7 @@ export default function Stage({ children, deck }) {
         width: "100%",
         overflow: "hidden",
         background: darkBackground,
-        color: "#222"
+        color: "#222",
       }}
     >
       <SceneContainer
@@ -53,7 +53,7 @@ export default function Stage({ children, deck }) {
         <SceneContent
           style={{
             height: h,
-            width: "100%"
+            width: "100%",
             // borderBottom: '1px red solid',
           }}
           origin={{ x: 0.5, y: yMiddle }}
@@ -69,7 +69,7 @@ export default function Stage({ children, deck }) {
           style={{
             background: "#FAF9F5",
             transformStyle: "preserve-3d",
-            marginTop: -1
+            marginTop: -1,
           }}
         >
           <div
@@ -79,7 +79,7 @@ export default function Stage({ children, deck }) {
               width: vw,
               backgroundImage: dividerTexture,
               backgroundColor: darkBackground,
-              backgroundPosition: "center top"
+              backgroundPosition: "center top",
             }}
           >
             <svg
@@ -92,7 +92,7 @@ export default function Stage({ children, deck }) {
                 zIndex: "1",
                 position: "absolute",
                 bottom: -1,
-                height: "90%"
+                height: "90%",
               }}
             >
               <path
@@ -137,7 +137,7 @@ function StageObjects({ sceneWidth, sceneHeight, yMiddle, deck }) {
         </React.Fragment>
       )}
       <Move dy={3.2} dx={2} dz={startZ - 1}>
-        <Pulpit onClick={() => setLightsOn(on => !on)} />
+        <Pulpit onClick={() => setLightsOn((on) => !on)} />
       </Move>
       <Move dy={3.1} dz={startZ}>
         <Platform />
@@ -163,7 +163,7 @@ function Screen({ deck }) {
           width: deckWidth,
           height: (deckWidth * 9) / 16,
           transform: `scale(${(scale * 8) / deckWidth})`,
-          transformOrigin: "left top"
+          transformOrigin: "left top",
         }}
       >
         {deck}
@@ -183,7 +183,7 @@ function Top() {
         w={width}
         style={{
           background: "#161616",
-          backgroundImage: `url("${wood}")`
+          backgroundImage: `url("${wood}")`,
         }}
       />
       {/* front */}
@@ -193,7 +193,7 @@ function Top() {
         w={width}
         style={{
           background: "#111",
-          backgroundImage: `url("${wood}")`
+          backgroundImage: `url("${wood}")`,
         }}
       />
     </React.Fragment>
@@ -211,7 +211,7 @@ function Platform() {
         w={width}
         style={{
           background: "#161616",
-          backgroundImage: `url("${wood}")`
+          backgroundImage: `url("${wood}")`,
         }}
       />
       {/* front */}
@@ -221,7 +221,7 @@ function Platform() {
         w={width}
         style={{
           background: "#111",
-          backgroundImage: `url("${wood}")`
+          backgroundImage: `url("${wood}")`,
         }}
       />
     </React.Fragment>
@@ -244,7 +244,7 @@ function Pulpit({ onClick }) {
           fontFamily: "monospace",
           backgroundImage: `url("${purtyWood}")`,
           userSelect: "none",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
         pinY={"bottom"}
         onClick={onClick}
@@ -266,8 +266,8 @@ function Banner() {
       w={1.5}
       h={4}
       style={{
-        background: "#777",
-        backgroundImage: `url("${shattered}")`
+        background: "#999",
+        backgroundImage: `url("${shattered}")`,
       }}
     >
       <div
@@ -280,7 +280,7 @@ function Banner() {
           height: "100%",
           boxSizing: "border-box",
           opacity: 0.7,
-          transformStyle: "preserve-3d"
+          transformStyle: "preserve-3d",
         }}
       >
         <a
@@ -298,7 +298,7 @@ function Banner() {
             fontSize: scale * 0.19,
             fontWeight: "bolder",
             textAlign: "center",
-            display: "flex"
+            display: "flex",
           }}
         >
           <img
@@ -312,8 +312,11 @@ function Banner() {
             <div>Deck</div>
           </div>
         </a>
-        <a href="http://jabci.com/" style={{ width: "65%" }}>
-          <img src={jabci} alt="jabci Logo" width="100%" />
+        <a
+          href="https://www.bairesdev.com/sponsoring-open-source-projects/"
+          style={{ width: "95%" }}
+        >
+          <img src={bairesdev} alt="BairesDev Logo" width="100%" />
         </a>
         <a
           href="https://opencollective.com/code-surfer#sponsor"
@@ -324,7 +327,7 @@ function Banner() {
             fontSize: scale * 0.16,
             fontWeight: "bolder",
             textAlign: "center",
-            display: "flex"
+            display: "flex",
           }}
         >
           <img src={ocollective} alt="Open Collective Logo" width="30%" />
@@ -344,7 +347,7 @@ function Divider({ sceneWidth, sceneHeight, yMiddle }) {
       style={{
         background: darkBackground,
         backgroundImage: dividerTexture,
-        backgroundPosition: "center bottom"
+        backgroundPosition: "center bottom",
       }}
       h={8}
       w={sceneWidth * 1.7}
