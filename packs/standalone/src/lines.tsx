@@ -235,6 +235,7 @@ export function LineList({
                       {token}
                     </span>
                   ))}
+                {stepPair.prev.annotations?.[lineKey + 1]}
               </div>
             </div>
           )
